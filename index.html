@@ -1,14 +1,125 @@
-amethyst-dining/
-│
-├── index.html
-├── style.css
-├── script.js
-├── assets/
-│   ├── logo.png
-│   ├── hero.jpg
-│   ├── sushi.jpg
-│   ├── steak.jpg
-│   ├── seafood.jpg
-│   ├── dessert.jpg
-│   └── qr-code.png
-└── README.md
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amethyst Dining - Digital Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-placeholder">
+                <i class="fas fa-gem gold-text"></i>
+                <span class="purple-text">Amethyst</span> <span class="gold-text">Dining</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Amethyst Dining</h1>
+            <p>የቅንጦት እና የምርጥ ጣዕም መገናኛ</p>
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="menu-search" placeholder="የሚፈልጉትን ምግብ ወይም መጠጥ እዚህ ይፈልጉ...">
+            </div>
+        </div>
+    </section>
+
+    <div class="category-tabs-container">
+        <div class="category-tabs" id="category-tabs">
+            <button class="tab-btn active" data-category="all">ሁሉም</button>
+            <button class="tab-btn" data-category="starters">መቀስቀሻዎች (Starters)</button>
+            <button class="tab-btn" data-category="mains">ዋና ምግቦች</button>
+            <button class="tab-btn" data-category="drinks">መጠጦች</button>
+            <button class="tab-btn" data-category="desserts">ጣፋጮች</button>
+        </div>
+    </div>
+
+    <main class="menu-container">
+        <div class="menu-grid" id="menu-grid">
+            <div class="menu-item" data-category="starters">
+                <div class="item-info">
+                    <div class="item-header">
+                        <h3>Special Creamy Soup</h3>
+                        <span class="price">450 ETB</span>
+                    </div>
+                    <p class="description">በጥንቃቄ የተዘጋጀ ክሬሚ የሹርባ አማራጭ ከነጭ ሽንኩርት ዳቦ ጋር።</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="mains">
+                <div class="item-info">
+                    <div class="item-header">
+                        <h3>Amethyst Signature Steak</h3>
+                        <span class="price">1,200 ETB</span>
+                    </div>
+                    <p class="description">በልዩ ቅመማ ቅመም የታሸገ፣ በሚፈልጉት ደረጃ የበሰለ ምርጥ የበሬ ስጋ ስቴክ።</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="mains">
+                <div class="item-info">
+                    <div class="item-header">
+                        <h3>Alfredo Pasta</h3>
+                        <span class="price">750 ETB</span>
+                    </div>
+                    <p class="description">ክሬሚ ኋይት ሶስ፣ እንጉዳይ እና የዶሮ ስጋ የተካተተበት ጣፋጭ ፓስታ።</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="drinks">
+                <div class="item-info">
+                    <div class="item-header">
+                        <h3>Purple Amethyst Mocktail</h3>
+                        <span class="price">350 ETB</span>
+                    </div>
+                    <p class="description">የቤሪ ፍሬዎች፣ ለይም እና ሚንት ቅልቅል የሆነ የሬስቶራንታችን ልዩ መጠጥ።</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="desserts">
+                <div class="item-info">
+                    <div class="item-header">
+                        <h3>Chocolate Lava Cake</h3>
+                        <span class="price">500 ETB</span>
+                    </div>
+                    <p class="description">በውስጡ የቀለጠ ቸኮሌት የያዘ፣ ከቫኒላ አይስክሬም ጋር የሚቀርብ።</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="no-results" class="no-results hidden">
+            <i class="fas fa-search-minus"></i>
+            <p>የፈለጉት ምግብ አልተገኘም። እባክዎ ሌላ ቃል ይሞክሩ።</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://instagram.com/amethyst_dining" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com/@amethyst_dining" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                <a href="https://share.google/YWP23HCNPEKCWyFA8" target="_blank" class="social-icon-maps"><i class="fas fa-map-marker-alt"></i> Google Maps</a>
+            </div>
+            <p class="copyright">&copy; 2026 Amethyst Dining. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="floating-buttons">
+        <a href="tel:+251969995662" class="float-btn call-btn" title="ይደውሉ">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+        <a href="https://wa.me/251969995662" target="_blank" class="float-btn whatsapp-btn" title="ዋትስአፕ">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
