@@ -1,184 +1,235 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #050508;
-    color: #fff;
+    background-color: #040206;
+    color: #f4f4f5;
     font-family: 'Poppins', sans-serif;
-    overflow-hidden: hidden;
+    overflow-x: hidden;
 }
 
 .luxury-bg {
     min-height: 100vh;
-    background: radial-gradient(circle at center, #1b053a 0%, #050508 100%);
+    background: radial-gradient(circle at center, #1b0433 0%, #05020a 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 20px;
+    padding: 20px 10px;
     box-sizing: border-box;
 }
 
 .brand-header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .mini-logo {
-    max-width: 70px;
+    max-width: 75px;
     height: auto;
+    filter: drop-shadow(0 4px 10px rgba(212,175,55,0.4));
 }
 
 .brand-header h1 {
-    font-family: 'Marcellus', serif;
+    font-family: 'Cinzel', serif;
     font-size: 24px;
     color: #d4af37;
-    margin: 5px 0;
-    letter-spacing: 3px;
-}
-
-.brand-header p {
-    font-size: 10px;
+    margin: 8px 0 2px 0;
     letter-spacing: 4px;
-    color: #aaa;
-    margin: 0;
+    font-weight: 700;
 }
 
-/* 3D Container Box */
+.tagline {
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: #ccc;
+    text-transform: uppercase;
+}
+
+.menu-controls {
+    width: 100%;
+    max-width: 360px;
+    margin-bottom: 15px;
+    z-index: 10;
+}
+
+.category-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.cat-tab {
+    background: rgba(25, 15, 40, 0.6);
+    color: #bbb;
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cat-tab.active {
+    background: #5c1d8d;
+    color: #fff;
+    border-color: #d4af37;
+    box-shadow: 0 0 10px rgba(92,29,141,0.5);
+}
+
 .scene3d {
-    width: 340px;
-    height: 480px;
-    perspective: 1500px; /* የ3D ጥልቀት የሚሰጠው ዋናው ኮድ */
-    margin: 20px auto;
+    width: 100%;
+    max-width: 360px;
+    height: 500px;
+    perspective: 1600px;
+    margin: 10px 0;
 }
 
-/* The Acrylic Stand */
 .menu-stand {
     width: 100%;
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* ሜኑው ሲዞር የሚጠቀመው ክላስ */
 .menu-stand.flipped {
     transform: rotateY(180deg);
 }
 
-/* የሆልደሩ ገጾች የጋራ ስታይል */
 .stand-face {
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden; /* የጀርባው ገጽ እንዳይታይ መደበቂያ */
-    border-radius: 16px;
-    padding: 25px;
-    box-sizing: border-box;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 20px;
     border: 3px solid #d4af37;
-    background: linear-gradient(135deg, rgba(28, 10, 48, 0.95) 0%, rgba(12, 5, 20, 0.98) 100%);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.7), inset 0 0 20px rgba(212,175,55,0.1);
+    background: linear-gradient(145deg, rgba(30, 12, 55, 0.98) 0%, rgba(8, 3, 15, 0.99) 100%);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.85), inset 0 0 30px rgba(212,175,55,0.15);
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
-/* የፊተኛው ገጽ አቀማመጥ */
-.face-front {
-    transform: rotateY(0deg);
-    z-index: 2;
-}
-
-/* የጀርባው ገጽ አቀማመጥ */
 .face-back {
     transform: rotateY(180deg);
     border-color: #aa841a;
 }
 
-/* በሆልደሩ ውስጥ ያሉ ምግቦች አቀራረብ */
-.page-badge {
-    display: inline-block;
-    background: #5c1d8d;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-}
-
-.category-title {
-    font-family: 'Marcellus', serif;
-    font-size: 20px;
-    color: #d4af37;
+.page-header {
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
-.menu-item {
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding-bottom: 12px;
+.side-badge, .side-badge-back {
+    font-size: 9px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
 }
 
-.item-main {
+.side-badge { background: #5c1d8d; }
+.side-badge-back { background: #aa841a; color: #000; }
+
+.page-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    color: #fff;
+    margin: 6px 0 0 0;
+    letter-spacing: 1px;
+}
+
+.scrollable-menu-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scrollable-menu-content::-webkit-scrollbar { width: 4px; }
+.scrollable-menu-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+.scrollable-menu-content::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
+
+.menu-item-box {
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding-bottom: 8px;
+}
+
+.item-meta {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 10px;
 }
 
-.item-main h4 {
+.item-meta h3 {
     margin: 0;
-    font-size: 15px;
-    color: #fff;
+    font-size: 14px;
     font-weight: 500;
+    color: #fff;
 }
 
 .price {
-    font-size: 14px;
+    font-size: 13.5px;
     color: #d4af37;
     font-weight: 600;
+    white-space: nowrap;
 }
 
-.menu-item p {
-    margin: 5px 0 0 0;
-    font-size: 12px;
+.curr {
+    font-size: 9px;
+    font-weight: 400;
     color: #aaa;
-    font-weight: 300;
 }
 
-/* የ3D መቆሚያ በታች በኩል (Stand Base Effect) */
+.menu-item-box p {
+    margin: 4px 0 0 0;
+    font-size: 11.5px;
+    color: #b5b5ba;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
 .stand-base-3d {
     position: absolute;
-    bottom: -15px;
-    left: 5%;
-    width: 90%;
-    height: 15px;
-    background: #111;
-    border: 2px solid #333;
-    border-radius: 4px;
-    transform: rotateX(90deg) translateZ(-10px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+    bottom: -12px;
+    left: 10%;
+    width: 80%;
+    height: 12px;
+    background: #0f0a14;
+    border: 1px solid #d4af37;
+    border-radius: 3px;
+    transform: rotateX(85deg) translateZ(-6px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.9);
 }
 
-/* የማዞሪያ ቁልፍ (Control Button) */
-.controls-container {
-    margin-top: 20px;
-}
+.action-bar { margin-top: 20px; }
 
-.flip-btn {
+.btn-flip-3d {
     background: linear-gradient(135deg, #d4af37 0%, #aa841a 100%);
     border: none;
     color: #000;
-    padding: 14px 35px;
+    padding: 14px 30px;
     font-size: 14px;
     font-weight: 600;
-    border-radius: 30px;
+    border-radius: 25px;
     cursor: pointer;
-    box-shadow: 0 5px 20px rgba(212,175,55,0.4);
+    box-shadow: 0 5px 20px rgba(212,175,55,0.35);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     transition: 0.3s;
 }
 
-.flip-btn:active {
-    transform: scale(0.95);
-}
+.btn-flip-3d:active { transform: scale(0.96); }
