@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentCategory = 'all';
     let searchQuery = '';
 
-    // Filter Menu Function
     function filterMenu() {
         let visibleItemsCount = 0;
 
@@ -27,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // የፍለጋ ውጤት ከታጣ
         if (visibleItemsCount === 0) {
             noResults.classList.remove('hidden');
         } else {
@@ -35,16 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Search Input Listener
     searchInput.addEventListener('input', (e) => {
         searchQuery = e.target.value.toLowerCase().trim();
         filterMenu();
     });
 
-    // Category Tabs Listener
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
-            // Active ክላስን አስተካክል
             tabButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 
@@ -52,12 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
             filterMenu();
             
             // በሞባይል ላይ ምድብ ሲነካ ወደ ሜኑ መጀመሪያ ላይ ቀስ ብሎ እንዲሄድ
-            if(window.innerWidth < 768) {
-                window.scrollTo({
-                    top: document.getElementById('category-tabs').offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            }
+            const offsetTop = document.getElementById('category-tabs').offsetTop;
+            window.scrollTo({
+                top: offsetTop - 20,
+                behavior: 'smooth'
+            });
         });
     });
 });
