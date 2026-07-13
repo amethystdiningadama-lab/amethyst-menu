@@ -4,119 +4,484 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amethyst Dining - Digital Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <div class="logo-placeholder">
-                <i class="fas fa-gem gold-text"></i>
-                <span class="purple-text">Amethyst</span> <span class="gold-text">Dining</span>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="logo.png" alt="Amethyst Dining Logo" class="main-logo">
+            <p class="hero-subtitle">TASTE THE EXCELLENCE</p>
+            <div class="scroll-indicator">
+                <span>ወደ ሜኑ ይለፉ</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
         </div>
     </header>
 
-    <section class="hero-section">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Amethyst Dining</h1>
-            <p>የቅንጦት እና የምርጥ ጣዕም መገናኛ</p>
-            <div class="search-container">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="menu-search" placeholder="የሚፈልጉትን ምግብ ወይም መጠጥ እዚህ ይፈልጉ...">
-            </div>
-        </div>
-    </section>
-
-    <div class="category-tabs-container">
-        <div class="category-tabs" id="category-tabs">
-            <button class="tab-btn active" data-category="all">ሁሉም</button>
-            <button class="tab-btn" data-category="starters">መቀስቀሻዎች (Starters)</button>
-            <button class="tab-btn" data-category="mains">ዋና ምግቦች</button>
-            <button class="tab-btn" data-category="drinks">መጠጦች</button>
-            <button class="tab-btn" data-category="desserts">ጣፋጮች</button>
-        </div>
-    </div>
-
+    <!-- Main Container -->
     <main class="menu-container">
-        <div class="menu-grid" id="menu-grid">
-            <div class="menu-item" data-category="starters">
-                <div class="item-info">
-                    <div class="item-header">
-                        <h3>Special Creamy Soup</h3>
-                        <span class="price">450 ETB</span>
-                    </div>
-                    <p class="description">በጥንቃቄ የተዘጋጀ ክሬሚ የሹርባ አማራጭ ከነጭ ሽንኩርት ዳቦ ጋር።</p>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="mains">
-                <div class="item-info">
-                    <div class="item-header">
-                        <h3>Amethyst Signature Steak</h3>
-                        <span class="price">1,200 ETB</span>
-                    </div>
-                    <p class="description">በልዩ ቅመማ ቅመም የታሸገ፣ በሚፈልጉት ደረጃ የበሰለ ምርጥ የበሬ ስጋ ስቴክ።</p>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="mains">
-                <div class="item-info">
-                    <div class="item-header">
-                        <h3>Alfredo Pasta</h3>
-                        <span class="price">750 ETB</span>
-                    </div>
-                    <p class="description">ክሬሚ ኋይት ሶስ፣ እንጉዳይ እና የዶሮ ስጋ የተካተተበት ጣፋጭ ፓስታ።</p>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="drinks">
-                <div class="item-info">
-                    <div class="item-header">
-                        <h3>Purple Amethyst Mocktail</h3>
-                        <span class="price">350 ETB</span>
-                    </div>
-                    <p class="description">የቤሪ ፍሬዎች፣ ለይም እና ሚንት ቅልቅል የሆነ የሬስቶራንታችን ልዩ መጠጥ።</p>
-                </div>
-            </div>
-
-            <div class="menu-item" data-category="desserts">
-                <div class="item-info">
-                    <div class="item-header">
-                        <h3>Chocolate Lava Cake</h3>
-                        <span class="price">500 ETB</span>
-                    </div>
-                    <p class="description">በውስጡ የቀለጠ ቸኮሌት የያዘ፣ ከቫኒላ አይስክሬም ጋር የሚቀርብ።</p>
-                </div>
-            </div>
-        </div>
         
-        <div id="no-results" class="no-results hidden">
+        <!-- Search Bar Section -->
+        <section class="search-section">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="menu-search" placeholder="የሚፈልጉትን ምግብ እዚህ ይፈልጉ...">
+            </div>
+        </section>
+
+        <!-- Category Tabs -->
+        <section class="categories-container" id="category-tabs">
+            <div class="tabs-scroll">
+                <button class="tab-btn active" data-category="all">ሁሉም</button>
+                <button class="tab-btn" data-category="soups">Soups</button>
+                <button class="tab-btn" data-category="sushi">Sushi</button>
+                <button class="tab-btn" data-category="shareables">Shareables</button>
+                <button class="tab-btn" data-category="large-plates">Large Plates</button>
+                <button class="tab-btn" data-category="sides">Sides & Dessert</button>
+            </div>
+        </section>
+
+        <!-- Menu Items Grid -->
+        <section class="menu-grid" id="menu-items">
+            
+            <!-- SOUPS -->
+            <div class="menu-item" data-category="soups">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Butternut Squash Soup</h3>
+                        <span class="price">400 <small>BR</small></span>
+                    </div>
+                    <p class="description">Roasted squash blended with aromatic spices.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="soups">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Doctor Marasamo Soup</h3>
+                        <span class="price">500 <small>BR</small></span>
+                    </div>
+                    <p class="description">A savory infusion of ginger, curry, and fresh fish stock.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="soups">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Spicy Lentil Soup</h3>
+                        <span class="price">400 <small>BR</small></span>
+                    </div>
+                    <p class="description">Hearty lentils simmered with garden vegetables and a kick of spice.</p>
+                </div>
+            </div>
+
+            <!-- SUSHI -->
+            <div class="menu-item" data-category="sushi">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Salmon Maki</h3>
+                        <span class="price">1,500 <small>BR</small></span>
+                    </div>
+                    <p class="description">Fresh salmon, avocado, and crisp cucumber.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sushi">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Spicy Tuna Maki</h3>
+                        <span class="price">1,500 <small>BR</small></span>
+                    </div>
+                    <p class="description">Spicy tuna paired with avocado and cucumber.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sushi">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Shrimp Tempura Maki</h3>
+                        <span class="price">1,500 <small>BR</small></span>
+                    </div>
+                    <p class="description">Crispy shrimp tempura and cucumber.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sushi">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Panko Sushi Roll</h3>
+                        <span class="price">1,500 <small>BR</small></span>
+                    </div>
+                    <p class="description">Crispy fried roll with fish, mango, and nori topped with tempura flakes.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sushi">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Avocado & Cucumber Roll</h3>
+                        <span class="price">1,500 <small>BR</small></span>
+                    </div>
+                    <p class="description">A refreshing classic with creamy avocado and cucumber.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sushi">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Amethyst Salmon Grand</h3>
+                        <span class="price">2,000 <small>BR</small></span>
+                    </div>
+                    <p class="description">Premium salmon paired elegantly with fresh avocado.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sushi">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Salmon Nigiri</h3>
+                        <span class="price">2,000 <small>BR</small></span>
+                    </div>
+                    <p class="description">Traditional slice of fresh salmon served over seasoned sushi rice.</p>
+                </div>
+            </div>
+
+            <!-- SHAREABLES -->
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Chili Garlic Edamame <span class="veg-badge"><i class="fas fa-leaf"></i> V</span></h3>
+                        <span class="price">600 <small>BR</small></span>
+                    </div>
+                    <p class="description">Steamed edamame tossed in a bold chili-garlic glaze.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Crispy Vegetable Taquitos <span class="veg-badge"><i class="fas fa-leaf"></i> V</span></h3>
+                        <span class="price">800 <small>BR</small></span>
+                    </div>
+                    <p class="description">Golden-fried tortillas filled with vegetables, beans, soy, and ginger.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Vegetable Spring Rolls <span class="veg-badge"><i class="fas fa-leaf"></i> V</span></h3>
+                        <span class="price">800 <small>BR</small></span>
+                    </div>
+                    <p class="description">Crispy spring rolls served with sweet chili sauce.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Gyoza</h3>
+                        <span class="price">1,100 <small>BR</small></span>
+                    </div>
+                    <p class="description">Pan-fried Japanese dumplings served with soy dipping sauce.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Signature Crispy Taquitos</h3>
+                        <span class="price">900 <small>BR</small></span>
+                    </div>
+                    <p class="description">Your choice of savory beef or fresh fish packed in a crispy shell.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Vegetable Tempura</h3>
+                        <span class="price">700 <small>BR</small></span>
+                    </div>
+                    <p class="description">Lightly battered seasonal vegetables served with premium tempura sauce.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Salmon Sashimi</h3>
+                        <span class="price">1,500 <small>BR</small></span>
+                    </div>
+                    <p class="description">Fresh salmon with soy sauce, lime, and toasted sesame oil.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Avocado Crispy Tofu Chili <span class="veg-badge"><i class="fas fa-leaf"></i> V</span></h3>
+                        <span class="price">1,000 <small>BR</small></span>
+                    </div>
+                    <p class="description">Crispy tofu with avocado, chili, and signature house seasoning.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Garlic Shrimp</h3>
+                        <span class="price">1,800 <small>BR</small></span>
+                    </div>
+                    <p class="description">Garlic butter shrimp perfectly served with sweet corn.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="shareables">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Amethyst Signature Salad <span class="veg-badge"><i class="fas fa-leaf"></i> V</span></h3>
+                        <span class="price">500 <small>BR</small></span>
+                    </div>
+                    <p class="description">Fresh mixed lettuce with seasonal vegetables and premium house dressing.</p>
+                </div>
+            </div>
+
+            <!-- LARGE PLATES -->
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Spicy Wasabi Beef</h3>
+                        <span class="price">2,000 <small>BR</small></span>
+                    </div>
+                    <p class="description">Tender beef served with spring onions & aromatic Coconut Rice.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Beef Fillet (Steak)</h3>
+                        <span class="price">1,800 <small>BR</small></span>
+                    </div>
+                    <p class="description">Perfectly grilled beef fillet enhanced with classic Chimichurri sauce.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Sticky Sesame Beef</h3>
+                        <span class="price">1,800 <small>BR</small></span>
+                    </div>
+                    <p class="description">Tender beef glazed in a sweet and savory sesame sauce, served with fresh vegetables.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Roasted Nile Perch</h3>
+                        <span class="price">1,800 <small>BR</small></span>
+                    </div>
+                    <p class="description">Fresh Nile Perch served with fluffy steamed rice and a crisp green salad.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Chicken Panko</h3>
+                        <span class="price">1,700 <small>BR</small></span>
+                    </div>
+                    <p class="description">Crispy breaded chicken served with creamy mayo and tangy pickled daikon.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Chicken Teriyaki</h3>
+                        <span class="price">1,700 <small>BR</small></span>
+                    </div>
+                    <p class="description">Grilled chicken glazed in savory teriyaki sauce, topped with spring onions and served with steamed rice.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Salmon Teriyaki</h3>
+                        <span class="price">3,300 <small>BR</small></span>
+                    </div>
+                    <p class="description">Salmon fillet marinated with garlic and fine herbs, grilled to a delicate finish.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Wok Stir-Fried Noodles</h3>
+                        <span class="price">1,500 <small>BR</small></span>
+                    </div>
+                    <p class="description">Classic wok-tossed noodles with signature savory sauces.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Vegetable Curry Noodles</h3>
+                        <span class="price">1,300 <small>BR</small></span>
+                    </div>
+                    <p class="description">Rich and aromatic curry infused noodles with crisp seasonal vegetables.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Signature Glass Noodles</h3>
+                        <span class="price">1,500 <small>BR</small></span>
+                    </div>
+                    <p class="description">Delicate and flavorful clear glass noodles prepared to perfection.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Vegetable Fried Rice <span class="veg-badge"><i class="fas fa-leaf"></i> V</span></h3>
+                        <span class="price">1,400 <small>BR</small></span>
+                    </div>
+                    <p class="description">Fragrant fried rice mixed with finely chopped fresh garden vegetables.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Wagyu Beef Ribeye</h3>
+                        <span class="price">6,000 <small>BR</small></span>
+                    </div>
+                    <p class="description">Premium Australian Pure Blood signature Wagyu, served with smooth rich mash.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Grilled Lamb Chop</h3>
+                        <span class="price">5,400 <small>BR</small></span>
+                    </div>
+                    <p class="description">Perfectly seared, juicy lamb chops served alongside rich Coconut Rice.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="large-plates">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Sliders (Mini Burgers)</h3>
+                        <span class="price">800 <small>BR</small></span>
+                    </div>
+                    <p class="description">Three signature mini burgers with your choice of filling: Beef | Fish | Chicken.</p>
+                </div>
+            </div>
+
+            <!-- SIDES & DESSERT -->
+            <div class="menu-item" data-category="sides">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Seasonal Vegetables</h3>
+                        <span class="price">250 <small>BR</small></span>
+                    </div>
+                    <p class="description">Freshly sautéed or steamed assortment of the finest seasonal vegetables.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sides">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Steamed Rice</h3>
+                        <span class="price">250 <small>BR</small></span>
+                    </div>
+                    <p class="description">Fluffy, light, and perfectly steamed premium grain white rice.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sides">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Chinese Cabbage</h3>
+                        <span class="price">250 <small>BR</small></span>
+                    </div>
+                    <p class="description">Tender and lightly seasoned sautéed Chinese cabbage.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sides">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Mashed Potato</h3>
+                        <span class="price">250 <small>BR</small></span>
+                    </div>
+                    <p class="description">Creamy, buttery, and smooth house-made mashed potatoes.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sides">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Green Salad</h3>
+                        <span class="price">250 <small>BR</small></span>
+                    </div>
+                    <p class="description">A crisp, refreshing mix of garden greens served with a light dressing.</p>
+                </div>
+            </div>
+
+            <div class="menu-item" data-category="sides">
+                <div class="item-details">
+                    <div class="item-header">
+                        <h3>Seasonal Fruit Platter</h3>
+                        <span class="price">300 <small>BR</small></span>
+                    </div>
+                    <p class="description">A vibrant selection of nature's finest fresh fruits, hand-picked by our Chef.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden">
             <i class="fas fa-search-minus"></i>
-            <p>የፈለጉት ምግብ አልተገኘም። እባክዎ ሌላ ቃል ይሞክሩ።</p>
+            <p>የፈለጉት ምግብ አልተገኘም! እባክዎ እንደገና ይሞክሩ።</p>
         </div>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="social-links">
-                <a href="https://instagram.com/amethyst_dining" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="https://tiktok.com/@amethyst_dining" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
-                <a href="https://share.google/YWP23HCNPEKCWyFA8" target="_blank" class="social-icon-maps"><i class="fas fa-map-marker-alt"></i> Google Maps</a>
-            </div>
-            <p class="copyright">&copy; 2026 Amethyst Dining. All Rights Reserved.</p>
+    <!-- Footer Links & Socials -->
+    <footer class="main-footer">
+        <div class="social-icons">
+            <a href="https://instagram.com/amethyst_dining" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com/@amethyst_dining" target="_blank" class="social-link"><i class="fab fa-tiktok"></i></a>
+            <a href="https://share.google/YWP23HCNPEKCWyFA8" target="_blank" class="social-link"><i class="fas fa-map-marker-alt"></i></a>
         </div>
+        <p class="copyright">&copy; 2026 Amethyst Dining. All Rights Reserved.</p>
     </footer>
 
-    <div class="floating-buttons">
-        <a href="tel:+251969995662" class="float-btn call-btn" title="ይደውሉ">
-            <i class="fas fa-phone-alt"></i>
-        </a>
-        <a href="https://wa.me/251969995662" target="_blank" class="float-btn whatsapp-btn" title="ዋትስአፕ">
+    <!-- Floating Action Buttons -->
+    <div class="floating-actions">
+        <a href="https://wa.me/251969995662" target="_blank" class="float-btn whatsapp" title="WhatsApp Us">
             <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="tel:+251969995662" class="float-btn call" title="Call Us Now">
+            <i class="fas fa-phone-alt"></i>
         </a>
     </div>
 
