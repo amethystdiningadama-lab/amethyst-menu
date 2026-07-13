@@ -1,184 +1,181 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #050508;
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    overflow-hidden: hidden;
-}
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amethyst Dining - 3D Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
 
-.luxury-bg {
-    min-height: 100vh;
-    background: radial-gradient(circle at center, #1b053a 0%, #050508 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
+    <div class="luxury-bg">
+        <header class="brand-header">
+            <img src="logo.png" alt="Amethyst Logo" class="mini-logo">
+            <h1>AMETHYST DINING</h1>
+            <div class="tagline">TASTE THE EXCELLENCE</div>
+        </header>
 
-.brand-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
+        <div class="menu-controls">
+            <div class="category-scroll">
+                <button class="cat-tab active" onclick="filterCategory('all')">All Menu</button>
+                <button class="cat-tab" onclick="filterCategory('soups')">Soups</button>
+                <button class="cat-tab" onclick="filterCategory('sushi')">Sushi</button>
+                <button class="cat-tab" onclick="filterCategory('shareables')">Shareables</button>
+                <button class="cat-tab" onclick="filterCategory('large')">Large Plates</button>
+                <button class="cat-tab" onclick="filterCategory('sides')">Sides & Dessert</button>
+            </div>
+        </div>
 
-.mini-logo {
-    max-width: 70px;
-    height: auto;
-}
+        <div class="scene3d">
+            <div class="menu-stand" id="menuStand">
+                
+                <div class="stand-face face-front">
+                    <div class="page-header">
+                        <span class="side-badge">PAGE 1</span>
+                        <h2>STARTERS & SUSHI</h2>
+                    </div>
+                    
+                    <div class="scrollable-menu-content">
+                        <div class="menu-item-box" data-category="soups">
+                            <div class="item-meta"><h3>Butternut Squash Soup</h3><span class="price">400 <span class="curr">ETB</span></span></div>
+                            <p>Roasted squash blended with aromatic spices.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="soups">
+                            <div class="item-meta"><h3>Doctor Marasamo Soup</h3><span class="price">500 <span class="curr">ETB</span></span></div>
+                            <p>Savory infusion of ginger, curry, and fresh fish stock.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="soups">
+                            <div class="item-meta"><h3>Spicy Lentil Soup</h3><span class="price">400 <span class="curr">ETB</span></span></div>
+                            <p>Hearty lentils simmered with garden vegetables.</p>
+                        </div>
 
-.brand-header h1 {
-    font-family: 'Marcellus', serif;
-    font-size: 24px;
-    color: #d4af37;
-    margin: 5px 0;
-    letter-spacing: 3px;
-}
+                        <div class="menu-item-box" data-category="sushi">
+                            <div class="item-meta"><h3>Salmon Maki</h3><span class="price">1,500 <span class="curr">ETB</span></span></div>
+                            <p>Fresh salmon, avocado, and crisp cucumber.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="sushi">
+                            <div class="item-meta"><h3>Shrimp Tempura Maki</h3><span class="price">1,500 <span class="curr">ETB</span></span></div>
+                            <p>Crispy shrimp tempura and cucumber.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="sushi">
+                            <div class="item-meta"><h3>Amethyst Salmon Grand</h3><span class="price">2,000 <span class="curr">ETB</span></span></div>
+                            <p>Premium salmon paired elegantly with fresh avocado.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="sushi">
+                            <div class="item-meta"><h3>Salmon Nigiri</h3><span class="price">2,000 <span class="curr">ETB</span></span></div>
+                            <p>Traditional slice of fresh salmon over seasoned rice.</p>
+                        </div>
 
-.brand-header p {
-    font-size: 10px;
-    letter-spacing: 4px;
-    color: #aaa;
-    margin: 0;
-}
+                        <div class="menu-item-box" data-category="shareables">
+                            <div class="item-meta"><h3>Chili Garlic Edamame</h3><span class="price">600 <span class="curr">ETB</span></span></div>
+                            <p>Steamed edamame tossed in a bold chili-garlic glaze.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="shareables">
+                            <div class="item-meta"><h3>Crispy Vegetable Taquitos</h3><span class="price">800 <span class="curr">ETB</span></span></div>
+                            <p>Golden-fried tortillas filled with vegetables and soy.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="shareables">
+                            <div class="item-meta"><h3>Gyoza</h3><span class="price">1,100 <span class="curr">ETB</span></span></div>
+                            <p>Pan-fried Japanese dumplings with soy dipping sauce.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="shareables">
+                            <div class="item-meta"><h3>Garlic Shrimp</h3><span class="price">1,800 <span class="curr">ETB</span></span></div>
+                            <p>Garlic butter shrimp perfectly served with sweet corn.</p>
+                        </div>
+                    </div>
+                </div>
 
-/* 3D Container Box */
-.scene3d {
-    width: 340px;
-    height: 480px;
-    perspective: 1500px; /* የ3D ጥልቀት የሚሰጠው ዋናው ኮድ */
-    margin: 20px auto;
-}
+                <div class="stand-face face-back">
+                    <div class="page-header">
+                        <span class="side-badge-back">PAGE 2</span>
+                        <h2 style="color: #aa841a;">MAINS & SIDES</h2>
+                    </div>
+                    
+                    <div class="scrollable-menu-content">
+                        <div class="menu-item-box" data-category="large">
+                            <div class="item-meta"><h3>Wagyu Beef Ribeye</h3><span class="price">6,000 <span class="curr">ETB</span></span></div>
+                            <p>Premium Australian Pure Blood signature Wagyu.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="large">
+                            <div class="item-meta"><h3>Grilled Lamb Chop</h3><span class="price">5,400 <span class="curr">ETB</span></span></div>
+                            <p>Perfectly seared, juicy lamb chops with Coconut Rice.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="large">
+                            <div class="item-meta"><h3>Spicy Wasabi Beef</h3><span class="price">2,000 <span class="curr">ETB</span></span></div>
+                            <p>Tender beef served with spring onions.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="large">
+                            <div class="item-meta"><h3>Roasted Nile Perch</h3><span class="price">1,800 <span class="curr">ETB</span></span></div>
+                            <p>Fresh Nile Perch served with fluffy steamed rice.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="large">
+                            <div class="item-meta"><h3>Salmon Teriyaki</h3><span class="price">3,300 <span class="curr">ETB</span></span></div>
+                            <p>Salmon fillet marinated with garlic and fine herbs.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="large">
+                            <div class="item-meta"><h3>Wok Stir-Fried Noodles</h3><span class="price">1,500 <span class="curr">ETB</span></span></div>
+                            <p>Classic wok-tossed noodles with savory sauces.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="large">
+                            <div class="item-meta"><h3>Sliders (Mini Burgers)</h3><span class="price">800 <span class="curr">ETB</span></span></div>
+                            <p>Three signature mini burgers: Beef | Fish | Chicken.</p>
+                        </div>
 
-/* The Acrylic Stand */
-.menu-stand {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
+                        <div class="menu-item-box" data-category="sides">
+                            <div class="item-meta"><h3>Seasonal Vegetables</h3><span class="price" style="color:#aa841a;">250 <span class="curr">ETB</span></span></div>
+                            <p>Freshly sautéed or steamed assortment of vegetables.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="sides">
+                            <div class="item-meta"><h3>Mashed Potato</h3><span class="price" style="color:#aa841a;">250 <span class="curr">ETB</span></span></div>
+                            <p>Creamy, buttery, and smooth house-made potatoes.</p>
+                        </div>
+                        <div class="menu-item-box" data-category="sides">
+                            <div class="item-meta"><h3>Seasonal Fruit Platter</h3><span class="price" style="color:#aa841a;">300 <span class="curr">ETB</span></span></div>
+                            <p>A vibrant selection of fresh fruits.</p>
+                        </div>
+                    </div>
+                </div>
 
-/* ሜኑው ሲዞር የሚጠቀመው ክላስ */
-.menu-stand.flipped {
-    transform: rotateY(180deg);
-}
+                <div class="stand-base-3d"></div>
+            </div>
+        </div>
 
-/* የሆልደሩ ገጾች የጋራ ስታይል */
-.stand-face {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden; /* የጀርባው ገጽ እንዳይታይ መደበቂያ */
-    border-radius: 16px;
-    padding: 25px;
-    box-sizing: border-box;
-    border: 3px solid #d4af37;
-    background: linear-gradient(135deg, rgba(28, 10, 48, 0.95) 0%, rgba(12, 5, 20, 0.98) 100%);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.7), inset 0 0 20px rgba(212,175,55,0.1);
-}
+        <div class="action-bar">
+            <button class="btn-flip-3d" onclick="toggle3DFlip()">
+                <i class="fas fa-rotate"></i> ሆልደሩን አዙር (Flip Menu)
+            </button>
+        </div>
+    </div>
 
-/* የፊተኛው ገጽ አቀማመጥ */
-.face-front {
-    transform: rotateY(0deg);
-    z-index: 2;
-}
+    <script>
+        function toggle3DFlip() {
+            document.getElementById('menuStand').classList.toggle('flipped');
+        }
 
-/* የጀርባው ገጽ አቀማመጥ */
-.face-back {
-    transform: rotateY(180deg);
-    border-color: #aa841a;
-}
+        function filterCategory(category) {
+            const tabs = document.querySelectorAll('.cat-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
 
-/* በሆልደሩ ውስጥ ያሉ ምግቦች አቀራረብ */
-.page-badge {
-    display: inline-block;
-    background: #5c1d8d;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    letter-spacing: 2px;
-    margin-bottom: 15px;
-}
+            const stand = document.getElementById('menuStand');
+            if (category === 'large' || category === 'sides') {
+                stand.classList.add('flipped');
+            } else if (category !== 'all') {
+                stand.classList.remove('flipped');
+            }
 
-.category-title {
-    font-family: 'Marcellus', serif;
-    font-size: 20px;
-    color: #d4af37;
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 25px;
-}
-
-.menu-item {
-    margin-bottom: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding-bottom: 12px;
-}
-
-.item-main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.item-main h4 {
-    margin: 0;
-    font-size: 15px;
-    color: #fff;
-    font-weight: 500;
-}
-
-.price {
-    font-size: 14px;
-    color: #d4af37;
-    font-weight: 600;
-}
-
-.menu-item p {
-    margin: 5px 0 0 0;
-    font-size: 12px;
-    color: #aaa;
-    font-weight: 300;
-}
-
-/* የ3D መቆሚያ በታች በኩል (Stand Base Effect) */
-.stand-base-3d {
-    position: absolute;
-    bottom: -15px;
-    left: 5%;
-    width: 90%;
-    height: 15px;
-    background: #111;
-    border: 2px solid #333;
-    border-radius: 4px;
-    transform: rotateX(90deg) translateZ(-10px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-}
-
-/* የማዞሪያ ቁልፍ (Control Button) */
-.controls-container {
-    margin-top: 20px;
-}
-
-.flip-btn {
-    background: linear-gradient(135deg, #d4af37 0%, #aa841a 100%);
-    border: none;
-    color: #000;
-    padding: 14px 35px;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0 5px 20px rgba(212,175,55,0.4);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: 0.3s;
-}
-
-.flip-btn:active {
-    transform: scale(0.95);
-}
+            const items = document.querySelectorAll('.menu-item-box');
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
