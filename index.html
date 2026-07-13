@@ -3,383 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amethyst Dining - Premium Digital Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Amethyst Dining - Premium 3D Digital Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Top Premium Banner -->
-    <header class="menu-hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div class="logo-wrapper">
-                <!-- የሎጎ ምስል ማሳያ ኮድ -->
-                <img src="logo.png" alt="Amethyst Dining Logo" style="max-width: 140px; margin-bottom: 10px; height: auto;">
-                <h1>AMETHYST</h1>
-                <p class="logo-sub">DINING</p>
-            </div>
-            <div class="tagline">TASTE THE EXCELLENCE</div>
-        </div>
-    </header>
 
-    <!-- Search Box -->
-    <div class="search-container">
-        <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="የሚፈልጉትን ምግብ እዚህ ይፈልጉ..." onkeyup="filterMenu()">
-        </div>
+    <div class="menu-3d-perspective">
+        
+        <header class="menu-hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="logo-wrapper">
+                    <img src="logo.png" alt="Amethyst Dining Logo" class="main-logo">
+                    <h1>AMETHYST</h1>
+                    <p class="logo-sub">DINING</p>
+                </div>
+                <div class="tagline">TASTE THE EXCELLENCE</div>
+                
+                <a href="https://amethyst-dining-demo.pages.dev/" target="_blank" class="btn-3d-showcase">
+                    የቤቱን 3D እይታ ይጎብኙ <span class="sparkle">✧</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="menu-container">
+            
+            <div class="search-wrapper">
+                <input type="text" id="menu-search" placeholder="የሚፈልጉትን ምግብ እዚህ ይፈልጉ...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+
+            <div class="categories-container">
+                <button class="category-btn active">ሁሉም</button>
+                <button class="category-btn">Soups</button>
+                <button class="category-btn">Sushi</button>
+                <button class="category-btn">Shareables</button>
+            </div>
+
+            <div class="menu-grid">
+                
+                <div class="menu-item-3d">
+                    <div class="card-glow"></div>
+                    <div class="item-header">
+                        <h3>Butternut Squash Soup</h3>
+                        <span class="price-tag">400 ETB</span>
+                    </div>
+                    <p class="item-desc">Roasted squash blended with aromatic spices and cream.</p>
+                </div>
+
+                <div class="menu-item-3d">
+                    <div class="card-glow"></div>
+                    <div class="item-header">
+                        <h3>Doctor Marasamo Soup</h3>
+                        <span class="price-tag">500 ETB</span>
+                    </div>
+                    <p class="item-desc">A savory infusion of ginger, curry, and fresh fish stock.</p>
+                </div>
+
+                <div class="menu-item-3d">
+                    <div class="card-glow"></div>
+                    <div class="item-header">
+                        <h3>Spicy Lentil Soup</h3>
+                        <span class="price-tag">450 ETB</span>
+                    </div>
+                    <p class="item-desc">Hearty lentils simmered with garden vegetables and a kick of spice.</p>
+                </div>
+
+                <div class="menu-item-3d">
+                    <div class="card-glow"></div>
+                    <div class="item-header">
+                        <h3>Amethyst Dragon Roll</h3>
+                        <span class="price-tag">650 ETB</span>
+                    </div>
+                    <p class="item-desc">Premium eel and cucumber inside, topped with avocado and sweet eel sauce.</p>
+                </div>
+
+            </div>
+        </main>
     </div>
 
-    <!-- Category Selector -->
-    <div class="category-tabs">
-        <button class="tab-btn active" onclick="filterCategory('all')">ሁሉም</button>
-        <button class="tab-btn" onclick="filterCategory('soups')">Soups</button>
-        <button class="tab-btn" onclick="filterCategory('sushi')">Sushi</button>
-        <button class="tab-btn" onclick="filterCategory('shareables')">Shareables</button>
-        <button class="tab-btn" onclick="filterCategory('large-plates')">Large Plates</button>
-        <button class="tab-btn" onclick="filterCategory('sides')">Sides & Dessert</button>
-    </div>
-
-    <!-- Menu Grid -->
-    <main class="menu-grid" id="menuGrid">
-        <!-- SOUPS -->
-        <div class="menu-item" data-category="soups">
-            <div class="item-info">
-                <h3>Butternut Squash Soup</h3>
-                <p>Roasted squash blended with aromatic spices.</p>
-            </div>
-            <div class="item-price">400 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="soups">
-            <div class="item-info">
-                <h3>Doctor Marasamo Soup</h3>
-                <p>A savory infusion of ginger, curry, and fresh fish stock.</p>
-            </div>
-            <div class="item-price">500 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="soups">
-            <div class="item-info">
-                <h3>Spicy Lentil Soup</h3>
-                <p>Hearty lentils simmered with garden vegetables and a kick of spice.</p>
-            </div>
-            <div class="item-price">400 <span class="currency">ETB</span></div>
-        </div>
-
-        <!-- SUSHI -->
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <h3>Salmon Maki</h3>
-                <p>Fresh salmon, avocado, and crisp cucumber.</p>
-            </div>
-            <div class="item-price">1,500 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <h3>Spicy Tuna Maki</h3>
-                <p>Spicy tuna paired with avocado and cucumber.</p>
-            </div>
-            <div class="item-price">1,500 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <h3>Shrimp Tempura Maki</h3>
-                <p>Crispy shrimp tempura and cucumber.</p>
-            </div>
-            <div class="item-price">1,500 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <h3>Panko Sushi Roll</h3>
-                <p>Crispy fried roll with fish, mango, and nori topped with tempura flakes.</p>
-            </div>
-            <div class="item-price">1,500 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <h3>Avocado & Cucumber Roll <span class="v-badge">V</span></h3>
-                <p>A refreshing classic with creamy avocado and cucumber.</p>
-            </div>
-            <div class="item-price">1,500 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <h3>Amethyst Salmon Grand</h3>
-                <p>Premium salmon paired elegantly with fresh avocado.</p>
-            </div>
-            <div class="item-price">2,000 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <h3>Salmon Nigiri</h3>
-                <p>Traditional slice of fresh salmon served over seasoned sushi rice.</p>
-            </div>
-            <div class="item-price">2,000 <span class="currency">ETB</span></div>
-        </div>
-
-        <!-- SHAREABLES -->
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Chili Garlic Edamame <span class="v-badge">V</span></h3>
-                <p>Steamed edamame tossed in a bold chili-garlic glaze.</p>
-            </div>
-            <div class="item-price">600 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Crispy Vegetable Taquitos <span class="v-badge">V</span></h3>
-                <p>Golden-fried tortillas filled with vegetables, beans, soy, and ginger.</p>
-            </div>
-            <div class="item-price">800 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Vegetable Spring Rolls <span class="v-badge">V</span></h3>
-                <p>Crispy spring rolls served with sweet chili sauce.</p>
-            </div>
-            <div class="item-price">800 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Gyoza</h3>
-                <p>Pan-fried Japanese dumplings served with soy dipping sauce.</p>
-            </div>
-            <div class="item-price">1,100 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Signature Crispy Taquitos</h3>
-                <p>Your choice of savory beef or fresh fish packed in a crispy shell.</p>
-            </div>
-            <div class="item-price">900 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Vegetable Tempura <span class="v-badge">V</span></h3>
-                <p>Lightly battered seasonal vegetables served with premium tempura sauce.</p>
-            </div>
-            <div class="item-price">700 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Salmon Sashimi</h3>
-                <p>Fresh salmon with soy sauce, lime, and toasted sesame oil.</p>
-            </div>
-            <div class="item-price">1,500 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Avocado Crispy Tofu Chili <span class="v-badge">V</span></h3>
-                <p>Crispy tofu with avocado, chili, and signature house seasoning.</p>
-            </div>
-            <div class="item-price">1,000 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Garlic Shrimp</h3>
-                <p>Garlic butter shrimp perfectly served with sweet corn.</p>
-            </div>
-            <div class="item-price">1,800 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <h3>Amethyst Signature Salad <span class="v-badge">V</span></h3>
-                <p>Fresh mixed lettuce with seasonal vegetables and premium house dressing.</p>
-            </div>
-            <div class="item-price">500 <span class="currency">ETB</span></div>
-        </div>
-
-        <!-- LARGE PLATES -->
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Spicy Wasabi Beef</h3>
-                <p>Tender beef served with spring onions & aromatic Coconut Rice.</p>
-            </div>
-            <div class="item-price">2,000 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Beef Fillet (Steak)</h3>
-                <p>Perfectly grilled beef fillet enhanced with classic Chimichurri sauce.</p>
-            </div>
-            <div class="item-price">1,800 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Sticky Sesame Beef</h3>
-                <p>Tender beef glazed in a sweet and savory sesame sauce, served with fresh vegetables.</p>
-            </div>
-            <div class="item-price">1,800 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Roasted Nile Perch</h3>
-                <p>Fresh Nile Perch served with fluffy steamed rice and a cheat green salad.</p>
-            </div>
-            <div class="item-price">1,800 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Chicken Panko</h3>
-                <p>Crispy breaded chicken served with creamy mayo and tangy pickled daikon.</p>
-            </div>
-            <div class="item-price">1,700 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Chicken Teriyaki</h3>
-                <p>Grilled chicken glazed in savory teriyaki sauce, topped with spring onions and served with steamed rice.</p>
-            </div>
-            <div class="item-price">1,700 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Salmon Teriyaki</h3>
-                <p>Salmon fillet marinated with garlic and fine herbs, grilled to a delicate finish.</p>
-            </div>
-            <div class="item-price">3,300 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Wok Stir-Fried Noodles</h3>
-                <p>Classic wok-tossed noodles with signature savory sauces.</p>
-            </div>
-            <div class="item-price">1,500 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Vegetable Curry Noodles <span class="v-badge">V</span></h3>
-                <p>Rich and aromatic curry infused noodles with crisp seasonal vegetables.</p>
-            </div>
-            <div class="item-price">1,300 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Signature Glass Noodles</h3>
-                <p>Delicate and flavorful clear glass noodles prepared to perfection.</p>
-            </div>
-            <div class="item-price">1,500 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Vegetable Fried Rice <span class="v-badge">V</span></h3>
-                <p>Fragrant fried rice mixed with finely chopped fresh garden vegetables.</p>
-            </div>
-            <div class="item-price">1,400 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Wagyu Beef Ribeye</h3>
-                <p>Premium Australian Pure Blood signature Wagyu, served with smooth rich mash.</p>
-            </div>
-            <div class="item-price">6,000 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Grilled Lamb Chop</h3>
-                <p>Perfectly seared, juicy lamb chops served alongside rich Coconut Rice.</p>
-            </div>
-            <div class="item-price">5,400 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <h3>Sliders (Mini Burgers)</h3>
-                <p>Three signature mini burgers with your choice of filling: Beef | Fish | Chicken.</p>
-            </div>
-            <div class="item-price">800 <span class="currency">ETB</span></div>
-        </div>
-
-        <!-- SIDES & DESSERT -->
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <h3>Seasonal Vegetables <span class="v-badge">V</span></h3>
-                <p>Freshly sautéed or steamed assortment of the finest seasonal vegetables.</p>
-            </div>
-            <div class="item-price">250 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <h3>Steamed Rice <span class="v-badge">V</span></h3>
-                <p>Fluffy, light, and perfectly steamed premium grain white rice.</p>
-            </div>
-            <div class="item-price">250 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <h3>Chinese Cabbage <span class="v-badge">V</span></h3>
-                <p>Tender and lightly seasoned sautéed Chinese cabbage.</p>
-            </div>
-            <div class="item-price">250 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <h3>Mashed Potato <span class="v-badge">V</span></h3>
-                <p>Creamy, buttery, and smooth house-made mashed potatoes.</p>
-            </div>
-            <div class="item-price">250 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <h3>Green Salad <span class="v-badge">V</span></h3>
-                <p>A crisp, refreshing mix of garden greens served with a light dressing.</p>
-            </div>
-            <div class="item-price">250 <span class="currency">ETB</span></div>
-        </div>
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <h3>Seasonal Fruit Platter <span class="v-badge">V</span></h3>
-                <p>A vibrant selection of nature's finest fresh fruits, hand-picked by our Chef.</p>
-            </div>
-            <div class="item-price">300 <span class="currency">ETB</span></div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="social-links">
-            <a href="https://instagram.com/amethyst_dining" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://tiktok.com/@amethyst_dining" target="_blank"><i class="fab fa-tiktok"></i></a>
-            <a href="https://share.google/YWP23HCNPEKCWyFA8" target="_blank"><i class="fas fa-map-marker-alt"></i></a>
-        </div>
-        <p class="copyright">&copy; 2026 Amethyst Dining. All Rights Reserved.</p>
-    </footer>
-
-    <!-- Call & WA Actions -->
-    <div class="action-buttons">
-        <a href="https://wa.me/251969995662" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i></a>
-        <a href="tel:+251969995662" class="btn-call"><i class="fas fa-phone-alt"></i></a>
-    </div>
-
-    <script>
-        function filterCategory(category) {
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-
-            const items = document.querySelectorAll('.menu-item');
-            items.forEach(item => {
-                if (category === 'all' || item.getAttribute('data-category') === category) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        // Real-time search function
-        function filterMenu() {
-            const keyword = document.getElementById('searchInput').value.toLowerCase();
-            const items = document.querySelectorAll('.menu-item');
-            items.forEach(item => {
-                const title = item.querySelector('h3').innerText.toLowerCase();
-                const desc = item.querySelector('p').innerText.toLowerCase();
-                if (title.includes(keyword) || desc.includes(keyword)) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
