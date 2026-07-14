@@ -3,42 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amethyst Dining Order</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f4f4f9;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        .order-button {
-            background-color: #28a745;
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 20px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .order-button:hover {
-            background-color: #218838;
-        }
-    </style>
+    <title>Amethyst Dining Menu</title>
+    <!-- እዚህ ጋር የእርስዎን CSS ወይም Style ይኖራል -->
 </head>
 <body>
 
-    <h1>Amethyst Dining</h1>
-    <p>የሚፈልጉትን ምግብ ከሜኑአችን ላይ መርጠው በዚህ ፎርም ይላኩልን።</p>
-    
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" class="order-button">Order Now</a>
+    <main>
+        <!-- የሜኑ ዝርዝርዎ -->
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Vegetable Fried Rice <span class="v-badge">V</span></h3><p>Fragrant fried rice mixed with finely chopped fresh garden vegetables.</p></div><div class="item-price">1,400 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Wagyu Beef Ribeye</h3><p>Premium Australian Pure Blood signature Wagyu, served with smooth rich mash.</p></div><div class="item-price">6,000 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Grilled Lamb Chop</h3><p>Perfectly seared, juicy lamb chops served alongside rich Coconut Rice.</p></div><div class="item-price">5,400 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Sliders (Mini Burgers)</h3><p>Three signature mini burgers with your choice of filling: Beef | Fish | Chicken.</p></div><div class="item-price">800 ETB</div></div>
+        
+        <!-- SIDES -->
+        <div class="menu-item" data-category="sides"><div class="item-info"><h3>Seasonal Vegetables <span class="v-badge">V</span></h3><p>Freshly sautéed or steamed assortment of the finest seasonal vegetables.</p></div><div class="item-price">250 ETB</div></div>
+        <div class="menu-item" data-category="sides"><div class="item-info"><h3>Steamed Rice <span class="v-badge">V</span></h3><p>Fluffy, light, and perfectly steamed premium grain white rice.</p></div><div class="item-price">250 ETB</div></div>
+        <div class="menu-item" data-category="sides"><div class="item-info"><h3>Chinese Cabbage <span class="v-badge">V</span></h3><p>Tender and lightly seasoned sautéed Chinese cabbage.</p></div><div class="item-price">250 ETB</div></div>
+        <div class="menu-item" data-category="sides"><div class="item-info"><h3>Mashed Potato <span class="v-badge">V</span></h3><p>Creamy, buttery, and smooth house-made mashed potatoes.</p></div><div class="item-price">250 ETB</div></div>
+        <div class="menu-item" data-category="sides"><div class="item-info"><h3>Green Salad <span class="v-badge">V</span></h3><p>A crisp, refreshing mix of garden greens served with a light dressing.</p></div><div class="item-price">250 ETB</div></div>
+        <div class="menu-item" data-category="sides"><div class="item-info"><h3>Seasonal Fruit Platter <span class="v-badge">V</span></h3><p>A vibrant selection of nature's finest fresh fruits, hand-picked by our Chef.</p></div><div class="item-price">300 ETB</div></div>
+    </main>
 
+    <section class="info-section">
+        <h2>Opening Hours</h2>
+        <p>Monday – Sunday</p>
+        <p>10:00 AM – 11:00 PM</p>
+    </section>
+
+    <section class="info-section">
+        <h2>📍 Location</h2>
+        <p>Adama, Ethiopia</p>
+        <a href="https://share.google/YWP23HCNPEKCWyFA8" target="_blank" class="map-btn">Open in Google Maps</a>
+    </section>
+
+    <section class="info-section">
+        <h2>Scan to View Our Digital Menu</h2>
+        <!-- QR Code img -->
+    </section>
+
+    <footer>
+        <h3>AMETHYST DINING</h3>
+        <p>☎ +251 96 999 5662</p>
+        <p>📍 Adama, Ethiopia</p>
+        <p>💜 Thank you for choosing AMETHYST DINING</p>
+    </footer>
+
+    <!-- እዚህ ጋር ኦርደር ቁልፉን ጨምሬበታለሁ -->
+    <div class="action-buttons">
+        <a href="https://wa.me/251969995662" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+251969995662" class="btn-call"><i class="fas fa-phone"></i></a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-order" style="background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; margin-left:10px; font-weight:bold;">Order</a>
+    </div>
+
+    <script>
+        function filterCategory(category) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.style.display = (category === 'all' || item.getAttribute('data-category') === category) ? 'flex' : 'none';
+            });
+        }
+        function filterMenu() {
+            let k = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.menu-item').forEach(i => {
+                i.style.display = (i.innerText.toLowerCase().includes(k)) ? 'flex' : 'none';
+            });
+        }
+    </script>
 </body>
 </html>
