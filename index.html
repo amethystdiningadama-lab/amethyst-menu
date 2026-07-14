@@ -3,19 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amethyst Dining Menu</title>
-    <!-- እዚህ ጋር የእርስዎን CSS ወይም Style ይኖራል -->
+    <title>Amethyst Dining - Premium Digital Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Arial', sans-serif; background: #05020a; color: #fff; margin: 0; padding: 0; }
+        .logo-area { text-align: center; margin: 20px 0; }
+        .logo-img { max-width: 200px; height: auto; }
+        .hero-section { text-align: center; padding: 40px 20px; }
+        .tagline { font-size: 14px; letter-spacing: 4px; color: #d4af37; text-transform: uppercase; margin-bottom: 20px; }
+        .hero-buttons { display: flex; justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+        .btn-primary, .btn-secondary, .btn-callhero { padding: 12px 20px; border-radius: 5px; text-decoration: none; color: #fff; font-weight: bold; }
+        .btn-primary { background: #d4af37; color: #000; }
+        .btn-secondary { background: #5c1d8d; }
+        .btn-callhero { background: #333; }
+        .search-container { padding: 20px; }
+        .search-box { background: #1a1a1a; padding: 10px; border-radius: 5px; display: flex; align-items: center; }
+        input { background: none; border: none; color: #fff; width: 100%; padding-left: 10px; }
+        .category-tabs { display: flex; overflow-x: auto; padding: 10px; gap: 10px; justify-content: center; }
+        .tab-btn { background: #222; border: none; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; }
+        .tab-btn.active { background: #d4af37; color: #000; }
+        .menu-grid { padding: 20px; }
+        .menu-item { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 15px 0; }
+        .item-price { color: #d4af37; font-weight: bold; }
+        .v-badge { color: #25D366; font-size: 12px; margin-left: 5px; }
+        .info-section { text-align: center; padding: 40px 20px; border-top: 1px solid #333; }
+        .map-btn { display: inline-block; padding: 10px 20px; background: #d4af37; color: #000; text-decoration: none; border-radius: 5px; margin-top: 15px; font-weight: bold; }
+        .qr-image { width: 200px; margin-top: 20px; }
+        footer { text-align: center; padding: 40px 20px; background: #000; border-top: 2px solid #d4af37; }
+        .action-buttons { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; }
+        .btn-wa { background: #25D366; color: white; padding: 15px 20px; border-radius: 50%; font-size: 20px; text-decoration: none; }
+        .btn-call { background: #d4af37; color: #000; padding: 15px 20px; border-radius: 50%; font-size: 20px; text-decoration: none; }
+        /* አዲስ የተጨመረው የኦርደር አዝራር ስታይል */
+        .btn-order-form { background: #28a745; color: white; padding: 15px 20px; border-radius: 50%; font-size: 20px; text-decoration: none; }
+    </style>
 </head>
 <body>
 
-    <main>
-        <!-- የሜኑ ዝርዝርዎ -->
+    <div class="logo-area">
+        <img src="logo.png" alt="Amethyst Logo" class="logo-img">
+        <h1 style="color: #d4af37; margin: 5px 0;">AMETHYST</h1>
+        <p style="margin:0;">DINING</p>
+    </div>
+
+    <section class="hero-section">
+        <h2>Luxury Dining Experience in Adama</h2>
+        <div class="tagline">TASTE THE EXCELLENCE</div>
+        <div class="hero-buttons">
+            <a href="https://amethyst-dining-demo.pages.dev/" target="_blank" class="btn-primary">Reserve a Table</a>
+            <a href="#menuGrid" class="btn-secondary">View Menu</a>
+            <a href="tel:+251969995662" class="btn-callhero"><i class="fas fa-phone"></i> Call Now</a>
+        </div>
+    </section>
+
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="የሚፈልጉትን ምግብ እዚህ ይፈልጉ..." onkeyup="filterMenu()">
+        </div>
+    </div>
+    <div class="category-tabs">
+        <button class="tab-btn active" onclick="filterCategory('all')">ሁሉም</button>
+        <button class="tab-btn" onclick="filterCategory('soups')">Soups</button>
+        <button class="tab-btn" onclick="filterCategory('sushi')">Sushi</button>
+        <button class="tab-btn" onclick="filterCategory('shareables')">Shareables</button>
+        <button class="tab-btn" onclick="filterCategory('large-plates')">Large Plates</button>
+        <button class="tab-btn" onclick="filterCategory('sides')">Sides & Dessert</button>
+    </div>
+
+    <main class="menu-grid" id="menuGrid">
+        <!-- ሜኑ ዝርዝር እንዳለ ነው -->
+        <div class="menu-item" data-category="soups"><div class="item-info"><h3>Butternut Squash Soup</h3><p>Roasted squash blended with aromatic spices.</p></div><div class="item-price">400 ETB</div></div>
+        <div class="menu-item" data-category="soups"><div class="item-info"><h3>Doctor Marasamo Soup</h3><p>A savory infusion of ginger, curry, and fresh fish stock.</p></div><div class="item-price">500 ETB</div></div>
+        <div class="menu-item" data-category="soups"><div class="item-info"><h3>Spicy Lentil Soup</h3><p>Hearty lentils simmered with garden vegetables and a kick of spice.</p></div><div class="item-price">400 ETB</div></div>
+        <div class="menu-item" data-category="sushi"><div class="item-info"><h3>Salmon Maki</h3><p>Fresh salmon, avocado, and crisp cucumber.</p></div><div class="item-price">1,500 ETB</div></div>
+        <div class="menu-item" data-category="sushi"><div class="item-info"><h3>Spicy Tuna Maki</h3><p>Spicy tuna paired with avocado and cucumber.</p></div><div class="item-price">1,500 ETB</div></div>
+        <div class="menu-item" data-category="sushi"><div class="item-info"><h3>Shrimp Tempura Maki</h3><p>Crispy shrimp tempura and cucumber.</p></div><div class="item-price">1,500 ETB</div></div>
+        <div class="menu-item" data-category="sushi"><div class="item-info"><h3>Panko Sushi Roll</h3><p>Crispy fried roll with fish, mango, and nori topped with tempura flakes.</p></div><div class="item-price">1,500 ETB</div></div>
+        <div class="menu-item" data-category="sushi"><div class="item-info"><h3>Avocado & Cucumber Roll <span class="v-badge">V</span></h3><p>A refreshing classic with creamy avocado and cucumber.</p></div><div class="item-price">1,500 ETB</div></div>
+        <div class="menu-item" data-category="sushi"><div class="item-info"><h3>Amethyst Salmon Grand</h3><p>Premium salmon paired elegantly with fresh avocado.</p></div><div class="item-price">2,000 ETB</div></div>
+        <div class="menu-item" data-category="sushi"><div class="item-info"><h3>Salmon Nigiri</h3><p>Traditional slice of fresh salmon served over seasoned sushi rice.</p></div><div class="item-price">2,000 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Chili Garlic Edamame <span class="v-badge">V</span></h3><p>Steamed edamame tossed in a bold chili-garlic glaze.</p></div><div class="item-price">600 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Crispy Vegetable Taquitos <span class="v-badge">V</span></h3><p>Golden-fried tortillas filled with vegetables, beans, soy, and ginger.</p></div><div class="item-price">800 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Vegetable Spring Rolls <span class="v-badge">V</span></h3><p>Crispy spring rolls served with sweet chili sauce.</p></div><div class="item-price">800 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Gyoza</h3><p>Pan-fried Japanese dumplings served with soy dipping sauce.</p></div><div class="item-price">1,100 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Signature Crispy Taquitos</h3><p>Your choice of savory beef or fresh fish packed in a crispy shell.</p></div><div class="item-price">900 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Vegetable Tempura <span class="v-badge">V</span></h3><p>Lightly battered seasonal vegetables served with premium tempura sauce.</p></div><div class="item-price">700 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Salmon Sashimi</h3><p>Fresh salmon with soy sauce, lime, and toasted sesame oil.</p></div><div class="item-price">1,500 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Avocado Crispy Tofu Chili <span class="v-badge">V</span></h3><p>Crispy tofu with avocado, chili, and signature house seasoning.</p></div><div class="item-price">1,000 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Garlic Shrimp</h3><p>Garlic butter shrimp perfectly served with sweet corn.</p></div><div class="item-price">1,800 ETB</div></div>
+        <div class="menu-item" data-category="shareables"><div class="item-info"><h3>Amethyst Signature Salad <span class="v-badge">V</span></h3><p>Fresh mixed lettuce with seasonal vegetables and premium house dressing.</p></div><div class="item-price">500 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Spicy Wasabi Beef</h3><p>Tender beef served with spring onions & aromatic Coconut Rice.</p></div><div class="item-price">2,000 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Beef Fillet (Steak)</h3><p>Perfectly grilled beef fillet enhanced with classic Chimichurri sauce.</p></div><div class="item-price">1,800 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Sticky Sesame Beef</h3><p>Tender beef glazed in a sweet and savory sesame sauce, served with fresh vegetables.</p></div><div class="item-price">1,800 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Roasted Nile Perch</h3><p>Fresh Nile Perch served with fluffy steamed rice and a cheat green salad.</p></div><div class="item-price">1,800 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Chicken Panko</h3><p>Crispy breaded chicken served with creamy mayo and tangy pickled daikon.</p></div><div class="item-price">1,700 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Chicken Teriyaki</h3><p>Grilled chicken glazed in savory teriyaki sauce, topped with spring onions and served with steamed rice.</p></div><div class="item-price">1,700 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Salmon Teriyaki</h3><p>Salmon fillet marinated with garlic and fine herbs, grilled to a delicate finish.</p></div><div class="item-price">5,300 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Wok Stir-Fried Noodles</h3><p>Classic wok-tossed noodles with signature savory sauces.</p></div><div class="item-price">1,500 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Vegetable Curry Noodles <span class="v-badge">V</span></h3><p>Rich and aromatic curry infused noodles with crisp seasonal vegetables.</p></div><div class="item-price">1,300 ETB</div></div>
+        <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Signature Glass Noodles</h3><p>Delicate and flavorful clear glass noodles prepared to perfection.</p></div><div class="item-price">1,500 ETB</div></div>
         <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Vegetable Fried Rice <span class="v-badge">V</span></h3><p>Fragrant fried rice mixed with finely chopped fresh garden vegetables.</p></div><div class="item-price">1,400 ETB</div></div>
         <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Wagyu Beef Ribeye</h3><p>Premium Australian Pure Blood signature Wagyu, served with smooth rich mash.</p></div><div class="item-price">6,000 ETB</div></div>
         <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Grilled Lamb Chop</h3><p>Perfectly seared, juicy lamb chops served alongside rich Coconut Rice.</p></div><div class="item-price">5,400 ETB</div></div>
         <div class="menu-item" data-category="large-plates"><div class="item-info"><h3>Sliders (Mini Burgers)</h3><p>Three signature mini burgers with your choice of filling: Beef | Fish | Chicken.</p></div><div class="item-price">800 ETB</div></div>
-        
-        <!-- SIDES -->
         <div class="menu-item" data-category="sides"><div class="item-info"><h3>Seasonal Vegetables <span class="v-badge">V</span></h3><p>Freshly sautéed or steamed assortment of the finest seasonal vegetables.</p></div><div class="item-price">250 ETB</div></div>
         <div class="menu-item" data-category="sides"><div class="item-info"><h3>Steamed Rice <span class="v-badge">V</span></h3><p>Fluffy, light, and perfectly steamed premium grain white rice.</p></div><div class="item-price">250 ETB</div></div>
         <div class="menu-item" data-category="sides"><div class="item-info"><h3>Chinese Cabbage <span class="v-badge">V</span></h3><p>Tender and lightly seasoned sautéed Chinese cabbage.</p></div><div class="item-price">250 ETB</div></div>
@@ -38,7 +128,7 @@
 
     <section class="info-section">
         <h2>Scan to View Our Digital Menu</h2>
-        <!-- QR Code img -->
+        <img src="qr.png" alt="QR Code" class="qr-image">
     </section>
 
     <footer>
@@ -50,9 +140,9 @@
 
     <!-- እዚህ ጋር ኦርደር ቁልፉን ጨምሬበታለሁ -->
     <div class="action-buttons">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-order-form"><i class="fas fa-shopping-cart"></i></a>
         <a href="https://wa.me/251969995662" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i></a>
         <a href="tel:+251969995662" class="btn-call"><i class="fas fa-phone"></i></a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-order" style="background:#28a745; color:white; padding:10px; border-radius:5px; text-decoration:none; margin-left:10px; font-weight:bold;">Order</a>
     </div>
 
     <script>
