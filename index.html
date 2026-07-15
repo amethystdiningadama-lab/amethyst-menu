@@ -23,41 +23,49 @@
         .tab-btn { background: #222; border: none; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; }
         .tab-btn.active { background: #d4af37; color: #000; }
         .menu-grid { padding: 20px; }
+        
+        /* የተስተካከለ የምግብ ካርድ እና አዝራሮች */
         .menu-item { border-bottom: 1px solid #333; padding: 20px 0; }
         .item-info h3 { margin: 0 0 5px 0; font-size: 1.2rem; }
-        .item-price { color: #d4af37; font-weight: bold; margin-top: 5px; }
-        .v-badge { color: #25D366; font-size: 12px; }
-        /* የሶስቱ አዝራሮች ስታይል */
-        .order-options { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-        .btn-opt { padding: 6px 12px; border-radius: 4px; font-size: 12px; text-decoration: none; color: #fff; font-weight: bold; }
+        .item-price { color: #d4af37; font-weight: bold; margin: 10px 0; }
+        
+        .order-options { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px; }
+        .btn-opt { padding: 8px 12px; border-radius: 4px; font-size: 11px; font-weight: bold; text-decoration: none; color: #fff; }
         .bg-form { background: #5c1d8d; }
         .bg-wa { background: #25D366; }
         .bg-tg { background: #0088cc; }
-        .payment-box-section { background: #11091c; border: 1px dashed #d4af37; border-radius: 10px; margin: 30px 20px; padding: 30px 20px; text-align: center; }
-        .payment-accounts { display: inline-block; text-align: left; background: #05020a; padding: 15px 25px; border-radius: 8px; border: 1px solid #333; margin-top: 15px; }
-        .action-buttons { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
-        .btn-float { padding: 15px 20px; border-radius: 50%; font-size: 20px; color: white; }
+
+        .payment-box-section { background: #11091c; border: 1px dashed #d4af37; border-radius: 10px; margin: 30px 20px; padding: 20px; text-align: center; }
+        .payment-accounts { text-align: left; background: #05020a; padding: 15px; border-radius: 8px; border: 1px solid #333; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <div class="logo-area">
-        <h1 style="color: #d4af37;">AMETHYST</h1>
+        <h1>AMETHYST</h1>
         <p>DINING</p>
     </div>
 
+    <section class="hero-section">
+        <h2>Luxury Dining Experience in Adama</h2>
+        <div class="hero-buttons">
+            <a href="#menuGrid" class="btn-secondary">View Menu</a>
+            <a href="tel:+251969995662" class="btn-callhero"><i class="fas fa-phone"></i> Call Now</a>
+        </div>
+    </section>
+
     <main class="menu-grid" id="menuGrid">
-        <!-- ለሁሉም ምግብ ይህንን መዋቅር ይጠቀሙ -->
+        <!-- ምሳሌ (ይህንን መዋቅር ለእያንዳንዱ ምግብ ይተግብሩ) -->
         <div class="menu-item" data-category="soups">
             <h3>Butternut Squash Soup</h3>
+            <p>Roasted squash blended with aromatic spices.</p>
             <div class="item-price">400 ETB</div>
             <div class="order-options">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-opt bg-form">Google Form</a>
-                <a href="https://wa.me/251969995662?text=Butternut Squash Soup ማዘዝ እፈልጋለሁ" target="_blank" class="btn-opt bg-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                <a href="https://t.me/mr_makbel_aschalew?text=Butternut Squash Soup ማዘዝ እፈልጋለሁ" target="_blank" class="btn-opt bg-tg"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="https://wa.me/251969995662?text=Butternut Squash Soup ማዘዝ እፈልጋለሁ" target="_blank" class="btn-opt bg-wa">WhatsApp</a>
+                <a href="https://t.me/mr_makbel_aschalew?text=Butternut Squash Soup ማዘዝ እፈልጋለሁ" target="_blank" class="btn-opt bg-tg">Telegram</a>
             </div>
         </div>
-        <!-- የተቀሩትን ምግቦች በዚህ መልክ ይቅዱ -->
     </main>
 
     <section class="payment-box-section">
@@ -68,12 +76,5 @@
         </div>
     </section>
 
-    <script>
-        function filterCategory(category) {
-            document.querySelectorAll('.menu-item').forEach(item => {
-                item.style.display = (category === 'all' || item.getAttribute('data-category') === category) ? 'block' : 'none';
-            });
-        }
-    </script>
 </body>
 </html>
