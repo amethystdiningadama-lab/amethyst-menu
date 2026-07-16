@@ -27,7 +27,7 @@ function openOrderModal(foodName, price) {
     currentFoodPrice = price;
     document.getElementById('modalFoodTitle').innerText = foodName;
     
-    // Default እሴቶችን መመለስ
+    // እሴቶችን መመለስ
     document.getElementById('orderQty').value = 1;
     document.getElementById('specialNote').value = "";
     
@@ -45,7 +45,7 @@ function changeQty(amount) {
     if (newVal < 1) newVal = 1; 
     
     qtyInput.value = newVal;
-    updateOrderLinks(); // ብዛቱ ሲቀየር ዋጋውና መላኪያ ሊንኩም አብረው ይዘመናሉ
+    updateOrderLinks();
 }
 
 // ጠቅላላ ዋጋን ማስላት እና መልዕክቱን ማዘመን
@@ -53,7 +53,6 @@ function updateOrderLinks() {
     let qty = parseInt(document.getElementById('orderQty').value) || 1;
     let note = document.getElementById('specialNote').value.trim();
     
-    // ጠቅላላ ዋጋ ስሌት (የምግቡ ዋጋ * ብዛት)
     let totalPrice = currentFoodPrice * qty;
     
     // በሞዳሉ ውስጥ ያለውን የዋጋ ማሳያ ማዘመን
