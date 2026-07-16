@@ -1,91 +1,105 @@
-// --- Category Filtering (የምግብ ምድብ ማጣሪያ) ---
-function filterCategory(category) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    if (event) {
-        event.target.classList.add('active');
-    }
-    document.querySelectorAll('.menu-item').forEach(item => {
-        item.style.display = (category === 'all' || item.getAttribute('data-category') === category) ? 'flex' : 'none';
-    });
-}
+// ==========================================
+// AMETHYST DINING - MAKBEL ASCHALEW
+// CENTRAL BACKEND SYSTEM (V2.0 COMPLETE)
+// ==========================================
 
-// --- Menu Search (ምግብ መፈለጊያ) ---
-function filterMenu() {
-    let k = document.getElementById('searchInput').value.toLowerCase();
-    document.querySelectorAll('.menu-item').forEach(i => {
-        i.style.display = (i.innerText.toLowerCase().includes(k)) ? 'flex' : 'none';
-    });
-}
+// ⚠️ የራስዎን የGoogle Sheet ID ብቻ እዚህ ይተኩ (ከሊንኩ መሃል ላይ የሚገኘውን ረጅም ኮድ)
+var SHEET_ID = "YOUR_GOOGLE_SHEET_ID_HERE"; 
+var TELEGRAM_TOKEN = "8979621552:AAESTA_S1M-iZ0Vq_zXyTZkptRaeHAAD698";
 
-// --- Dynamic Modal Operations (የትዕዛዝ ሞዳል ስራዎች) ---
-let currentFoodName = ""; 
-let currentFoodPrice = 0; 
-
-// ሞዳሉን (Popup) መክፈት
-function openOrderModal(foodName, price) {
-    currentFoodName = foodName;
-    currentFoodPrice = price;
-    document.getElementById('modalFoodTitle').innerText = foodName;
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
     
-    // እሴቶችን መመለስ
-    document.getElementById('orderQty').value = 1;
-    document.getElementById('specialNote').value = "";
-    
-    updateOrderLinks();
-    
-    document.getElementById('dynamicOrderModal').style.display = 'flex';
-}
-
-// የምግብ ብዛት መጨመሪያ እና መቀነሻ (+/-)
-function changeQty(amount) {
-    let qtyInput = document.getElementById('orderQty');
-    let currentVal = parseInt(qtyInput.value) || 1;
-    let newVal = currentVal + amount;
-    
-    if (newVal < 1) newVal = 1; 
-    
-    qtyInput.value = newVal;
-    updateOrderLinks();
-}
-
-// ጠቅላላ ዋጋን ማስላት እና መልዕክቱን ማዘመን
-function updateOrderLinks() {
-    let qty = parseInt(document.getElementById('orderQty').value) || 1;
-    let note = document.getElementById('specialNote').value.trim();
-    
-    let totalPrice = currentFoodPrice * qty;
-    
-    // በሞዳሉ ውስጥ ያለውን የዋጋ ማሳያ ማዘመን
-    document.getElementById('modalTotalPrice').innerText = totalPrice.toLocaleString() + " ETB";
-    
-    // ለተቀባዩ የሚደርሰው የአዲስ ትዕዛዝ መልዕክት ቅርጸት
-    let messageText = `🍽️ አዲስ ትዕዛዝ ማቅረብ እፈልጋለሁ\n\n`;
-    messageText += `▪️ የምግብ ስም: ${currentFoodName}\n`;
-    messageText += `▪️ የምግብ ብዛት: ${qty}\n`; 
-    messageText += `▪️ ጠቅላላ ዋጋ: ${totalPrice.toLocaleString()} ETB\n`; 
-    
-    if (note !== "") {
-        messageText += `▪️ ልዩ ፍላጎት: ${note}\n`;
+    // 1. መረጃው የመጣው ከቴሌግራም ቦት ከሆነ
+    if (data.message) {
+      handleTelegramMessage(data, sheet);
+    } 
+    // 2. መረጃው የመጣው ከዌብሳይቱ ከሆነ
+    else if (data.action === "log_web_order") {
+      logWebOrder(data, sheet);
     }
     
-    let encodedMessage = encodeURIComponent(messageText);
+    return ContentService.createTextOutput(JSON.stringify({status: "success"}))
+                         .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({status: "error", message: err.toString()}))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// ከዌብሳይት የሚመጣውን ትዕዛዝ መመዝገቢያ
+function logWebOrder(data, sheet) {
+  sheet.appendRow([
+    new Date(),
+    data.source, // Web-WhatsApp, Web-Telegram, Web-SMS
+    data.foodName,
+    data.quantity,
+    data.totalPrice + " ETB",
+    data.note || "-",
+    "-"
+  ]);
+}
+
+// ከቴሌግራም ቦት የሚመጣውን ትዕዛዝ መመዝገቢያ
+function handleTelegramMessage(data, sheet) {
+  var chatId = data.message.chat.id;
+  var text = data.message.text;
+  var user = data.message.chat.username ? "@" + data.message.chat.username : (data.message.chat.first_name || "Unknown");
+  
+  if (text && text.includes("አዲስ ትዕዛዝ ማቅረብ እፈልጋለሁ")) {
+    var foodName = "Not parsed";
+    var qty = "1";
+    var totalPrice = "0";
+    var note = "-";
     
-    // ሊንኮችን በራስ-ሰር ማዘመን
-    document.getElementById('modalFormLink').href = "https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform";
-    document.getElementById('modalWaLink').href = "https://wa.me/251969995662?text=" + encodedMessage;
-    document.getElementById('modalTgLink').href = "https://t.me/mr_makbel_aschalew?text=" + encodedMessage;
-    document.getElementById('modalSmsLink').href = "sms:+251969995662?body=" + encodedMessage;
+    var foodMatch = text.match(/የምግብ ስም:\s*(.*)/);
+    var qtyMatch = text.match(/የምግብ ብዛት:\s*(\d+)/);
+    var priceMatch = text.match(/ጠቅላላ ዋጋ:\s*(.*)/);
+    var noteMatch = text.match(/ልዩ ፍላጎት:\s*(.*)/);
+    
+    if (foodMatch) foodName = foodMatch[1].trim();
+    if (qtyMatch) qty = qtyMatch[1].trim();
+    if (priceMatch) totalPrice = priceMatch[1].trim();
+    if (noteMatch) note = noteMatch[1].trim();
+    
+    sheet.appendRow([
+      new Date(),
+      "Direct Telegram Bot",
+      foodName,
+      qty,
+      totalPrice,
+      note,
+      user + " (ID: " + chatId + ")"
+    ]);
+    
+    var replyText = "✅ እናመሰግናለን! ትዕዛዝዎ በ Amethyst Dining ሲስተም ላይ በሚገባ ተመዝግቧል። በቅርቡ እናነጋግርዎታለን! 💜";
+    sendTelegramMessage(chatId, replyText);
+  } else {
+    var welcomeText = "እንኳን ወደ Amethyst Dining የትዕዛዝ ቦት በሰላም መጡ! 🍽️\n\nበዌብሳይታችን ላይ የሚፈልጉትን ምግብ መርጠው 'Order Now' የሚለውን ሲጫኑ ይህ ቦት ትዕዛዝዎን በራስ-ሰር ይመዘግባል።";
+    sendTelegramMessage(chatId, welcomeText);
+  }
 }
 
-// ሞዳሉን መዝጋት
-function closeOrderModal() {
-    document.getElementById('dynamicOrderModal').style.display = 'none';
+function sendTelegramMessage(chatId, text) {
+  var url = "https://api.telegram.org/bot" + TELEGRAM_TOKEN + "/sendMessage";
+  var payload = {
+    "chat_id": chatId,
+    "text": text
+  };
+  var options = {
+    "method": "post",
+    "contentType": "application/json",
+    "payload": JSON.stringify(payload)
+  };
+  UrlFetchApp.fetch(url, options);
 }
 
-// ሞዳሉን ከሳጥኑ ውጭ ሲጫኑ እንዲዘጋ ማድረግ
-window.onclick = function(event) {
-    let modal = document.getElementById('dynamicOrderModal');
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+// ⚠️ ቦቱን እና ስክሪፕቱን ለማስተሳሰር ይህንን ፈንክሽን አንድ ጊዜ Run ያድርጉት
+function setWebhook() {
+  var webAppUrl = "YOUR_DEPLOYED_WEB_APP_URL_HERE"; 
+  var url = "https://api.telegram.org/bot" + TELEGRAM_TOKEN + "/setWebhook?url=" + webAppUrl;
+  var response = UrlFetchApp.fetch(url);
+  Logger.log(response.getContentText());
 }
