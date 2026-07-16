@@ -1,9 +1,9 @@
 // ==========================================
-// AMETHYST DINING - MAKBEL ASCHALEW
-// CENTRAL BACKEND SYSTEM (V2.0 COMPLETE)
+// AMETHYST DINING - CENTRAL BACKEND SYSTEM
+// DEVELOPED FOR: MAKBEL ASCHALEW
 // ==========================================
 
-// ⚠️ የራስዎን የGoogle Sheet ID ብቻ እዚህ ይተኩ (ከሊንኩ መሃል ላይ የሚገኘውን ረጅም ኮድ)
+// ⚠️ የራስዎን የGoogle Sheet ID እዚህ ይተኩ (ከሊንኩ መሃል ላይ የሚገኘውን ረጅሙን ኮድ)
 var SHEET_ID = "YOUR_GOOGLE_SHEET_ID_HERE"; 
 var TELEGRAM_TOKEN = "8979621552:AAESTA_S1M-iZ0Vq_zXyTZkptRaeHAAD698";
 
@@ -29,7 +29,7 @@ function doPost(e) {
   }
 }
 
-// ከዌብሳይት የሚመጣውን ትዕዛዝ መመዝገቢያ
+// ከዌብሳይት የሚመጣውን ትዕዛዝ በ Google Sheet ላይ መመዝገቢያ
 function logWebOrder(data, sheet) {
   sheet.appendRow([
     new Date(),
@@ -42,7 +42,7 @@ function logWebOrder(data, sheet) {
   ]);
 }
 
-// ከቴሌግራም ቦት የሚመጣውን ትዕዛዝ መመዝገቢያ
+// ከቴሌግራም ቦት የሚመጣውን ትዕዛዝ መለይቶ በ Google Sheet ላይ መመዝገቢያ
 function handleTelegramMessage(data, sheet) {
   var chatId = data.message.chat.id;
   var text = data.message.text;
@@ -82,6 +82,7 @@ function handleTelegramMessage(data, sheet) {
   }
 }
 
+// ወደ ቴሌግራም መልዕክት መላኪያ ፈንክሽን
 function sendTelegramMessage(chatId, text) {
   var url = "https://api.telegram.org/bot" + TELEGRAM_TOKEN + "/sendMessage";
   var payload = {
@@ -96,9 +97,9 @@ function sendTelegramMessage(chatId, text) {
   UrlFetchApp.fetch(url, options);
 }
 
-// ⚠️ ቦቱን እና ስክሪፕቱን ለማስተሳሰር ይህንን ፈንክሽን አንድ ጊዜ Run ያድርጉት
+// ⚠️ ቦቱን እና ስክሪፕቱን ለማገናኘት ይህንን ፈንክሽን አንድ ጊዜ Run ያድርጉት
 function setWebhook() {
-  var webAppUrl = "YOUR_DEPLOYED_WEB_APP_URL_HERE"; 
+  var webAppUrl = "YOUR_DEPLOYED_WEB_APP_URL_HERE"; // ይህንን በደረጃ 2 በሚያገኙት Web App URL ይተኩት
   var url = "https://api.telegram.org/bot" + TELEGRAM_TOKEN + "/setWebhook?url=" + webAppUrl;
   var response = UrlFetchApp.fetch(url);
   Logger.log(response.getContentText());
