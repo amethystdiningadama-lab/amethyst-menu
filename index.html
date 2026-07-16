@@ -78,6 +78,7 @@
         .bg-form { background: #5c1d8d; }
         .bg-wa { background: #25D366; }
         .bg-tg { background: #0088cc; }
+        .bg-sms { background: #ff9800; } /* ለSMS የተዘጋጀ ብርቱካናማ ቀለም */
         .btn-close-modal { background: #333; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; margin-top: 15px; font-weight: bold; }
     </style>
 </head>
@@ -531,6 +532,7 @@
             <a id="modalFormLink" href="#" target="_blank" class="btn-opt bg-form"><i class="fas fa-wpforms"></i> Google Form</a>
             <a id="modalWaLink" href="#" target="_blank" class="btn-opt bg-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             <a id="modalTgLink" href="#" target="_blank" class="btn-opt bg-tg"><i class="fab fa-telegram-plane"></i> Telegram</a>
+            <a id="modalSmsLink" href="#" class="btn-opt bg-sms"><i class="fas fa-comment-alt"></i> SMS (በአጭር መልዕክት)</a>
             <button class="btn-close-modal" onclick="closeOrderModal()"><i class="fas fa-times"></i> ዝጋ (Close)</button>
         </div>
     </div>
@@ -562,6 +564,7 @@
             document.getElementById('modalFormLink').href = "https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform";
             document.getElementById('modalWaLink').href = "https://wa.me/251969995662?text=" + encodedName + " ማዘዝ እፈልጋለሁ";
             document.getElementById('modalTgLink').href = "https://t.me/mr_makbel_aschalew?text=" + encodedName + " ማዘዝ እፈልጋለሁ";
+            document.getElementById('modalSmsLink').href = "sms:+251969995662?body=" + encodedName + " ማዘዝ እፈልጋለሁ";
             
             // ሞዳሉን መክፈት
             document.getElementById('dynamicOrderModal').style.display = 'flex';
