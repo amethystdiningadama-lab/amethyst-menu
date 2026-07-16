@@ -5,104 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amethyst Dining - Premium Digital Menu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: 'Arial', sans-serif; background: #05020a; color: #fff; margin: 0; padding: 0; }
-        .logo-area { text-align: center; margin: 20px 0; }
-        .logo-img { max-width: 200px; height: auto; }
-        .hero-section { text-align: center; padding: 40px 20px; }
-        .tagline { font-size: 14px; letter-spacing: 4px; color: #d4af37; text-transform: uppercase; margin-bottom: 20px; }
-        .hero-buttons { display: flex; justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-        .btn-primary, .btn-secondary, .btn-callhero { padding: 12px 20px; border-radius: 5px; text-decoration: none; color: #fff; font-weight: bold; }
-        .btn-primary { background: #d4af37; color: #000; }
-        .btn-secondary { background: #5c1d8d; }
-        .btn-callhero { background: #333; }
-        .search-container { padding: 20px; }
-        .search-box { background: #1a1a1a; padding: 10px; border-radius: 5px; display: flex; align-items: center; }
-        input { background: none; border: none; color: #fff; width: 100%; padding-left: 10px; }
-        .category-tabs { display: flex; overflow-x: auto; padding: 10px; gap: 10px; justify-content: center; }
-        .tab-btn { background: #222; border: none; color: #fff; padding: 8px 15px; border-radius: 20px; cursor: pointer; }
-        .tab-btn.active { background: #d4af37; color: #000; }
-        .menu-grid { padding: 20px; }
-        
-        /* የምግብ ካርድ ዲዛይን */
-        .menu-item { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 20px 0; align-items: flex-start; }
-        .item-info { flex: 1; padding-right: 15px; }
-        .item-info h3 { margin: 0 0 5px 0; font-size: 1.2rem; }
-        .item-info p { margin: 0 0 12px 0; color: #aaa; font-size: 0.95rem; }
-        .item-price { color: #d4af37; font-weight: bold; font-size: 1.1rem; white-space: nowrap; }
-        .v-badge { color: #25D366; font-size: 12px; margin-left: 5px; }
-        
-        /* የተስተካከለው የኦርደር ቁልፍ */
-        .btn-order-inline {
-            display: inline-block;
-            background: #5c1d8d;
-            color: #fff;
-            padding: 8px 15px;
-            font-size: 13px;
-            font-weight: bold;
-            text-decoration: none;
-            border: none;
-            border-radius: 4px;
-            margin-top: 5px;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-        .btn-order-inline:hover {
-            background: #d4af37;
-            color: #000;
-        }
-        .btn-order-inline i { margin-right: 5px; }
-
-        /* የክፍያ መረጃ ሳጥን ስታይል */
-        .payment-box-section { background: #11091c; border: 1px dashed #d4af37; border-radius: 10px; margin: 30px 20px; padding: 30px 20px; text-align: center; }
-        .payment-box-section h2 { color: #d4af37; margin-top: 0; font-size: 1.6rem; }
-        .payment-box-section p { color: #ccc; font-size: 0.95rem; line-height: 1.6; }
-        .payment-accounts { display: inline-block; text-align: left; background: #05020a; padding: 15px 25px; border-radius: 8px; border: 1px solid #333; margin-top: 15px; width: 100%; max-width: 420px; box-sizing: border-box; }
-        .payment-accounts div { margin: 10px 0; font-size: 1.05rem; }
-
-        .info-section { text-align: center; padding: 40px 20px; border-top: 1px solid #333; }
-        .map-btn { display: inline-block; padding: 10px 20px; background: #d4af37; color: #000; text-decoration: none; border-radius: 5px; margin-top: 15px; font-weight: bold; }
-        .qr-image { width: 200px; margin-top: 20px; }
-        footer { text-align: center; padding: 40px 20px; background: #000; border-top: 2px solid #d4af37; margin-bottom: 60px; }
-        
-        .action-buttons { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 1000; }
-        .btn-wa { background: #25D366; color: white; padding: 15px 20px; border-radius: 50%; font-size: 20px; text-decoration: none; }
-        .btn-call { background: #d4af37; color: #000; padding: 15px 20px; border-radius: 50%; font-size: 20px; text-decoration: none; }
-        .btn-order-form { background: #28a745; color: white; padding: 15px 20px; border-radius: 50%; font-size: 20px; text-decoration: none; }
-
-        /* አዲሱ የመምረጫ ሞዳል (Modal) ስታይል */
-        .order-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; }
-        .order-modal-content { background: #1a1a1a; padding: 25px; width: 85%; max-width: 400px; border-radius: 12px; text-align: center; border: 1px solid #d4af37; position: relative; margin: 0 auto; top: 50%; transform: translateY(-50%); }
-        .order-modal-content h3 { color: #d4af37; margin-top: 0; font-size: 1.3rem; margin-bottom: 20px; }
-        .btn-opt { display: block; padding: 12px; margin: 12px 0; border-radius: 6px; text-decoration: none; color: #fff; font-weight: bold; font-size: 1rem; }
-        .bg-form { background: #5c1d8d; }
-        .bg-wa { background: #25D366; }
-        .bg-tg { background: #0088cc; }
-        .bg-sms { background: #ff9800; } /* ለSMS የተዘጋጀ ብርቱካናማ ቀለም */
-        .btn-close-modal { background: #333; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; margin-top: 15px; font-weight: bold; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="logo-area">
-        <img src="logo.png" alt="Amethyst Logo" class="logo-img">
-        <h1 style="color: #d4af37; margin: 5px 0;">AMETHYST</h1>
-        <p style="margin:0;">DINING</p>
-    </div>
+    <header class="brand-header">
+        <div class="logo-area">
+            <img src="logo.png" alt="Amethyst Logo" class="logo-img">
+            <h1 class="brand-title">AMETHYST</h1>
+            <p class="brand-subtitle">DINING</p>
+        </div>
+    </header>
 
     <section class="hero-section">
-        <h2>Luxury Dining Experience in Adama</h2>
+        <h2 class="hero-heading">Luxury Dining Experience in Adama</h2>
         <div class="tagline">TASTE THE EXCELLENCE</div>
         <div class="hero-buttons">
-            <a href="https://amethyst-dining-demo.pages.dev/" target="_blank" class="btn-primary">Reserve a Table</a>
-            <a href="#menuGrid" class="btn-secondary">View Menu</a>
-            <a href="tel:+251969995662" class="btn-callhero"><i class="fas fa-phone"></i> Call Now</a>
+            <a href="https://amethyst-dining-demo.pages.dev/" target="_blank" class="btn-hero-primary">Reserve a Table</a>
+            <a href="#menuGrid" class="btn-hero-secondary">View Menu</a>
+            <a href="tel:+251969995662" class="btn-hero-call"><i class="fas fa-phone"></i> Call Now</a>
         </div>
     </section>
 
     <div class="search-container">
         <div class="search-box">
-            <i class="fas fa-search"></i>
+            <i class="fas fa-search search-icon"></i>
             <input type="text" id="searchInput" placeholder="የሚፈልጉትን ምግብ እዚህ ይፈልጉ..." onkeyup="filterMenu()">
         </div>
     </div>
@@ -118,392 +46,546 @@
 
     <main class="menu-grid" id="menuGrid">
         
-        <!-- --- 1. SOUPS --- -->
         <div class="menu-item" data-category="soups">
             <div class="item-info">
-                <h3>Butternut Squash Soup</h3>
-                <p>Roasted squash blended with aromatic spices.</p>
-                <button onclick="openOrderModal('Butternut Squash Soup')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Butternut Squash Soup</h3>
+                    <span class="item-price">400 ETB</span>
+                </div>
+                <p class="item-desc">Roasted squash blended with aromatic spices.</p>
+                <button onclick="openOrderModal('Butternut Squash Soup', 400)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">400 ETB</div>
-        </div>
-        
-        <div class="menu-item" data-category="soups">
-            <div class="item-info">
-                <h3>Doctor Marasamo Soup</h3>
-                <p>A savory infusion of ginger, curry, and fresh fish stock.</p>
-                <button onclick="openOrderModal('Doctor Marasamo Soup')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
-            </div>
-            <div class="item-price">500 ETB</div>
         </div>
         
         <div class="menu-item" data-category="soups">
             <div class="item-info">
-                <h3>Spicy Lentil Soup</h3>
-                <p>Hearty lentils simmered with garden vegetables and a kick of spice.</p>
-                <button onclick="openOrderModal('Spicy Lentil Soup')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Doctor Marasamo Soup</h3>
+                    <span class="item-price">500 ETB</span>
+                </div>
+                <p class="item-desc">A savory infusion of ginger, curry, and fresh fish stock.</p>
+                <button onclick="openOrderModal('Doctor Marasamo Soup', 500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">400 ETB</div>
+        </div>
+        
+        <div class="menu-item" data-category="soups">
+            <div class="item-info">
+                <div class="item-meta">
+                    <h3 class="item-title">Spicy Lentil Soup</h3>
+                    <span class="item-price">400 ETB</span>
+                </div>
+                <p class="item-desc">Hearty lentils simmered with garden vegetables and a kick of spice.</p>
+                <button onclick="openOrderModal('Spicy Lentil Soup', 400)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
+            </div>
         </div>
 
-        <!-- --- 2. SUSHI --- -->
         <div class="menu-item" data-category="sushi">
             <div class="item-info">
-                <h3>Salmon Maki</h3>
-                <p>Fresh salmon, avocado, and crisp cucumber.</p>
-                <button onclick="openOrderModal('Salmon Maki')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Salmon Maki</h3>
+                    <span class="item-price">1,500 ETB</span>
+                </div>
+                <p class="item-desc">Fresh salmon, avocado, and crisp cucumber.</p>
+                <button onclick="openOrderModal('Salmon Maki', 1500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,500 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sushi">
             <div class="item-info">
-                <h3>Spicy Tuna Maki</h3>
-                <p>Spicy tuna paired with avocado and cucumber.</p>
-                <button onclick="openOrderModal('Spicy Tuna Maki')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Spicy Tuna Maki</h3>
+                    <span class="item-price">1,500 ETB</span>
+                </div>
+                <p class="item-desc">Spicy tuna paired with avocado and cucumber.</p>
+                <button onclick="openOrderModal('Spicy Tuna Maki', 1500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,500 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sushi">
             <div class="item-info">
-                <h3>Shrimp Tempura Maki</h3>
-                <p>Crispy shrimp tempura and cucumber.</p>
-                <button onclick="openOrderModal('Shrimp Tempura Maki')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Shrimp Tempura Maki</h3>
+                    <span class="item-price">1,500 ETB</span>
+                </div>
+                <p class="item-desc">Crispy shrimp tempura and cucumber.</p>
+                <button onclick="openOrderModal('Shrimp Tempura Maki', 1500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,500 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sushi">
             <div class="item-info">
-                <h3>Panko Sushi Roll</h3>
-                <p>Crispy fried roll with fish, mango, and nori topped with tempura flakes.</p>
-                <button onclick="openOrderModal('Panko Sushi Roll')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Panko Sushi Roll</h3>
+                    <span class="item-price">1,500 ETB</span>
+                </div>
+                <p class="item-desc">Crispy fried roll with fish, mango, and nori topped with tempura flakes.</p>
+                <button onclick="openOrderModal('Panko Sushi Roll', 1500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,500 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sushi">
             <div class="item-info">
-                <h3>Avocado & Cucumber Roll <span class="v-badge">V</span></h3>
-                <p>A refreshing classic with creamy avocado and cucumber.</p>
-                <button onclick="openOrderModal('Avocado & Cucumber Roll')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Avocado & Cucumber Roll <span class="v-badge">V</span></h3>
+                    <span class="item-price">1,500 ETB</span>
+                </div>
+                <p class="item-desc">A refreshing classic with creamy avocado and cucumber.</p>
+                <button onclick="openOrderModal('Avocado & Cucumber Roll', 1500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,500 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sushi">
             <div class="item-info">
-                <h3>Amethyst Salmon Grand</h3>
-                <p>Premium salmon paired elegantly with fresh avocado.</p>
-                <button onclick="openOrderModal('Amethyst Salmon Grand')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Amethyst Salmon Grand</h3>
+                    <span class="item-price">2,000 ETB</span>
+                </div>
+                <p class="item-desc">Premium salmon paired elegantly with fresh avocado.</p>
+                <button onclick="openOrderModal('Amethyst Salmon Grand', 2000)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">2,000 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sushi">
             <div class="item-info">
-                <h3>Salmon Nigiri</h3>
-                <p>Traditional slice of fresh salmon served over seasoned sushi rice.</p>
-                <button onclick="openOrderModal('Salmon Nigiri')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Salmon Nigiri</h3>
+                    <span class="item-price">2,000 ETB</span>
+                </div>
+                <p class="item-desc">Traditional slice of fresh salmon served over seasoned sushi rice.</p>
+                <button onclick="openOrderModal('Salmon Nigiri', 2000)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">2,000 ETB</div>
         </div>
 
-        <!-- --- 3. SHAREABLES --- -->
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Chili Garlic Edamame <span class="v-badge">V</span></h3>
-                <p>Steamed edamame tossed in a bold chili-garlic glaze.</p>
-                <button onclick="openOrderModal('Chili Garlic Edamame')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Chili Garlic Edamame <span class="v-badge">V</span></h3>
+                    <span class="item-price">600 ETB</span>
+                </div>
+                <p class="item-desc">Steamed edamame tossed in a bold chili-garlic glaze.</p>
+                <button onclick="openOrderModal('Chili Garlic Edamame', 600)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">600 ETB</div>
         </div>
         
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Crispy Vegetable Taquitos <span class="v-badge">V</span></h3>
-                <p>Golden-fried tortillas filled with vegetables, beans, soy, and ginger.</p>
-                <button onclick="openOrderModal('Crispy Vegetable Taquitos')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Crispy Vegetable Taquitos <span class="v-badge">V</span></h3>
+                    <span class="item-price">800 ETB</span>
+                </div>
+                <p class="item-desc">Golden-fried tortillas filled with vegetables, beans, soy, and ginger.</p>
+                <button onclick="openOrderModal('Crispy Vegetable Taquitos', 800)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">800 ETB</div>
         </div>
         
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Vegetable Spring Rolls <span class="v-badge">V</span></h3>
-                <p>Crispy spring rolls served with sweet chili sauce.</p>
-                <button onclick="openOrderModal('Vegetable Spring Rolls')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Vegetable Spring Rolls <span class="v-badge">V</span></h3>
+                    <span class="item-price">800 ETB</span>
+                </div>
+                <p class="item-desc">Crispy spring rolls served with sweet chili sauce.</p>
+                <button onclick="openOrderModal('Vegetable Spring Rolls', 800)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">800 ETB</div>
         </div>
         
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Gyoza</h3>
-                <p>Pan-fried Japanese dumplings served with soy dipping sauce.</p>
-                <button onclick="openOrderModal('Gyoza')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Gyoza</h3>
+                    <span class="item-price">1,100 ETB</span>
+                </div>
+                <p class="item-desc">Pan-fried Japanese dumplings served with soy dipping sauce.</p>
+                <button onclick="openOrderModal('Gyoza', 1100)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,100 ETB</div>
         </div>
         
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Signature Crispy Taquitos</h3>
-                <p>Your choice of savory beef or fresh fish packed in a crispy shell.</p>
-                <button onclick="openOrderModal('Signature Crispy Taquitos')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Signature Crispy Taquitos</h3>
+                    <span class="item-price">900 ETB</span>
+                </div>
+                <p class="item-desc">Your choice of savory beef or fresh fish packed in a crispy shell.</p>
+                <button onclick="openOrderModal('Signature Crispy Taquitos', 900)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">900 ETB</div>
         </div>
         
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Vegetable Tempura <span class="v-badge">V</span></h3>
-                <p>Lightly battered seasonal vegetables served with premium tempura sauce.</p>
-                <button onclick="openOrderModal('Vegetable Tempura')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Vegetable Tempura <span class="v-badge">V</span></h3>
+                    <span class="item-price">700 ETB</span>
+                </div>
+                <p class="item-desc">Lightly battered seasonal vegetables served with premium tempura sauce.</p>
+                <button onclick="openOrderModal('Vegetable Tempura', 700)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">700 ETB</div>
         </div>
         
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Salmon Sashimi</h3>
-                <p>Fresh salmon with soy sauce, lime, and toasted sesame oil.</p>
-                <button onclick="openOrderModal('Salmon Sashimi')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Salmon Sashimi</h3>
+                    <span class="item-price">1,500 ETB</span>
+                </div>
+                <p class="item-desc">Fresh salmon with soy sauce, lime, and toasted sesame oil.</p>
+                <button onclick="openOrderModal('Salmon Sashimi', 1500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,500 ETB</div>
         </div>
         
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Avocado Crispy Tofu Chili <span class="v-badge">V</span></h3>
-                <p>Crispy tofu with avocado, chili, and signature house seasoning.</p>
-                <button onclick="openOrderModal('Avocado Crispy Tofu Chili')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Avocado Crispy Tofu Chili <span class="v-badge">V</span></h3>
+                    <span class="item-price">1,000 ETB</span>
+                </div>
+                <p class="item-desc">Crispy tofu with avocado, chili, and signature house seasoning.</p>
+                <button onclick="openOrderModal('Avocado Crispy Tofu Chili', 1000)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,000 ETB</div>
         </div>
         
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Garlic Shrimp</h3>
-                <p>Garlic butter shrimp perfectly served with sweet corn.</p>
-                <button onclick="openOrderModal('Garlic Shrimp')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Garlic Shrimp</h3>
+                    <span class="item-price">1,800 ETB</span>
+                </div>
+                <p class="item-desc">Garlic butter shrimp perfectly served with sweet corn.</p>
+                <button onclick="openOrderModal('Garlic Shrimp', 1800)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,800 ETB</div>
         </div>
         
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
-                <h3>Amethyst Signature Salad <span class="v-badge">V</span></h3>
-                <p>Fresh mixed lettuce with seasonal vegetables and premium house dressing.</p>
-                <button onclick="openOrderModal('Amethyst Signature Salad')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Amethyst Signature Salad <span class="v-badge">V</span></h3>
+                    <span class="item-price">500 ETB</span>
+                </div>
+                <p class="item-desc">Fresh mixed lettuce with seasonal vegetables and premium house dressing.</p>
+                <button onclick="openOrderModal('Amethyst Signature Salad', 500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">500 ETB</div>
         </div>
 
-        <!-- --- 4. LARGE PLATES --- -->
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Spicy Wasabi Beef</h3>
-                <p>Tender beef served with spring onions & aromatic Coconut Rice.</p>
-                <button onclick="openOrderModal('Spicy Wasabi Beef')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Spicy Wasabi Beef</h3>
+                    <span class="item-price">2,000 ETB</span>
+                </div>
+                <p class="item-desc">Tender beef served with spring onions & aromatic Coconut Rice.</p>
+                <button onclick="openOrderModal('Spicy Wasabi Beef', 2000)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">2,000 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Beef Fillet (Steak)</h3>
-                <p>Perfectly grilled beef fillet enhanced with classic Chimichurri sauce.</p>
-                <button onclick="openOrderModal('Beef Fillet (Steak)')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Beef Fillet (Steak)</h3>
+                    <span class="item-price">1,800 ETB</span>
+                </div>
+                <p class="item-desc">Perfectly grilled beef fillet enhanced with classic Chimichurri sauce.</p>
+                <button onclick="openOrderModal('Beef Fillet (Steak)', 1800)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,800 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Sticky Sesame Beef</h3>
-                <p>Tender beef glazed in a sweet and savory sesame sauce, served with fresh vegetables.</p>
-                <button onclick="openOrderModal('Sticky Sesame Beef')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Sticky Sesame Beef</h3>
+                    <span class="item-price">1,800 ETB</span>
+                </div>
+                <p class="item-desc">Tender beef glazed in a sweet and savory sesame sauce, served with fresh vegetables.</p>
+                <button onclick="openOrderModal('Sticky Sesame Beef', 1800)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,800 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Roasted Nile Perch</h3>
-                <p>Fresh Nile Perch served with fluffy steamed rice and a cheat green salad.</p>
-                <button onclick="openOrderModal('Roasted Nile Perch')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Roasted Nile Perch</h3>
+                    <span class="item-price">1,800 ETB</span>
+                </div>
+                <p class="item-desc">Fresh Nile Perch served with fluffy steamed rice and a cheat green salad.</p>
+                <button onclick="openOrderModal('Roasted Nile Perch', 1800)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,800 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Chicken Panko</h3>
-                <p>Crispy breaded chicken served with creamy mayo and tangy pickled daikon.</p>
-                <button onclick="openOrderModal('Chicken Panko')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Chicken Panko</h3>
+                    <span class="item-price">1,700 ETB</span>
+                </div>
+                <p class="item-desc">Crispy breaded chicken served with creamy mayo and tangy pickled daikon.</p>
+                <button onclick="openOrderModal('Chicken Panko', 1700)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,700 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Chicken Teriyaki</h3>
-                <p>Grilled chicken glazed in savory teriyaki sauce, topped with spring onions and served with steamed rice.</p>
-                <button onclick="openOrderModal('Chicken Teriyaki')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Chicken Teriyaki</h3>
+                    <span class="item-price">1,700 ETB</span>
+                </div>
+                <p class="item-desc">Grilled chicken glazed in savory teriyaki sauce, topped with spring onions and served with steamed rice.</p>
+                <button onclick="openOrderModal('Chicken Teriyaki', 1700)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,700 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Salmon Teriyaki</h3>
-                <p>Salmon fillet marinated with garlic and fine herbs, grilled to a delicate finish.</p>
-                <button onclick="openOrderModal('Salmon Teriyaki')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Salmon Teriyaki</h3>
+                    <span class="item-price">5,300 ETB</span>
+                </div>
+                <p class="item-desc">Salmon fillet marinated with garlic and fine herbs, grilled to a delicate finish.</p>
+                <button onclick="openOrderModal('Salmon Teriyaki', 5300)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">5,300 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Wok Stir-Fried Noodles</h3>
-                <p>Classic wok-tossed noodles with signature savory sauces.</p>
-                <button onclick="openOrderModal('Wok Stir-Fried Noodles')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Wok Stir-Fried Noodles</h3>
+                    <span class="item-price">1,500 ETB</span>
+                </div>
+                <p class="item-desc">Classic wok-tossed noodles with signature savory sauces.</p>
+                <button onclick="openOrderModal('Wok Stir-Fried Noodles', 1500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,500 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Vegetable Curry Noodles <span class="v-badge">V</span></h3>
-                <p>Rich and aromatic curry infused noodles with crisp seasonal vegetables.</p>
-                <button onclick="openOrderModal('Vegetable Curry Noodles')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Vegetable Curry Noodles <span class="v-badge">V</span></h3>
+                    <span class="item-price">1,300 ETB</span>
+                </div>
+                <p class="item-desc">Rich and aromatic curry infused noodles with crisp seasonal vegetables.</p>
+                <button onclick="openOrderModal('Vegetable Curry Noodles', 1300)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,300 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Signature Glass Noodles</h3>
-                <p>Delicate and flavorful clear glass noodles prepared to perfection.</p>
-                <button onclick="openOrderModal('Signature Glass Noodles')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Signature Glass Noodles</h3>
+                    <span class="item-price">1,500 ETB</span>
+                </div>
+                <p class="item-desc">Delicate and flavorful clear glass noodles prepared to perfection.</p>
+                <button onclick="openOrderModal('Signature Glass Noodles', 1500)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,500 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Vegetable Fried Rice <span class="v-badge">V</span></h3>
-                <p>Fragrant fried rice mixed with finely chopped fresh garden vegetables.</p>
-                <button onclick="openOrderModal('Vegetable Fried Rice')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Vegetable Fried Rice <span class="v-badge">V</span></h3>
+                    <span class="item-price">1,400 ETB</span>
+                </div>
+                <p class="item-desc">Fragrant fried rice mixed with finely chopped fresh garden vegetables.</p>
+                <button onclick="openOrderModal('Vegetable Fried Rice', 1400)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">1,400 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Wagyu Beef Ribeye</h3>
-                <p>Premium Australian Pure Blood signature Wagyu, served with smooth rich mash.</p>
-                <button onclick="openOrderModal('Wagyu Beef Ribeye')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Wagyu Beef Ribeye</h3>
+                    <span class="item-price">6,000 ETB</span>
+                </div>
+                <p class="item-desc">Premium Australian Pure Blood signature Wagyu, served with smooth rich mash.</p>
+                <button onclick="openOrderModal('Wagyu Beef Ribeye', 6000)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">6,000 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Grilled Lamb Chop</h3>
-                <p>Perfectly seared, juicy lamb chops served alongside rich Coconut Rice.</p>
-                <button onclick="openOrderModal('Grilled Lamb Chop')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Grilled Lamb Chop</h3>
+                    <span class="item-price">5,400 ETB</span>
+                </div>
+                <p class="item-desc">Perfectly seared, juicy lamb chops served alongside rich Coconut Rice.</p>
+                <button onclick="openOrderModal('Grilled Lamb Chop', 5400)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">5,400 ETB</div>
         </div>
         
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
-                <h3>Sliders (Mini Burgers)</h3>
-                <p>Three signature mini burgers with your choice of filling: Beef | Fish | Chicken.</p>
-                <button onclick="openOrderModal('Sliders (Mini Burgers)')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Sliders (Mini Burgers)</h3>
+                    <span class="item-price">800 ETB</span>
+                </div>
+                <p class="item-desc">Three signature mini burgers with your choice of filling: Beef | Fish | Chicken.</p>
+                <button onclick="openOrderModal('Sliders (Mini Burgers)', 800)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">800 ETB</div>
         </div>
 
-        <!-- --- 5. SIDES & DESSERTS --- -->
         <div class="menu-item" data-category="sides">
             <div class="item-info">
-                <h3>Seasonal Vegetables <span class="v-badge">V</span></h3>
-                <p>Freshly sautéed or steamed assortment of the finest seasonal vegetables.</p>
-                <button onclick="openOrderModal('Seasonal Vegetables')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Seasonal Vegetables <span class="v-badge">V</span></h3>
+                    <span class="item-price">250 ETB</span>
+                </div>
+                <p class="item-desc">Freshly sautéed or steamed assortment of the finest seasonal vegetables.</p>
+                <button onclick="openOrderModal('Seasonal Vegetables', 250)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">250 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sides">
             <div class="item-info">
-                <h3>Steamed Rice <span class="v-badge">V</span></h3>
-                <p>Fluffy, light, and perfectly steamed premium grain white rice.</p>
-                <button onclick="openOrderModal('Steamed Rice')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Steamed Rice <span class="v-badge">V</span></h3>
+                    <span class="item-price">250 ETB</span>
+                </div>
+                <p class="item-desc">Fluffy, light, and perfectly steamed premium grain white rice.</p>
+                <button onclick="openOrderModal('Steamed Rice', 250)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">250 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sides">
             <div class="item-info">
-                <h3>Chinese Cabbage <span class="v-badge">V</span></h3>
-                <p>Tender and lightly seasoned sautéed Chinese cabbage.</p>
-                <button onclick="openOrderModal('Chinese Cabbage')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Chinese Cabbage <span class="v-badge">V</span></h3>
+                    <span class="item-price">250 ETB</span>
+                </div>
+                <p class="item-desc">Tender and lightly seasoned sautéed Chinese cabbage.</p>
+                <button onclick="openOrderModal('Chinese Cabbage', 250)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">250 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sides">
             <div class="item-info">
-                <h3>Mashed Potato <span class="v-badge">V</span></h3>
-                <p>Creamy, buttery, and smooth house-made mashed potatoes.</p>
-                <button onclick="openOrderModal('Mashed Potato')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Mashed Potato <span class="v-badge">V</span></h3>
+                    <span class="item-price">250 ETB</span>
+                </div>
+                <p class="item-desc">Creamy, buttery, and smooth house-made mashed potatoes.</p>
+                <button onclick="openOrderModal('Mashed Potato', 250)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">250 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sides">
             <div class="item-info">
-                <h3>Green Salad <span class="v-badge">V</span></h3>
-                <p>A crisp, refreshing mix of garden greens served with a light dressing.</p>
-                <button onclick="openOrderModal('Green Salad')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Green Salad <span class="v-badge">V</span></h3>
+                    <span class="item-price">250 ETB</span>
+                </div>
+                <p class="item-desc">A crisp, refreshing mix of garden greens served with a light dressing.</p>
+                <button onclick="openOrderModal('Green Salad', 250)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">250 ETB</div>
         </div>
         
         <div class="menu-item" data-category="sides">
             <div class="item-info">
-                <h3>Seasonal Fruit Platter <span class="v-badge">V</span></h3>
-                <p>A vibrant selection of nature's finest fresh fruits, hand-picked by our Chef.</p>
-                <button onclick="openOrderModal('Seasonal Fruit Platter')" class="btn-order-inline"><i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ</button>
+                <div class="item-meta">
+                    <h3 class="item-title">Seasonal Fruit Platter <span class="v-badge">V</span></h3>
+                    <span class="item-price">300 ETB</span>
+                </div>
+                <p class="item-desc">A vibrant selection of nature's finest fresh fruits, hand-picked by our Chef.</p>
+                <button onclick="openOrderModal('Seasonal Fruit Platter', 300)" class="btn-order-inline">
+                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
+                </button>
             </div>
-            <div class="item-price">300 ETB</div>
         </div>
 
     </main>
 
-    <!-- 💳 የክፍያ መመሪያ ሳጥን -->
     <section class="payment-box-section">
         <h2><i class="fas fa-credit-card"></i> የክፍያ መመሪያ (Payment Steps)</h2>
         <p>እባክዎ መጀመሪያ የሚፈልጉትን ምግብ መርጠው ከታች ባሉት የክፍያ አማራጮች ሂሳብዎን ይክፈሉ፤ በመቀጠል በምግቡ ስር ያለውን <strong>"Order Now"</strong> ቁልፍ በመጫን ደረሰኙን (Screenshot) አያይዘው ይላኩ።</p>
         <div class="payment-accounts">
-            <div>📱 <strong>Telebirr:</strong> 0968093003 (Henok Tafese)</div>
-            <div>🏦 <strong>CBE (ንግድ ባንክ):</strong> 1000648950911 (Henok Tafese)</div>
+            <div class="payment-row">📱 <strong>Telebirr:</strong> 0968093003 (Henok Tafese)</div>
+            <div class="payment-row">🏦 <strong>CBE (ንግድ ባንክ):</strong> 1000648950911 (Henok Tafese)</div>
         </div>
     </section>
 
     <section class="info-section">
         <h2>Opening Hours</h2>
-        <p>Monday – Sunday</p>
-        <p>10:00 AM – 11:00 PM</p>
+        <p class="info-text">Monday – Sunday</p>
+        <p class="info-text highlight">10:00 AM – 11:00 PM</p>
     </section>
 
     <section class="info-section">
         <h2>📍 Location</h2>
-        <p>Adama, Ethiopia</p>
+        <p class="info-text">Adama, Ethiopia</p>
         <a href="https://share.google/YWP23HCNPEKCWyFA8" target="_blank" class="map-btn">Open in Google Maps</a>
     </section>
 
@@ -516,64 +598,62 @@
         <h3>AMETHYST DINING</h3>
         <p>☎ +251 96 999 5662</p>
         <p>📍 Adama, Ethiopia</p>
-        <p>💜 Thank you for choosing AMETHYST DINING</p>
+        <p class="footer-note">💜 Thank you for choosing AMETHYST DINING</p>
     </footer>
 
-    <div class="action-buttons">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-order-form"><i class="fas fa-shopping-cart"></i></a>
-        <a href="https://wa.me/251969995662" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i></a>
-        <a href="tel:+251969995662" class="btn-call"><i class="fas fa-phone"></i></a>
+    <div class="action-buttons-bar">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-floating bg-form" title="Google Form"><i class="fas fa-wpforms"></i></a>
+        <a href="https://wa.me/251969995662" target="_blank" class="btn-floating bg-wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+251969995662" class="btn-floating bg-call" title="Call Now"><i class="fas fa-phone"></i></a>
     </div>
 
-    <!-- ማዘዣ የሚከፍተው አዲሱ ሞዳል -->
     <div id="dynamicOrderModal" class="order-modal">
         <div class="order-modal-content">
+            <button class="btn-close-modal" onclick="closeOrderModal()"><i class="fas fa-times"></i></button>
+            
             <h3 id="modalFoodTitle">Food Name</h3>
-            <a id="modalFormLink" href="#" target="_blank" class="btn-opt bg-form"><i class="fas fa-wpforms"></i> Google Form</a>
-            <a id="modalWaLink" href="#" target="_blank" class="btn-opt bg-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            <a id="modalTgLink" href="#" target="_blank" class="btn-opt bg-tg"><i class="fab fa-telegram-plane"></i> Telegram</a>
-            <a id="modalSmsLink" href="#" class="btn-opt bg-sms"><i class="fas fa-comment-alt"></i> SMS (በአጭር መልዕክት)</a>
-            <button class="btn-close-modal" onclick="closeOrderModal()"><i class="fas fa-times"></i> ዝጋ (Close)</button>
+            
+            <div class="order-customization">
+                <div class="form-group">
+                    <label><i class="fas fa-sort-amount-up-alt"></i> የምግብ ብዛት (Quantity)</label>
+                    <div class="qty-selector">
+                        <button type="button" class="qty-btn" onclick="changeQty(-1)">-</button>
+                        <input type="number" id="orderQty" value="1" min="1" readonly>
+                        <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="specialNote"><i class="fas fa-magic"></i> ልዩ ፍላጎት ወይም ማስታወሻ (ይሄን ይሄን አድርጉልኝ...)</label>
+                    <textarea id="specialNote" oninput="updateOrderLinks()" placeholder="ለምሳሌ፦ ቅመም ቀንሱበት፣ በደንብ ይብሰል፣ ቶሎ ይድረስልኝ..."></textarea>
+                </div>
+            </div>
+
+            <div class="modal-payment-info">
+                <div class="modal-payment-header"><i class="fas fa-credit-card"></i> የክፍያ መረጃ (Payment Details)</div>
+                <div class="modal-total-box">
+                    <span>ጠቅላላ ዋጋ (Total Price):</span>
+                    <strong id="modalTotalPrice">0 ETB</strong>
+                </div>
+                <div class="modal-accounts">
+                    <div>📱 Telebirr: <strong>0968093003</strong> <span class="acc-name">(Henok Tafese)</span></div>
+                    <div>🏦 ንግድ ባንክ (CBE): <strong>1000648950911</strong> <span class="acc-name">(Henok Tafese)</span></div>
+                </div>
+                <p class="payment-hint">እባክዎ መጀመሪያ ክፍያውን ፈጽመው ሲልኩ ደረሰኙን (Screenshot) ያያይዙ።</p>
+            </div>
+
+            <div class="order-channels">
+                <label class="channel-label">በትዕዛዝ ማስተላለፊያ አማራጭ ይላኩ</label>
+                <div class="channels-grid">
+                    <a id="modalWaLink" href="#" target="_blank" class="btn-opt bg-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a id="modalTgLink" href="#" target="_blank" class="btn-opt bg-tg"><i class="fab fa-telegram-plane"></i> Telegram</a>
+                    <a id="modalSmsLink" href="#" class="btn-opt bg-sms"><i class="fas fa-comment-alt"></i> SMS</a>
+                    <a id="modalFormLink" href="#" target="_blank" class="btn-opt bg-form"><i class="fas fa-wpforms"></i> Form</a>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        function filterCategory(category) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            document.querySelectorAll('.menu-item').forEach(item => {
-                item.style.display = (category === 'all' || item.getAttribute('data-category') === category) ? 'flex' : 'none';
-            });
-        }
-        function filterMenu() {
-            let k = document.getElementById('searchInput').value.toLowerCase();
-            document.querySelectorAll('.menu-item').forEach(i => {
-                i.style.display = (i.innerText.toLowerCase().includes(k)) ? 'flex' : 'none';
-            });
-        }
-        
-        // አዲሱ የሞዳል ጃቫስክሪፕት ኮድ
-        function openOrderModal(foodName) {
-            // የምግቡን ስም ርዕስ ላይ ማስቀመጥ
-            document.getElementById('modalFoodTitle').innerText = foodName;
-            
-            // ለ ሊንክ በሚመች መልኩ የምግቡን ስም ማስተካከል
-            let encodedName = encodeURIComponent(foodName);
-            
-            // የሊንኮቹን አድራሻ ማዘመን
-            document.getElementById('modalFormLink').href = "https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform";
-            document.getElementById('modalWaLink').href = "https://wa.me/251969995662?text=" + encodedName + " ማዘዝ እፈልጋለሁ";
-            document.getElementById('modalTgLink').href = "https://t.me/mr_makbel_aschalew?text=" + encodedName + " ማዘዝ እፈልጋለሁ";
-            document.getElementById('modalSmsLink').href = "sms:+251969995662?body=" + encodedName + " ማዘዝ እፈልጋለሁ";
-            
-            // ሞዳሉን መክፈት
-            document.getElementById('dynamicOrderModal').style.display = 'flex';
-        }
-
-        function closeOrderModal() {
-            // ሞዳሉን መዝጋት
-            document.getElementById('dynamicOrderModal').style.display = 'none';
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
