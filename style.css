@@ -1,302 +1,140 @@
-/* ==========================================
-   AMETHYST DINING - PREMIUM CSS THEME
-   ========================================== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+// ==========================================
+// AMETHYST DINING - INTERACTION LOGIC (V2.2)
+// DEVELOPED FOR: MAKBEL ASCHALEW
+// ==========================================
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+var APPS_SCRIPT_URL = "YOUR_DEPLOYED_WEB_APP_URL_HERE"; 
+
+var currentFoodName = "";
+var currentFoodPrice = 0;
+var activeCategory = "all";
+
+// 1. የካቴጎሪ ማጣሪያ ፈንክሽን
+function filterCategory(category, buttonElement) {
+    activeCategory = category;
+    let buttons = document.getElementsByClassName('category-btn');
+    for (let btn of buttons) {
+        btn.classList.remove('active');
+    }
+    buttonElement.classList.add('active');
+    runFilters();
 }
 
-body {
-    background-color: #0b0510;
-    color: #ffffff;
-    line-height: 1.6;
+// 2. የፍለጋ አሞሌ (Search) ፈንክሽን
+function filterMenu() {
+    runFilters();
 }
 
-/* HERO SECTION */
-.hero {
-    background: linear-gradient(rgba(11, 5, 16, 0.75), #0b0510), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200') center/cover no-repeat;
-    height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+// 3. ሁለቱንም ማጣሪያዎች አንድ ላይ አጣምሮ የሚሰራ ዋና ፈንክሽን
+function runFilters() {
+    let searchValue = document.getElementById('searchBar').value.toLowerCase();
+    let cards = document.getElementsByClassName('menu-card');
+    
+    for (let card of cards) {
+        let cardCategory = card.getAttribute('data-category');
+        let cardName = card.querySelector('h3').innerText.toLowerCase();
+        
+        let matchesCategory = (activeCategory === "all" || cardCategory === activeCategory);
+        let matchesSearch = cardName.includes(searchValue);
+        
+        if (matchesCategory && matchesSearch) {
+            card.style.display = "flex";
+        } else {
+            card.style.display = "none";
+        }
+    }
 }
 
-.logo-container h1 {
-    font-size: 2.8rem;
-    letter-spacing: 3px;
-    color: #d6a2e8;
-    text-shadow: 0 4px 12px rgba(142, 68, 173, 0.6);
+// ሞዳሉን መክፈቻ ፈንክሽን
+function openOrderModal(foodName, price) {
+    currentFoodName = foodName;
+    currentFoodPrice = parseFloat(price);
+    
+    document.getElementById('modalFoodName').innerText = foodName;
+    document.getElementById('orderQty').value = 1;
+    document.getElementById('specialNote').value = "";
+    
+    updateTotalPrice();
+    document.getElementById('orderModal').style.display = 'block';
 }
 
-.logo-container .tagline {
-    font-size: 1.1rem;
-    color: #b3b3b3;
-    margin-top: 6px;
+// ሞዳሉን መዝጊያ ፈንክሽን
+function closeOrderModal() {
+    document.getElementById('orderModal').style.display = 'none';
 }
 
-/* MENU SECTION */
-.menu-container {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 20px;
+// የምግብ ብዛት ማስተካከያ (+ እና - ሲጫኑ)
+function changeQty(amount) {
+    let qtyInput = document.getElementById('orderQty');
+    let currentQty = parseInt(qtyInput.value) || 1;
+    let newQty = currentQty + amount;
+    if (newQty >= 1) {
+        qtyInput.value = newQty;
+        updateTotalPrice();
+    }
 }
 
-.section-title {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 45px;
-    color: #ffffff;
-    border-bottom: 2px solid #8e44ad;
-    display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
-    position: relative;
-    padding-bottom: 8px;
+// ጠቅላላ ዋጋን ማስሊያ
+function updateTotalPrice() {
+    let qty = parseInt(document.getElementById('orderQty').value) || 1;
+    let totalPrice = currentFoodPrice * qty;
+    document.getElementById('modalTotalPrice').innerText = totalPrice.toLocaleString() + " ETB";
 }
 
-.menu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
-    gap: 25px;
+// መረጃን ወደ መተግበሪያዎች ማስተላለፊያ ዋና ሲስተም
+function submitAndRedirect(channel) {
+    let qty = parseInt(document.getElementById('orderQty').value) || 1;
+    let note = document.getElementById('specialNote').value.trim();
+    let totalPrice = currentFoodPrice * qty;
+    
+    // የጀርባ ሺት መመዝገቢያ (ከተገናኘ)
+    let payload = {
+        action: "log_web_order",
+        source: "Web-" + channel,
+        foodName: currentFoodName,
+        quantity: qty,
+        totalPrice: totalPrice,
+        note: note || "-"
+    };
+    
+    fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        cache: "no-cache",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    }).catch(err => console.log("Background log updated."));
+    
+    // ለደንበኛው የሚዘጋጅ የትዕዛዝ መልዕክት ፎርማት
+    let messageText = `🍽️ አዲስ ትዕዛዝ ማቅረብ እፈልጋለሁ\n\n`;
+    messageText += `▪️ የምግብ ስም: ${currentFoodName}\n`;
+    messageText += `▪️ የምግብ ብዛት: ${qty}\n`; 
+    messageText += `▪️ ጠቅላላ ዋጋ: ${totalPrice.toLocaleString()} ETB\n`; 
+    if (note !== "") {
+        messageText += `▪️ ልዩ ፍላጎት: ${note}\n`;
+    }
+    
+    let encodedMessage = encodeURIComponent(messageText);
+    let redirectUrl = "";
+    
+    // ወደ ተመረጠው የእርስዎ የግል መስመር ማስተላለፊያ (+251969995662)
+    if (channel === 'WhatsApp') {
+        redirectUrl = "https://wa.me/251969995662?text=" + encodedMessage;
+    } else if (channel === 'Telegram') {
+        redirectUrl = "https://t.me/mr_makbel_aschalew?text=" + encodedMessage;
+    } else if (channel === 'SMS') {
+        redirectUrl = "sms:+251969995662?body=" + encodedMessage;
+    }
+    
+    if (redirectUrl !== "") {
+        window.open(redirectUrl, '_blank');
+    }
+    closeOrderModal();
 }
 
-.menu-card {
-    background-color: #160d21;
-    border: 1px solid #2d1b3f;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 24px;
-}
-
-.menu-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 22px rgba(142, 68, 173, 0.35);
-    border-color: #8e44ad;
-}
-
-.menu-info h3 {
-    color: #d6a2e8;
-    margin-bottom: 12px;
-    font-size: 1.3rem;
-}
-
-.menu-info .description {
-    color: #a6a6a6;
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-    height: 52px;
-}
-
-.menu-info .price {
-    display: block;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #2ecc71;
-    margin-bottom: 18px;
-}
-
-.btn-order {
-    width: 100%;
-    background-color: #8e44ad;
-    color: white;
-    border: none;
-    padding: 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-order:hover {
-    background-color: #a29bfe;
-}
-
-/* MODAL DESIGN */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.8);
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background-color: #160d21;
-    color: #ffffff;
-    margin: 8% auto;
-    padding: 24px;
-    border: 1px solid #8e44ad;
-    width: 92%;
-    max-width: 450px;
-    border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
-}
-
-.animate-zoom {
-    animation: zoomIn 0.25s ease-out;
-}
-
-@keyframes zoomIn {
-    from {transform: scale(0.9); opacity: 0;}
-    to {transform: scale(1); opacity: 1;}
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #2d1b3f;
-    padding-bottom: 12px;
-}
-
-.modal-header h3 {
-    margin: 0;
-    color: #d6a2e8;
-    font-size: 1.3rem;
-}
-
-.close-btn {
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #a6a6a6;
-}
-
-.close-btn:hover {
-    color: #fff;
-}
-
-.form-group {
-    margin: 20px 0;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #d9d9d9;
-}
-
-.qty-control {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.qty-control input {
-    width: 65px;
-    text-align: center;
-    font-size: 1.2rem;
-    padding: 8px;
-    background-color: #261738;
-    border: 1px solid #44305a;
-    color: #fff;
-    border-radius: 8px;
-}
-
-.btn-qty {
-    background-color: #8e44ad;
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    font-size: 1.4rem;
-    cursor: pointer;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-qty:hover {
-    background-color: #a29bfe;
-}
-
-textarea {
-    width: 100%;
-    height: 80px;
-    background-color: #261738;
-    border: 1px solid #44305a;
-    color: #fff;
-    border-radius: 8px;
-    padding: 10px;
-    resize: none;
-    box-sizing: border-box;
-}
-
-.price-summary {
-    background-color: #261738;
-    padding: 14px;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    border: 1px dashed #8e44ad;
-}
-
-.price-summary strong {
-    color: #2ecc71;
-    font-size: 1.4rem;
-}
-
-.order-instruction {
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-    color: #b3b3b3;
-}
-
-.channels-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-
-.btn-opt {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: transform 0.1s;
-}
-
-.btn-opt:active {
-    transform: scale(0.97);
-}
-
-.bg-wa { background-color: #25D366; }
-.bg-tg { background-color: #0088cc; }
-.bg-sms { background-color: #f39c12; }
-.bg-form { background-color: #34495e; text-decoration: none; }
-
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 30px;
-    color: #666;
-    font-size: 0.85rem;
-    margin-top: 40px;
-    border-top: 1px solid #160d21;
+window.onclick = function(event) {
+    let modal = document.getElementById('orderModal');
+    if (event.target == modal) {
+        closeOrderModal();
+    }
 }
