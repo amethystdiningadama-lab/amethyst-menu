@@ -1,140 +1,91 @@
-// ==========================================
-// AMETHYST DINING - INTERACTION LOGIC (V2.2)
-// DEVELOPED FOR: MAKBEL ASCHALEW
-// ==========================================
-
-var APPS_SCRIPT_URL = "YOUR_DEPLOYED_WEB_APP_URL_HERE"; 
-
-var currentFoodName = "";
-var currentFoodPrice = 0;
-var activeCategory = "all";
-
-// 1. የካቴጎሪ ማጣሪያ ፈንክሽን
-function filterCategory(category, buttonElement) {
-    activeCategory = category;
-    let buttons = document.getElementsByClassName('category-btn');
-    for (let btn of buttons) {
-        btn.classList.remove('active');
+// --- Category Filtering (የምግብ ምድብ ማጣሪያ) ---
+function filterCategory(category) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    if (event) {
+        event.target.classList.add('active');
     }
-    buttonElement.classList.add('active');
-    runFilters();
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.style.display = (category === 'all' || item.getAttribute('data-category') === category) ? 'flex' : 'none';
+    });
 }
 
-// 2. የፍለጋ አሞሌ (Search) ፈንክሽን
+// --- Menu Search (ምግብ መፈለጊያ) ---
 function filterMenu() {
-    runFilters();
+    let k = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('.menu-item').forEach(i => {
+        i.style.display = (i.innerText.toLowerCase().includes(k)) ? 'flex' : 'none';
+    });
 }
 
-// 3. ሁለቱንም ማጣሪያዎች አንድ ላይ አጣምሮ የሚሰራ ዋና ፈንክሽን
-function runFilters() {
-    let searchValue = document.getElementById('searchBar').value.toLowerCase();
-    let cards = document.getElementsByClassName('menu-card');
-    
-    for (let card of cards) {
-        let cardCategory = card.getAttribute('data-category');
-        let cardName = card.querySelector('h3').innerText.toLowerCase();
-        
-        let matchesCategory = (activeCategory === "all" || cardCategory === activeCategory);
-        let matchesSearch = cardName.includes(searchValue);
-        
-        if (matchesCategory && matchesSearch) {
-            card.style.display = "flex";
-        } else {
-            card.style.display = "none";
-        }
-    }
-}
+// --- Dynamic Modal Operations (የትዕዛዝ ሞዳል ስራዎች) ---
+let currentFoodName = ""; 
+let currentFoodPrice = 0; 
 
-// ሞዳሉን መክፈቻ ፈንክሽን
+// ሞዳሉን (Popup) መክፈት
 function openOrderModal(foodName, price) {
     currentFoodName = foodName;
-    currentFoodPrice = parseFloat(price);
+    currentFoodPrice = price;
+    document.getElementById('modalFoodTitle').innerText = foodName;
     
-    document.getElementById('modalFoodName').innerText = foodName;
+    // እሴቶችን መመለስ
     document.getElementById('orderQty').value = 1;
     document.getElementById('specialNote').value = "";
     
-    updateTotalPrice();
-    document.getElementById('orderModal').style.display = 'block';
+    updateOrderLinks();
+    
+    document.getElementById('dynamicOrderModal').style.display = 'flex';
 }
 
-// ሞዳሉን መዝጊያ ፈንክሽን
-function closeOrderModal() {
-    document.getElementById('orderModal').style.display = 'none';
-}
-
-// የምግብ ብዛት ማስተካከያ (+ እና - ሲጫኑ)
+// የምግብ ብዛት መጨመሪያ እና መቀነሻ (+/-)
 function changeQty(amount) {
     let qtyInput = document.getElementById('orderQty');
-    let currentQty = parseInt(qtyInput.value) || 1;
-    let newQty = currentQty + amount;
-    if (newQty >= 1) {
-        qtyInput.value = newQty;
-        updateTotalPrice();
-    }
+    let currentVal = parseInt(qtyInput.value) || 1;
+    let newVal = currentVal + amount;
+    
+    if (newVal < 1) newVal = 1; 
+    
+    qtyInput.value = newVal;
+    updateOrderLinks();
 }
 
-// ጠቅላላ ዋጋን ማስሊያ
-function updateTotalPrice() {
-    let qty = parseInt(document.getElementById('orderQty').value) || 1;
-    let totalPrice = currentFoodPrice * qty;
-    document.getElementById('modalTotalPrice').innerText = totalPrice.toLocaleString() + " ETB";
-}
-
-// መረጃን ወደ መተግበሪያዎች ማስተላለፊያ ዋና ሲስተም
-function submitAndRedirect(channel) {
+// ጠቅላላ ዋጋን ማስላት እና መልዕክቱን ማዘመን
+function updateOrderLinks() {
     let qty = parseInt(document.getElementById('orderQty').value) || 1;
     let note = document.getElementById('specialNote').value.trim();
+    
     let totalPrice = currentFoodPrice * qty;
     
-    // የጀርባ ሺት መመዝገቢያ (ከተገናኘ)
-    let payload = {
-        action: "log_web_order",
-        source: "Web-" + channel,
-        foodName: currentFoodName,
-        quantity: qty,
-        totalPrice: totalPrice,
-        note: note || "-"
-    };
+    // በሞዳሉ ውስጥ ያለውን የዋጋ ማሳያ ማዘመን
+    document.getElementById('modalTotalPrice').innerText = totalPrice.toLocaleString() + " ETB";
     
-    fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        cache: "no-cache",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    }).catch(err => console.log("Background log updated."));
-    
-    // ለደንበኛው የሚዘጋጅ የትዕዛዝ መልዕክት ፎርማት
+    // ለተቀባዩ የሚደርሰው የአዲስ ትዕዛዝ መልዕክት ቅርጸት
     let messageText = `🍽️ አዲስ ትዕዛዝ ማቅረብ እፈልጋለሁ\n\n`;
     messageText += `▪️ የምግብ ስም: ${currentFoodName}\n`;
     messageText += `▪️ የምግብ ብዛት: ${qty}\n`; 
     messageText += `▪️ ጠቅላላ ዋጋ: ${totalPrice.toLocaleString()} ETB\n`; 
+    
     if (note !== "") {
         messageText += `▪️ ልዩ ፍላጎት: ${note}\n`;
     }
     
     let encodedMessage = encodeURIComponent(messageText);
-    let redirectUrl = "";
     
-    // ወደ ተመረጠው የእርስዎ የግል መስመር ማስተላለፊያ (+251969995662)
-    if (channel === 'WhatsApp') {
-        redirectUrl = "https://wa.me/251969995662?text=" + encodedMessage;
-    } else if (channel === 'Telegram') {
-        redirectUrl = "https://t.me/mr_makbel_aschalew?text=" + encodedMessage;
-    } else if (channel === 'SMS') {
-        redirectUrl = "sms:+251969995662?body=" + encodedMessage;
-    }
-    
-    if (redirectUrl !== "") {
-        window.open(redirectUrl, '_blank');
-    }
-    closeOrderModal();
+    // ሊንኮችን በራስ-ሰር ማዘመን
+    document.getElementById('modalFormLink').href = "https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform";
+    document.getElementById('modalWaLink').href = "https://wa.me/251969995662?text=" + encodedMessage;
+    document.getElementById('modalTgLink').href = "https://t.me/mr_makbel_aschalew?text=" + encodedMessage;
+    document.getElementById('modalSmsLink').href = "sms:+251969995662?body=" + encodedMessage;
 }
 
+// ሞዳሉን መዝጋት
+function closeOrderModal() {
+    document.getElementById('dynamicOrderModal').style.display = 'none';
+}
+
+// ሞዳሉን ከሳጥኑ ውጭ ሲጫኑ እንዲዘጋ ማድረግ
 window.onclick = function(event) {
-    let modal = document.getElementById('orderModal');
+    let modal = document.getElementById('dynamicOrderModal');
     if (event.target == modal) {
-        closeOrderModal();
+        modal.style.display = "none";
     }
 }
