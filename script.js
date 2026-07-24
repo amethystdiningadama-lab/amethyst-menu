@@ -6,6 +6,16 @@ const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID_HERE';
 let currentUnitPrice = 0;
 let currentItemTitle = '';
 
+// --- Helper: HTML Characters Escaping for Telegram ---
+function escapeHtml(text) {
+    if (!text) return '';
+    return text
+        .toString()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
 // --- Open Order Modal ---
 function openOrderModal(title, price) {
     currentItemTitle = title;
@@ -54,9 +64,9 @@ function toggleServiceFields() {
     const deliveryDiv = document.getElementById('deliveryAddressField');
     const appointmentDiv = document.getElementById('appointmentTimeField');
 
-    if(tableDiv) tableDiv.style.display = (serviceType === 'Dine-in') ? 'block' : 'none';
-    if(deliveryDiv) deliveryDiv.style.display = (serviceType === 'Delivery') ? 'block' : 'none';
-    if(appointmentDiv) appointmentDiv.style.display = (serviceType === 'Appointment') ? 'block' : 'none';
+    if (tableDiv) tableDiv.style.display = (serviceType === 'Dine-in') ? 'block' : 'none';
+    if (deliveryDiv) deliveryDiv.style.display = (serviceType === 'Delivery') ? 'block' : 'none';
+    if (appointmentDiv) appointmentDiv.style.display = (serviceType === 'Appointment') ? 'block' : 'none';
 }
 
 // --- Update Dynamic External Links (WhatsApp, Direct TG, SMS) ---
@@ -81,7 +91,7 @@ function updateOrderLinks() {
     const message = `🛎 *አዲስ ትዕዛዝ [AMETHYST DINING]*\n` +
                     `🍽 *ምግብ:* ${currentItemTitle}\n` +
                     `🔢 *ብዛት:* ${qty}\n` +
-                    `💰 *ጠቅላላ ዋጋ:* ${total} ETB\n` +
+                    `💰 *ጠቅላላ ዋጋ:* ${total.toLocaleString()} ETB\n` +
                     `📌 *ዓይነት:* ${serviceType} (${detail})\n` +
                     `👤 *ደንበኛ:* ${name}\n` +
                     `📞 *ስልክ:* ${phone}\n` +
@@ -91,9 +101,13 @@ function updateOrderLinks() {
     const encodedMsg = encodeURIComponent(message);
 
     // Update Links
-    document.getElementById('modalWaLink').href = `https://wa.me/251969995662?text=${encodedMsg}`;
-    document.getElementById('modalTgLink').href = `https://t.me/share/url?url=&text=${encodedMsg}`;
-    document.getElementById('modalSmsLink').href = `sms:+251969995662?body=${encodedMsg}`;
+    const waEl = document.getElementById('modalWaLink');
+    const tgEl = document.getElementById('modalTgLink');
+    const smsEl = document.getElementById('modalSmsLink');
+
+    if (waEl) waEl.href = `https://wa.me/251969995662?text=${encodedMsg}`;
+    if (tgEl) tgEl.href = `https://t.me/share/url?url=&text=${encodedMsg}`;
+    if (smsEl) smsEl.href = `sms:+251969995662?body=${encodedMsg}`;
 }
 
 // --- Process Order directly via Telegram Bot ---
@@ -115,28 +129,30 @@ async function processOrder(event) {
 
     let detail = '';
     if (serviceType === 'Dine-in') {
-        detail = `🪑 **የጠረጴዛ ቁጥር:** ${document.getElementById('tableNumber').value || 'አልተጠቀሰም'}`;
+        detail = `<b>🪑 የጠረጴዛ ቁጥር:</b> ${escapeHtml(document.getElementById('tableNumber').value || 'አልተጠቀሰም')}`;
     } else if (serviceType === 'Delivery') {
-        detail = `🛵 **የማድረሻ አድራሻ:** ${document.getElementById('deliveryAddress').value || 'አልተጠቀሰም'}`;
+        detail = `<b>🛵 የማድረሻ አድራሻ:</b> ${escapeHtml(document.getElementById('deliveryAddress').value || 'አልተጠቀሰም')}`;
     } else if (serviceType === 'Appointment') {
-        detail = `📅 **የቀጠሮ ሰዓት:** ${document.getElementById('appointmentTime').value || 'አልተጠቀሰም'}`;
+        detail = `<b>📅 የቀጠሮ ሰዓት:</b> ${escapeHtml(document.getElementById('appointmentTime').value || 'አልተጠቀሰም')}`;
     }
 
+    const currentTime = new Date().toLocaleTimeString('am-ET', { hour: '2-digit', minute: '2-digit' });
+
     const telegramMessage = `
-🛎 **አዲስ ትዕዛዝ [${orderId}]**
+<b>🛎 አዲስ ትዕዛዝ [${orderId}]</b>
 ━━━━━━━━━━━━━━━━━━
-🍽 **ምግብ:** ${currentItemTitle}
-🔢 **ብዛት:** ${qty}
-💰 **ጠቅላላ ዋጋ:** ${total} ETB
-📌 **ዓይነት:** ${serviceType}
+<b>🍽 ምግብ:</b> ${escapeHtml(currentItemTitle)}
+<b>🔢 ብዛት:</b> ${qty}
+<b>💰 ጠቅላላ ዋጋ:</b> ${total.toLocaleString()} ETB
+<b>📌 ዓይነት:</b> ${escapeHtml(serviceType)}
 ${detail}
-👤 **ደንበኛ:** ${name}
-📞 **ስልክ:** ${phone}
-💳 **የክፍያ መንገድ:** ${payment}
-📝 **ማስታወሻ:** ${note}
+<b>👤 ደንበኛ:</b> ${escapeHtml(name)}
+<b>📞 ስልክ:</b> ${escapeHtml(phone)}
+<b>💳 የክፍያ መንገድ:</b> ${escapeHtml(payment)}
+<b>📝 ማስታወሻ:</b> ${escapeHtml(note)}
 ━━━━━━━━━━━━━━━━━━
-⏰ **ሰዓት:** ${new Date().toLocaleTimeString('et-ET')}
-    `;
+<b>⏰ ሰዓት:</b> ${currentTime}
+    `.trim();
 
     try {
         const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -145,7 +161,7 @@ ${detail}
             body: JSON.stringify({
                 chat_id: TELEGRAM_CHAT_ID,
                 text: telegramMessage,
-                parse_mode: 'Markdown'
+                parse_mode: 'HTML'
             })
         });
 
@@ -203,15 +219,16 @@ function toggleNoResults(count) {
         noResultEl.id = 'noResultsMsg';
         noResultEl.style.cssText = 'text-align:center; padding:30px; width:100%; color:#d4af37;';
         noResultEl.innerHTML = '<i class="fas fa-search-minus" style="font-size:2.5rem; margin-bottom:10px;"></i><p>ምንም የተገኘ ምግብ የለም</p>';
-        document.getElementById('menuGrid').appendChild(noResultEl);
+        const menuGrid = document.getElementById('menuGrid');
+        if (menuGrid) menuGrid.appendChild(noResultEl);
     }
     noResultEl.style.display = (count === 0) ? 'block' : 'none';
 }
 
 // Close Modal when clicking outside
-window.onclick = function(event) {
+window.addEventListener('click', function(event) {
     const modal = document.getElementById('dynamicOrderModal');
     if (event.target === modal) {
         closeOrderModal();
     }
-};
+});
