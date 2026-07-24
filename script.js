@@ -1,19 +1,23 @@
 // --- Category Filtering (የምግብ ምድብ ማጣሪያ) ---
 function filterCategory(category) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    if (event) {
+    
+    if (event && event.target) {
         event.target.classList.add('active');
     }
+
     document.querySelectorAll('.menu-item').forEach(item => {
-        item.style.display = (category === 'all' || item.getAttribute('data-category') === category) ? 'flex' : 'none';
+        let itemCat = item.getAttribute('data-category');
+        item.style.display = (category === 'all' || itemCat === category) ? 'flex' : 'none';
     });
 }
 
 // --- Menu Search (ምግብ መፈለጊያ) ---
 function filterMenu() {
-    let k = document.getElementById('searchInput').value.toLowerCase();
+    let k = document.getElementById('searchInput').value.toLowerCase().trim();
     document.querySelectorAll('.menu-item').forEach(i => {
-        i.style.display = (i.innerText.toLowerCase().includes(k)) ? 'flex' : 'none';
+        let textContent = i.innerText.toLowerCase();
+        i.style.display = (textContent.includes(k)) ? 'flex' : 'none';
     });
 }
 
@@ -27,7 +31,6 @@ function openOrderModal(foodName, price) {
     currentFoodPrice = price;
     document.getElementById('modalFoodTitle').innerText = foodName;
     
-    // እሴቶችን መመለስ
     document.getElementById('orderQty').value = 1;
     document.getElementById('specialNote').value = "";
     
@@ -48,17 +51,15 @@ function changeQty(amount) {
     updateOrderLinks();
 }
 
-// ጠቅላላ ዋጋን ማስላት እና መልዕክቱን ማዘመን
+// ጠቅላላ ዋጋን ማስላት እና የትዕዛዝ ሊንኮችን ማዘመን
 function updateOrderLinks() {
     let qty = parseInt(document.getElementById('orderQty').value) || 1;
     let note = document.getElementById('specialNote').value.trim();
     
     let totalPrice = currentFoodPrice * qty;
     
-    // በሞዳሉ ውስጥ ያለውን የዋጋ ማሳያ ማዘመን
     document.getElementById('modalTotalPrice').innerText = totalPrice.toLocaleString() + " ETB";
     
-    // ለተቀባዩ የሚደርሰው የአዲስ ትዕዛዝ መልዕክት ቅርጸት
     let messageText = `🍽️ አዲስ ትዕዛዝ ማቅረብ እፈልጋለሁ\n\n`;
     messageText += `▪️ የምግብ ስም: ${currentFoodName}\n`;
     messageText += `▪️ የምግብ ብዛት: ${qty}\n`; 
@@ -68,9 +69,11 @@ function updateOrderLinks() {
         messageText += `▪️ ልዩ ፍላጎት: ${note}\n`;
     }
     
+    messageText += `\n(ክፍያ በቴሌብር/ንግድ ባንክ ተፈጽሟል፣ ደረሰኙ ከዚህ ጋር ተያይዟል)`;
+    
     let encodedMessage = encodeURIComponent(messageText);
     
-    // ሊንኮችን በራስ-ሰር ማዘመን
+    // ትክክለኛው የሬስቶራንቱ ስልክ ቁጥር (+251969995662) እዚህ ተካቷል
     document.getElementById('modalFormLink').href = "https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform";
     document.getElementById('modalWaLink').href = "https://wa.me/251969995662?text=" + encodedMessage;
     document.getElementById('modalTgLink').href = "https://t.me/mr_makbel_aschalew?text=" + encodedMessage;
@@ -88,4 +91,4 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
-}
+};
