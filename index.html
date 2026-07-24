@@ -4,16 +4,493 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Amethyst Dining - Premium Digital Menu</title>
+    
+    <!-- Icons & Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.0">
+    
+    <!-- ALL-IN-ONE COMPLETE STYLES -->
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: #0b0512; 
+            color: #ffffff; 
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            overflow-x: hidden;
+            padding-bottom: 70px;
+        }
+
+        /* Header & Logo */
+        .brand-header {
+            text-align: center;
+            padding: 25px 15px 15px 15px;
+            background: linear-gradient(180deg, #160c24 0%, #0b0512 100%);
+        }
+
+        .logo-img { 
+            max-width: 150px; 
+            width: 100%; 
+            height: auto; 
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+
+        .brand-title {
+            color: #d4af37;
+            font-size: 26px;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+
+        .brand-subtitle {
+            color: #8a6da8;
+            font-size: 12px;
+            letter-spacing: 5px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 10px 15px 20px 15px;
+        }
+
+        .hero-heading {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .tagline {
+            color: #d4af37;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .hero-buttons a {
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-hero-primary { background: #d4af37; color: #0b0512; }
+        .btn-hero-secondary { border: 1px solid #d4af37; color: #d4af37; }
+        .btn-hero-call { background: #25D366; color: #fff; }
+
+        /* Search Section */
+        .search-container {
+            padding: 0 15px 15px 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            color: #d4af37;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px 12px 12px 42px;
+            background: #160c24;
+            border: 1px solid #332244;
+            border-radius: 25px;
+            color: #fff;
+            outline: none;
+            font-size: 13px;
+        }
+
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            padding: 0 15px 15px 15px;
+            scrollbar-width: none;
+        }
+        .category-tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            background: #160c24;
+            color: #aaa;
+            border: 1px solid #332244;
+            padding: 8px 16px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: #d4af37;
+            color: #0b0512;
+            font-weight: bold;
+            border-color: #d4af37;
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            padding: 0 15px 25px 15px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .menu-item {
+            background: #160c24;
+            border: 1px solid #2a183d;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .item-title {
+            font-size: 15px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .item-price {
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .item-desc {
+            color: #a8a8a8;
+            font-size: 12px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .v-badge {
+            background: #25D366;
+            color: #fff;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 5px;
+        }
+
+        .btn-order-inline {
+            background: linear-gradient(135deg, #d4af37, #aa8314);
+            color: #0b0512;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        /* Info Sections & Payment */
+        .payment-box-section, .info-section {
+            background: #160c24;
+            margin: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #332244;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .payment-box-section h2, .info-section h2 {
+            color: #d4af37;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .payment-box-section p, .info-section p {
+            font-size: 12px;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .payment-accounts {
+            margin-top: 12px;
+            background: #0b0512;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .payment-row { margin-bottom: 6px; }
+
+        .map-btn {
+            display: inline-block;
+            margin-top: 10px;
+            background: #d4af37;
+            color: #0b0512;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .qr-image {
+            max-width: 120px;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #8a6da8;
+            font-size: 12px;
+            background: #07030a;
+        }
+
+        footer h3 { color: #d4af37; margin-bottom: 5px; }
+
+        /* Floating Action Buttons */
+        .action-buttons-bar {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 99;
+        }
+
+        .btn-floating {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        /* ==========================================
+           FIXED POPUP / MODAL OVERLAY STYLES
+           ========================================== */
+        .order-modal {
+            display: none;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background-color: rgba(0, 0, 0, 0.88) !important;
+            z-index: 99999 !important;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .order-modal-content {
+            background: #160c24 !important;
+            border: 1px solid #d4af37 !important;
+            border-radius: 16px !important;
+            width: 100% !important;
+            max-width: 450px !important;
+            padding: 20px !important;
+            position: relative !important;
+            max-height: 85vh !important;
+            overflow-y: auto !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9) !important;
+        }
+
+        .btn-close-modal {
+            position: absolute !important;
+            top: 12px !important;
+            right: 15px !important;
+            background: transparent !important;
+            border: none !important;
+            color: #d4af37 !important;
+            font-size: 22px !important;
+            cursor: pointer !important;
+        }
+
+        #modalFoodTitle {
+            color: #d4af37 !important;
+            font-size: 1.2rem !important;
+            margin-bottom: 15px !important;
+            text-align: center !important;
+            padding-right: 20px !important;
+        }
+
+        .form-group {
+            margin-bottom: 12px !important;
+            text-align: left !important;
+        }
+
+        .form-group label {
+            display: block !important;
+            font-size: 12px !important;
+            color: #d4af37 !important;
+            margin-bottom: 5px !important;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100% !important;
+            padding: 10px !important;
+            background: #0b0512 !important;
+            border: 1px solid #332244 !important;
+            border-radius: 8px !important;
+            color: #fff !important;
+            font-size: 13px !important;
+            outline: none !important;
+        }
+
+        .qty-selector {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+        .qty-btn {
+            background: #d4af37 !important;
+            color: #0b0512 !important;
+            border: none !important;
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 6px !important;
+            font-weight: bold !important;
+            font-size: 18px !important;
+            cursor: pointer !important;
+        }
+
+        .qty-selector input {
+            text-align: center !important;
+            width: 60px !important;
+            font-weight: bold !important;
+        }
+
+        .modal-payment-info {
+            background: #0b0512 !important;
+            padding: 12px !important;
+            border-radius: 8px !important;
+            margin-top: 15px !important;
+            border: 1px dashed #d4af37 !important;
+        }
+
+        .modal-total-box {
+            display: flex !important;
+            justify-content: space-between !important;
+            font-size: 14px !important;
+            font-weight: bold !important;
+            color: #d4af37 !important;
+            margin-bottom: 8px !important;
+        }
+
+        .modal-accounts {
+            font-size: 12px !important;
+            color: #ddd !important;
+            line-height: 1.6 !important;
+        }
+
+        .acc-name {
+            color: #a8a8a8 !important;
+            font-size: 11px !important;
+        }
+
+        .payment-hint {
+            font-size: 11px !important;
+            color: #bbb !important;
+            margin-top: 6px !important;
+        }
+
+        .btn-submit-order {
+            background: linear-gradient(135deg, #25D366, #128C7E) !important;
+            color: #fff !important;
+            border: none !important;
+            width: 100% !important;
+            padding: 12px !important;
+            border-radius: 25px !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            margin-top: 15px !important;
+            cursor: pointer !important;
+        }
+
+        .order-channels {
+            margin-top: 15px !important;
+        }
+
+        .channel-label {
+            font-size: 11px !important;
+            color: #aaa !important;
+            display: block !important;
+            margin-bottom: 8px !important;
+            text-align: center !important;
+        }
+
+        .channels-grid {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 8px !important;
+        }
+
+        .btn-opt {
+            padding: 8px !important;
+            border-radius: 6px !important;
+            text-decoration: none !important;
+            color: #fff !important;
+            font-size: 12px !important;
+            text-align: center !important;
+            font-weight: 600 !important;
+            display: block !important;
+        }
+
+        .bg-wa { background: #25D366 !important; }
+        .bg-tg { background: #0088cc !important; }
+        .bg-sms { background: #ff9800 !important; }
+        .bg-form { background: #673ab7 !important; }
+        .bg-call { background: #2196F3 !important; }
+    </style>
 </head>
 <body>
 
     <!-- Header Section -->
     <header class="brand-header">
         <div class="logo-area">
-            <img src="logo.png" alt="Amethyst Logo" class="logo-img">
+            <img src="logo.png" alt="Amethyst Logo" class="logo-img" onerror="this.style.display='none'">
             <h1 class="brand-title">AMETHYST</h1>
             <p class="brand-subtitle">DINING</p>
         </div>
@@ -591,21 +1068,21 @@
     <!-- Hours -->
     <section class="info-section">
         <h2>Opening Hours</h2>
-        <p class="info-text">Monday – Sunday</p>
-        <p class="info-text highlight">10:00 AM – 11:00 PM</p>
+        <p>Monday – Sunday</p>
+        <p style="color:#d4af37; font-weight:bold; margin-top:4px;">10:00 AM – 11:00 PM</p>
     </section>
 
     <!-- Location -->
     <section class="info-section">
         <h2>📍 Location</h2>
-        <p class="info-text">Adama, Ethiopia</p>
+        <p>Adama, Ethiopia</p>
         <a href="https://share.google/YWP23HCNPEKCWyFA8" target="_blank" class="map-btn">Open in Google Maps</a>
     </section>
 
     <!-- QR Code -->
     <section class="info-section">
         <h2>Scan to View Our Digital Menu</h2>
-        <img src="qr.png" alt="QR Code" class="qr-image">
+        <img src="qr.png" alt="QR Code" class="qr-image" onerror="this.style.display='none'">
     </section>
 
     <!-- Footer -->
@@ -613,7 +1090,7 @@
         <h3>AMETHYST DINING</h3>
         <p>☎ +251 96 999 5662</p>
         <p>📍 Adama, Ethiopia</p>
-        <p class="footer-note">💜 Thank you for choosing AMETHYST DINING</p>
+        <p style="margin-top:8px;">💜 Thank you for choosing AMETHYST DINING</p>
     </footer>
 
     <!-- Floating Quick Action Bar -->
@@ -623,10 +1100,10 @@
         <a href="tel:+251969995662" class="btn-floating bg-call" title="Call Now"><i class="fas fa-phone"></i></a>
     </div>
 
-    <!-- Dynamic Order Modal -->
+    <!-- Dynamic Order Modal Popup Window -->
     <div id="dynamicOrderModal" class="order-modal">
         <div class="order-modal-content">
-            <button class="btn-close-modal" onclick="closeOrderModal()"><i class="fas fa-times"></i></button>
+            <button type="button" class="btn-close-modal" onclick="closeOrderModal()"><i class="fas fa-times"></i></button>
             
             <h3 id="modalFoodTitle">Food Name</h3>
 
@@ -692,7 +1169,6 @@
                 </div>
 
                 <div class="modal-payment-info">
-                    <div class="modal-payment-header"><i class="fas fa-credit-card"></i> የክፍያ መረጃ (Payment Details)</div>
                     <div class="modal-total-box">
                         <span>ጠቅላላ ዋጋ (Total Price):</span>
                         <strong id="modalTotalPrice">0 ETB</strong>
@@ -704,12 +1180,12 @@
                     <p class="payment-hint">እባክዎ መጀመሪያ ክፍያውን ፈጽመው ሲልኩ ደረሰኙን (Screenshot) ያያይዙ።</p>
                 </div>
 
-                <!-- Telegram Bot Submit Button -->
+                <!-- Submit Button -->
                 <button type="submit" id="submitOrderBtn" class="btn-submit-order">
-                    <i class="fas fa-paper-plane"></i> በቴሌግራም ቦት በቀጥታ ይላኩ
+                    <i class="fab fa-whatsapp"></i> በ WhatsApp በቀጥታ ይላኩ
                 </button>
 
-                <!-- External Social Links -->
+                <!-- Channels -->
                 <div class="order-channels">
                     <label class="channel-label">ወይም በሌሎች አማራጮች ያጋሩ / ይላኩ</label>
                     <div class="channels-grid">
@@ -724,7 +1200,154 @@
         </div>
     </div>
 
-    <!-- Script File Call -->
-    <script src="script.js?v=2.0"></script>
+    <!-- ALL-IN-ONE COMPLETE JAVASCRIPT LOGIC -->
+    <script>
+        let selectedItemName = '';
+        let selectedItemPrice = 0;
+        let currentQuantity = 1;
+
+        function openOrderModal(itemName, itemPrice) {
+            selectedItemName = itemName;
+            selectedItemPrice = itemPrice;
+            currentQuantity = 1;
+
+            document.getElementById('modalFoodTitle').innerText = itemName;
+            document.getElementById('orderQty').value = 1;
+
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('specialNote').value = '';
+            document.getElementById('serviceType').value = 'Dine-in';
+
+            toggleServiceFields();
+            calculateTotal();
+            updateOrderLinks();
+
+            document.getElementById('dynamicOrderModal').style.display = 'flex';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('dynamicOrderModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('dynamicOrderModal');
+            if (event.target === modal) {
+                closeOrderModal();
+            }
+        };
+
+        function changeQty(amount) {
+            let qtyInput = document.getElementById('orderQty');
+            let newQty = parseInt(qtyInput.value) + amount;
+
+            if (newQty >= 1) {
+                qtyInput.value = newQty;
+                currentQuantity = newQty;
+                calculateTotal();
+                updateOrderLinks();
+            }
+        }
+
+        function calculateTotal() {
+            let totalPrice = selectedItemPrice * currentQuantity;
+            document.getElementById('modalTotalPrice').innerText = totalPrice.toLocaleString() + ' ETB';
+        }
+
+        function toggleServiceFields() {
+            const serviceType = document.getElementById('serviceType').value;
+            const tableField = document.getElementById('tableNumberField');
+            const deliveryField = document.getElementById('deliveryAddressField');
+            const appointmentField = document.getElementById('appointmentTimeField');
+
+            tableField.style.display = 'none';
+            deliveryField.style.display = 'none';
+            appointmentField.style.display = 'none';
+
+            if (serviceType === 'Dine-in') {
+                tableField.style.display = 'block';
+            } else if (serviceType === 'Delivery') {
+                deliveryField.style.display = 'block';
+            } else if (serviceType === 'Appointment') {
+                appointmentField.style.display = 'block';
+            }
+        }
+
+        function updateOrderLinks() {
+            const serviceType = document.getElementById('serviceType').value;
+            const customerName = document.getElementById('customerName').value || 'ያልተጠቀሰ';
+            const customerPhone = document.getElementById('customerPhone').value || 'ያልተጠቀሰ';
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const specialNote = document.getElementById('specialNote').value || 'የለም';
+            const totalPrice = selectedItemPrice * currentQuantity;
+
+            let locationOrDetails = '';
+            if (serviceType === 'Dine-in') {
+                const table = document.getElementById('tableNumber').value || 'ያልተጠቀሰ';
+                locationOrDetails = `🪑 የጠረጴዛ ቁጥር: ${table}`;
+            } else if (serviceType === 'Delivery') {
+                const addr = document.getElementById('deliveryAddress').value || 'ያልተጠቀሰ';
+                locationOrDetails = `📍 የማድረሻ አድራሻ: ${addr}`;
+            } else if (serviceType === 'Appointment') {
+                const time = document.getElementById('appointmentTime').value || 'ያልተጠቀሰ';
+                locationOrDetails = `⏰ የቀጠሮ ሰዓት: ${time}`;
+            }
+
+            let message = `🍽️ *አዲስ የምግብ ትዕዛዝ - AMETHYST DINING*\n\n` +
+                `🍕 *ምግብ:* ${selectedItemName}\n` +
+                `🔢 *ብዛት:* ${currentQuantity}\n` +
+                `💰 *ጠቅላላ ዋጋ:* ${totalPrice.toLocaleString()} ETB\n` +
+                `🛎️ *የአገልግሎት ዓይነት:* ${serviceType}\n` +
+                `${locationOrDetails}\n\n` +
+                `👤 *የደንበኛ ስም:* ${customerName}\n` +
+                `📞 *ስልክ ቁጥር:* ${customerPhone}\n` +
+                `💳 *የክፍያ መንገድ:* ${paymentMethod}\n` +
+                `📝 *ልዩ ማስታወሻ:* ${specialNote}`;
+
+            let encodedMessage = encodeURIComponent(message);
+
+            document.getElementById('modalWaLink').href = `https://wa.me/251969995662?text=${encodedMessage}`;
+            document.getElementById('modalTgLink').href = `https://t.me/Amethyst_Dining?text=${encodedMessage}`;
+            document.getElementById('modalSmsLink').href = `sms:+251969995662?body=${encodedMessage}`;
+        }
+
+        function processOrder(event) {
+            event.preventDefault();
+            updateOrderLinks();
+            const waUrl = document.getElementById('modalWaLink').href;
+            window.open(waUrl, '_blank');
+        }
+
+        function filterMenu() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let items = document.querySelectorAll('.menu-item');
+
+            items.forEach(item => {
+                let title = item.querySelector('.item-title').innerText.toLowerCase();
+                let desc = item.querySelector('.item-desc').innerText.toLowerCase();
+
+                if (title.includes(input) || desc.includes(input)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function filterCategory(category, event) {
+            let buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (event) event.target.classList.add('active');
+
+            let items = document.querySelectorAll('.menu-item');
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
