@@ -1,234 +1,179 @@
-// --- Telegram Bot API Configuration ---
-// እባክዎ የራስዎን Bot Token እና Chat ID እዚህ ጋር ያስገቡ
-const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE';
-const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID_HERE';
+/* ==========================================
+   GLOBAL VARIABLES
+   ========================================== */
+let selectedItemName = '';
+let selectedItemPrice = 0;
+let currentQuantity = 1;
 
-let currentUnitPrice = 0;
-let currentItemTitle = '';
+/* ==========================================
+   OPEN & CLOSE MODAL FUNCTIONS
+   ========================================== */
+function openOrderModal(itemName, itemPrice) {
+    selectedItemName = itemName;
+    selectedItemPrice = itemPrice;
+    currentQuantity = 1;
 
-// --- Helper: HTML Characters Escaping for Telegram ---
-function escapeHtml(text) {
-    if (!text) return '';
-    return text
-        .toString()
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-}
-
-// --- Open Order Modal ---
-function openOrderModal(title, price) {
-    currentItemTitle = title;
-    currentUnitPrice = price;
-    
-    document.getElementById('modalFoodTitle').innerText = title;
+    // Set title and quantity reset
+    document.getElementById('modalFoodTitle').innerText = itemName;
     document.getElementById('orderQty').value = 1;
-    
-    calculateTotal();
+
+    // Reset default inputs
+    document.getElementById('customerName').value = '';
+    document.getElementById('customerPhone').value = '';
+    document.getElementById('specialNote').value = '';
+    document.getElementById('serviceType').value = 'Dine-in';
+
+    // Update prices & form visibility
     toggleServiceFields();
-    updateOrderLinks();
-    
-    document.getElementById('dynamicOrderModal').style.display = 'flex';
-}
-
-// --- Close Order Modal ---
-function closeOrderModal() {
-    document.getElementById('dynamicOrderModal').style.display = 'none';
-}
-
-// --- Change Quantity ---
-function changeQty(delta) {
-    let qtyInput = document.getElementById('orderQty');
-    let currentQty = parseInt(qtyInput.value) || 1;
-    currentQty += delta;
-    
-    if (currentQty < 1) currentQty = 1;
-    qtyInput.value = currentQty;
-    
     calculateTotal();
     updateOrderLinks();
+
+    // Show Modal
+    const modal = document.getElementById('dynamicOrderModal');
+    modal.style.display = 'flex';
 }
 
-// --- Calculate Total Price ---
-function calculateTotal() {
-    let qty = parseInt(document.getElementById('orderQty').value) || 1;
-    let total = qty * currentUnitPrice;
-    document.getElementById('modalTotalPrice').innerText = total.toLocaleString() + ' ETB';
-    return total;
+function closeOrderModal() {
+    const modal = document.getElementById('dynamicOrderModal');
+    modal.style.display = 'none';
 }
 
-// --- Toggle Fields Based on Service Type ---
-function toggleServiceFields() {
-    const serviceType = document.getElementById('serviceType').value;
-    const tableDiv = document.getElementById('tableNumberField');
-    const deliveryDiv = document.getElementById('deliveryAddressField');
-    const appointmentDiv = document.getElementById('appointmentTimeField');
-
-    if (tableDiv) tableDiv.style.display = (serviceType === 'Dine-in') ? 'block' : 'none';
-    if (deliveryDiv) deliveryDiv.style.display = (serviceType === 'Delivery') ? 'block' : 'none';
-    if (appointmentDiv) appointmentDiv.style.display = (serviceType === 'Appointment') ? 'block' : 'none';
-}
-
-// --- Update Dynamic External Links (WhatsApp, Direct TG, SMS) ---
-function updateOrderLinks() {
-    const qty = document.getElementById('orderQty').value || 1;
-    const total = calculateTotal();
-    const serviceType = document.getElementById('serviceType').value;
-    const name = document.getElementById('customerName').value || 'አልተጠቀሰም';
-    const phone = document.getElementById('customerPhone').value || 'አልተጠቀሰም';
-    const payment = document.getElementById('paymentMethod').value;
-    const note = document.getElementById('specialNote').value || 'የለም';
-    
-    let detail = '';
-    if (serviceType === 'Dine-in') {
-        detail = `የጠረጴዛ ቁጥር: ${document.getElementById('tableNumber').value || 'አልተጠቀሰም'}`;
-    } else if (serviceType === 'Delivery') {
-        detail = `የማድረሻ አድራሻ: ${document.getElementById('deliveryAddress').value || 'አልተጠቀሰም'}`;
-    } else if (serviceType === 'Appointment') {
-        detail = `የቀጠሮ ሰዓት: ${document.getElementById('appointmentTime').value || 'አልተጠቀሰም'}`;
-    }
-
-    const message = `🛎 *አዲስ ትዕዛዝ [AMETHYST DINING]*\n` +
-                    `🍽 *ምግብ:* ${currentItemTitle}\n` +
-                    `🔢 *ብዛት:* ${qty}\n` +
-                    `💰 *ጠቅላላ ዋጋ:* ${total.toLocaleString()} ETB\n` +
-                    `📌 *ዓይነት:* ${serviceType} (${detail})\n` +
-                    `👤 *ደንበኛ:* ${name}\n` +
-                    `📞 *ስልክ:* ${phone}\n` +
-                    `💳 *ክፍያ:* ${payment}\n` +
-                    `📝 *ማስታወሻ:* ${note}`;
-
-    const encodedMsg = encodeURIComponent(message);
-
-    // Update Links
-    const waEl = document.getElementById('modalWaLink');
-    const tgEl = document.getElementById('modalTgLink');
-    const smsEl = document.getElementById('modalSmsLink');
-
-    if (waEl) waEl.href = `https://wa.me/251969995662?text=${encodedMsg}`;
-    if (tgEl) tgEl.href = `https://t.me/share/url?url=&text=${encodedMsg}`;
-    if (smsEl) smsEl.href = `sms:+251969995662?body=${encodedMsg}`;
-}
-
-// --- Process Order directly via Telegram Bot ---
-async function processOrder(event) {
-    event.preventDefault();
-
-    const submitBtn = document.getElementById('submitOrderBtn');
-    submitBtn.innerText = 'እየተላከ ነው...';
-    submitBtn.disabled = true;
-
-    const orderId = 'AMD-' + Math.floor(100000 + Math.random() * 900000);
-    const qty = document.getElementById('orderQty').value || 1;
-    const total = calculateTotal();
-    const serviceType = document.getElementById('serviceType').value;
-    const name = document.getElementById('customerName').value;
-    const phone = document.getElementById('customerPhone').value;
-    const payment = document.getElementById('paymentMethod').value;
-    const note = document.getElementById('specialNote').value || 'የለም';
-
-    let detail = '';
-    if (serviceType === 'Dine-in') {
-        detail = `<b>🪑 የጠረጴዛ ቁጥር:</b> ${escapeHtml(document.getElementById('tableNumber').value || 'አልተጠቀሰም')}`;
-    } else if (serviceType === 'Delivery') {
-        detail = `<b>🛵 የማድረሻ አድራሻ:</b> ${escapeHtml(document.getElementById('deliveryAddress').value || 'አልተጠቀሰም')}`;
-    } else if (serviceType === 'Appointment') {
-        detail = `<b>📅 የቀጠሮ ሰዓት:</b> ${escapeHtml(document.getElementById('appointmentTime').value || 'አልተጠቀሰም')}`;
-    }
-
-    const currentTime = new Date().toLocaleTimeString('am-ET', { hour: '2-digit', minute: '2-digit' });
-
-    const telegramMessage = `
-<b>🛎 አዲስ ትዕዛዝ [${orderId}]</b>
-━━━━━━━━━━━━━━━━━━
-<b>🍽 ምግብ:</b> ${escapeHtml(currentItemTitle)}
-<b>🔢 ብዛት:</b> ${qty}
-<b>💰 ጠቅላላ ዋጋ:</b> ${total.toLocaleString()} ETB
-<b>📌 ዓይነት:</b> ${escapeHtml(serviceType)}
-${detail}
-<b>👤 ደንበኛ:</b> ${escapeHtml(name)}
-<b>📞 ስልክ:</b> ${escapeHtml(phone)}
-<b>💳 የክፍያ መንገድ:</b> ${escapeHtml(payment)}
-<b>📝 ማስታወሻ:</b> ${escapeHtml(note)}
-━━━━━━━━━━━━━━━━━━
-<b>⏰ ሰዓት:</b> ${currentTime}
-    `.trim();
-
-    try {
-        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: TELEGRAM_CHAT_ID,
-                text: telegramMessage,
-                parse_mode: 'HTML'
-            })
-        });
-
-        if (response.ok) {
-            alert(`ትዕዛዝዎ በተሳካ ሁኔታ ተልኳል!\nየማጣቀሻ ቁጥርዎ: ${orderId}`);
-            closeOrderModal();
-            document.getElementById('orderForm').reset();
-        } else {
-            alert('ትዕዛዙን በቦት ማስተላለፍ አልተቻለም። እባክዎ በ script.js ውስጥ Bot Token እና Chat ID ማስተካከልዎን ያረጋግጡ። ወይም ከታች ያሉትን የ WhatsApp/Telegram አማራጮች ይጠቀሙ።');
-        }
-    } catch (error) {
-        console.error('Error sending order:', error);
-        alert('የኔትወርክ ስህተት አጋጥሟል። እባክዎ ኢንተርኔትዎን ያረጋግጡ።');
-    } finally {
-        submitBtn.innerText = 'በቴሌግራም ቦት በቀጥታ ይላኩ';
-        submitBtn.disabled = false;
-    }
-}
-
-// --- Filtering Functions ---
-function filterCategory(category, evt) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    if (evt && evt.target) {
-        evt.target.classList.add('active');
-    }
-
-    let visibleCount = 0;
-    document.querySelectorAll('.menu-item').forEach(item => {
-        let isMatch = (category === 'all' || item.getAttribute('data-category') === category);
-        item.style.display = isMatch ? 'flex' : 'none';
-        if (isMatch) visibleCount++;
-    });
-
-    toggleNoResults(visibleCount);
-}
-
-function filterMenu() {
-    let keyword = document.getElementById('searchInput').value.toLowerCase();
-    let visibleCount = 0;
-
-    document.querySelectorAll('.menu-item').forEach(item => {
-        let text = item.innerText.toLowerCase();
-        let isMatch = text.includes(keyword);
-        item.style.display = isMatch ? 'flex' : 'none';
-        if (isMatch) visibleCount++;
-    });
-
-    toggleNoResults(visibleCount);
-}
-
-function toggleNoResults(count) {
-    let noResultEl = document.getElementById('noResultsMsg');
-    if (!noResultEl) {
-        noResultEl = document.createElement('div');
-        noResultEl.id = 'noResultsMsg';
-        noResultEl.style.cssText = 'text-align:center; padding:30px; width:100%; color:#d4af37;';
-        noResultEl.innerHTML = '<i class="fas fa-search-minus" style="font-size:2.5rem; margin-bottom:10px;"></i><p>ምንም የተገኘ ምግብ የለም</p>';
-        const menuGrid = document.getElementById('menuGrid');
-        if (menuGrid) menuGrid.appendChild(noResultEl);
-    }
-    noResultEl.style.display = (count === 0) ? 'block' : 'none';
-}
-
-// Close Modal when clicking outside
-window.addEventListener('click', function(event) {
+// Window click to close modal if clicked outside
+window.onclick = function(event) {
     const modal = document.getElementById('dynamicOrderModal');
     if (event.target === modal) {
         closeOrderModal();
     }
-});
+};
+
+/* ==========================================
+   QUANTITY & PRICE CALCULATION
+   ========================================== */
+function changeQty(amount) {
+    let qtyInput = document.getElementById('orderQty');
+    let newQty = parseInt(qtyInput.value) + amount;
+
+    if (newQty >= 1) {
+        qtyInput.value = newQty;
+        currentQuantity = newQty;
+        calculateTotal();
+        updateOrderLinks();
+    }
+}
+
+function calculateTotal() {
+    let totalPrice = selectedItemPrice * currentQuantity;
+    document.getElementById('modalTotalPrice').innerText = totalPrice.toLocaleString() + ' ETB';
+}
+
+/* ==========================================
+   TOGGLE SERVICE FIELDS (Dine-in / Delivery / Appointment)
+   ========================================== */
+function toggleServiceFields() {
+    const serviceType = document.getElementById('serviceType').value;
+    const tableField = document.getElementById('tableNumberField');
+    const deliveryField = document.getElementById('deliveryAddressField');
+    const appointmentField = document.getElementById('appointmentTimeField');
+
+    // Hide all first
+    tableField.style.display = 'none';
+    deliveryField.style.display = 'none';
+    appointmentField.style.display = 'none';
+
+    if (serviceType === 'Dine-in') {
+        tableField.style.display = 'block';
+    } else if (serviceType === 'Delivery') {
+        deliveryField.style.display = 'block';
+    } else if (serviceType === 'Appointment') {
+        appointmentField.style.display = 'block';
+    }
+}
+
+/* ==========================================
+   DYNAMIC ORDER LINK GENERATOR (WhatsApp / Telegram / SMS)
+   ========================================== */
+function updateOrderLinks() {
+    const serviceType = document.getElementById('serviceType').value;
+    const customerName = document.getElementById('customerName').value || 'ያልተጠቀሰ';
+    const customerPhone = document.getElementById('customerPhone').value || 'ያልተጠቀሰ';
+    const paymentMethod = document.getElementById('paymentMethod').value;
+    const specialNote = document.getElementById('specialNote').value || 'የለም';
+    const totalPrice = selectedItemPrice * currentQuantity;
+
+    let locationOrDetails = '';
+    if (serviceType === 'Dine-in') {
+        const table = document.getElementById('tableNumber').value || 'ያልተጠቀሰ';
+        locationOrDetails = `🪑 የጠረጴዛ ቁጥር: ${table}`;
+    } else if (serviceType === 'Delivery') {
+        const addr = document.getElementById('deliveryAddress').value || 'ያልተጠቀሰ';
+        locationOrDetails = `📍 ማድረሻ አድራሻ: ${addr}`;
+    } else if (serviceType === 'Appointment') {
+        const time = document.getElementById('appointmentTime').value || 'ያልተጠቀሰ';
+        locationOrDetails = `⏰ የቀጠሮ ሰዓት: ${time}`;
+    }
+
+    // Format text message
+    let message = `🍽️ *አዲስ የምግብ ትዕዛዝ - AMETHYST DINING*\n\n` +
+        `🍕 *ምግብ:* ${selectedItemName}\n` +
+        `🔢 *ብዛት:* ${currentQuantity}\n` +
+        `💰 *ጠቅላላ ዋጋ:* ${totalPrice.toLocaleString()} ETB\n` +
+        `🛎️ *የአገልግሎት ዓይነት:* ${serviceType}\n` +
+        `${locationOrDetails}\n\n` +
+        `👤 *የደንበኛ ስም:* ${customerName}\n` +
+        `📞 *ስልክ ቁጥር:* ${customerPhone}\n` +
+        `💳 *የክፍያ መንገድ:* ${paymentMethod}\n` +
+        `📝 *ልዩ ማስታወሻ:* ${specialNote}`;
+
+    let encodedMessage = encodeURIComponent(message);
+
+    // Update Links
+    document.getElementById('modalWaLink').href = `https://wa.me/251969995662?text=${encodedMessage}`;
+    document.getElementById('modalTgLink').href = `https://t.me/Amethyst_Dining?text=${encodedMessage}`;
+    document.getElementById('modalSmsLink').href = `sms:+251969995662?body=${encodedMessage}`;
+}
+
+/* ==========================================
+   ORDER FORM SUBMIT
+   ========================================== */
+function processOrder(event) {
+    event.preventDefault();
+    updateOrderLinks();
+    
+    // Automatically redirect to WhatsApp or Telegram for fast dispatch
+    const waUrl = document.getElementById('modalWaLink').href;
+    window.open(waUrl, '_blank');
+}
+
+/* ==========================================
+   SEARCH & FILTER FUNCTIONS
+   ========================================== */
+function filterMenu() {
+    let input = document.getElementById('searchInput').value.toLowerCase();
+    let items = document.querySelectorAll('.menu-item');
+
+    items.forEach(item => {
+        let title = item.querySelector('.item-title').innerText.toLowerCase();
+        let desc = item.querySelector('.item-desc').innerText.toLowerCase();
+
+        if (title.includes(input) || desc.includes(input)) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function filterCategory(category, event) {
+    let buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    if (event) event.target.classList.add('active');
+
+    let items = document.querySelectorAll('.menu-item');
+    items.forEach(item => {
+        if (category === 'all' || item.getAttribute('data-category') === category) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
