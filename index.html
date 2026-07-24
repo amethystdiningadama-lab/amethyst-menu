@@ -6,10 +6,11 @@
     <title>Amethyst Dining - Premium Digital Menu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.0">
 </head>
 <body>
 
+    <!-- Header Section -->
     <header class="brand-header">
         <div class="logo-area">
             <img src="logo.png" alt="Amethyst Logo" class="logo-img">
@@ -18,6 +19,7 @@
         </div>
     </header>
 
+    <!-- Hero Section -->
     <section class="hero-section">
         <h2 class="hero-heading">Luxury Dining Experience in Adama</h2>
         <div class="tagline">TASTE THE EXCELLENCE</div>
@@ -28,6 +30,7 @@
         </div>
     </section>
 
+    <!-- Search Section -->
     <div class="search-container">
         <div class="search-box">
             <i class="fas fa-search search-icon"></i>
@@ -35,6 +38,7 @@
         </div>
     </div>
     
+    <!-- Category Tabs -->
     <div class="category-tabs">
         <button class="tab-btn active" onclick="filterCategory('all', event)">ሁሉም</button>
         <button class="tab-btn" onclick="filterCategory('soups', event)">Soups</button>
@@ -44,6 +48,7 @@
         <button class="tab-btn" onclick="filterCategory('sides', event)">Sides & Dessert</button>
     </div>
 
+    <!-- Main Menu Grid -->
     <main class="menu-grid" id="menuGrid">
         
         <!-- SOUPS -->
@@ -573,6 +578,7 @@
 
     </main>
 
+    <!-- Payment Instructions -->
     <section class="payment-box-section">
         <h2><i class="fas fa-credit-card"></i> የክፍያ መመሪያ (Payment Steps)</h2>
         <p>እባክዎ መጀመሪያ የሚፈልጉትን ምግብ መርጠው ከታች ባሉት የክፍያ አማራጮች ሂሳብዎን ይክፈሉ፤ በመቀጠል በምግቡ ስር ያለውን <strong>"Order Now"</strong> ቁልፍ በመጫን ደረሰኙን (Screenshot) አያይዘው ይላኩ።</p>
@@ -582,23 +588,27 @@
         </div>
     </section>
 
+    <!-- Hours -->
     <section class="info-section">
         <h2>Opening Hours</h2>
         <p class="info-text">Monday – Sunday</p>
         <p class="info-text highlight">10:00 AM – 11:00 PM</p>
     </section>
 
+    <!-- Location -->
     <section class="info-section">
         <h2>📍 Location</h2>
         <p class="info-text">Adama, Ethiopia</p>
         <a href="https://share.google/YWP23HCNPEKCWyFA8" target="_blank" class="map-btn">Open in Google Maps</a>
     </section>
 
+    <!-- QR Code -->
     <section class="info-section">
         <h2>Scan to View Our Digital Menu</h2>
         <img src="qr.png" alt="QR Code" class="qr-image">
     </section>
 
+    <!-- Footer -->
     <footer>
         <h3>AMETHYST DINING</h3>
         <p>☎ +251 96 999 5662</p>
@@ -606,13 +616,14 @@
         <p class="footer-note">💜 Thank you for choosing AMETHYST DINING</p>
     </footer>
 
+    <!-- Floating Quick Action Bar -->
     <div class="action-buttons-bar">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-floating bg-form" title="Google Form"><i class="fas fa-wpforms"></i></a>
         <a href="https://wa.me/251969995662" target="_blank" class="btn-floating bg-wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         <a href="tel:+251969995662" class="btn-floating bg-call" title="Call Now"><i class="fas fa-phone"></i></a>
     </div>
 
-    <!-- የተስተካከለው እና የተሟላው የመስሪያ/የትዕዛዝ ሞዳል (ORDER MODAL) -->
+    <!-- Dynamic Order Modal -->
     <div id="dynamicOrderModal" class="order-modal">
         <div class="order-modal-content">
             <button class="btn-close-modal" onclick="closeOrderModal()"><i class="fas fa-times"></i></button>
@@ -693,12 +704,12 @@
                     <p class="payment-hint">እባክዎ መጀመሪያ ክፍያውን ፈጽመው ሲልኩ ደረሰኙን (Screenshot) ያያይዙ።</p>
                 </div>
 
-                <!-- 1. Direct Telegram Bot Submit Button -->
+                <!-- Telegram Bot Submit Button -->
                 <button type="submit" id="submitOrderBtn" class="btn-submit-order">
                     <i class="fas fa-paper-plane"></i> በቴሌግራም ቦት በቀጥታ ይላኩ
                 </button>
 
-                <!-- 2. Direct External Social Links -->
+                <!-- External Social Links -->
                 <div class="order-channels">
                     <label class="channel-label">ወይም በሌሎች አማራጮች ያጋሩ / ይላኩ</label>
                     <div class="channels-grid">
@@ -713,6 +724,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Script File Call -->
+    <script src="script.js?v=2.0"></script>
 </body>
 </html>
