@@ -36,16 +36,17 @@
     </div>
     
     <div class="category-tabs">
-        <button class="tab-btn active" onclick="filterCategory('all')">ሁሉም</button>
-        <button class="tab-btn" onclick="filterCategory('soups')">Soups</button>
-        <button class="tab-btn" onclick="filterCategory('sushi')">Sushi</button>
-        <button class="tab-btn" onclick="filterCategory('shareables')">Shareables</button>
-        <button class="tab-btn" onclick="filterCategory('large-plates')">Large Plates</button>
-        <button class="tab-btn" onclick="filterCategory('sides')">Sides & Dessert</button>
+        <button class="tab-btn active" onclick="filterCategory('all', event)">ሁሉም</button>
+        <button class="tab-btn" onclick="filterCategory('soups', event)">Soups</button>
+        <button class="tab-btn" onclick="filterCategory('sushi', event)">Sushi</button>
+        <button class="tab-btn" onclick="filterCategory('shareables', event)">Shareables</button>
+        <button class="tab-btn" onclick="filterCategory('large-plates', event)">Large Plates</button>
+        <button class="tab-btn" onclick="filterCategory('sides', event)">Sides & Dessert</button>
     </div>
 
     <main class="menu-grid" id="menuGrid">
         
+        <!-- SOUPS -->
         <div class="menu-item" data-category="soups">
             <div class="item-info">
                 <div class="item-meta">
@@ -85,6 +86,7 @@
             </div>
         </div>
 
+        <!-- SUSHI -->
         <div class="menu-item" data-category="sushi">
             <div class="item-info">
                 <div class="item-meta">
@@ -176,6 +178,7 @@
             </div>
         </div>
 
+        <!-- SHAREABLES -->
         <div class="menu-item" data-category="shareables">
             <div class="item-info">
                 <div class="item-meta">
@@ -306,6 +309,7 @@
             </div>
         </div>
 
+        <!-- LARGE PLATES -->
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
                 <div class="item-meta">
@@ -488,6 +492,7 @@
             </div>
         </div>
 
+        <!-- SIDES -->
         <div class="menu-item" data-category="sides">
             <div class="item-info">
                 <div class="item-meta">
@@ -607,50 +612,104 @@
         <a href="tel:+251969995662" class="btn-floating bg-call" title="Call Now"><i class="fas fa-phone"></i></a>
     </div>
 
+    <!-- የተስተካከለው እና የተሟላው የመስሪያ/የትዕዛዝ ሞዳል (ORDER MODAL) -->
     <div id="dynamicOrderModal" class="order-modal">
         <div class="order-modal-content">
             <button class="btn-close-modal" onclick="closeOrderModal()"><i class="fas fa-times"></i></button>
             
             <h3 id="modalFoodTitle">Food Name</h3>
-            
-            <div class="order-customization">
-                <div class="form-group">
-                    <label><i class="fas fa-sort-amount-up-alt"></i> የምግብ ብዛት (Quantity)</label>
-                    <div class="qty-selector">
-                        <button type="button" class="qty-btn" onclick="changeQty(-1)">-</button>
-                        <input type="number" id="orderQty" value="1" min="1" readonly>
-                        <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+
+            <form id="orderForm" onsubmit="processOrder(event)">
+                
+                <div class="order-customization">
+                    <div class="form-group">
+                        <label><i class="fas fa-sort-amount-up-alt"></i> የምግብ ብዛት (Quantity)</label>
+                        <div class="qty-selector">
+                            <button type="button" class="qty-btn" onclick="changeQty(-1)">-</button>
+                            <input type="number" id="orderQty" value="1" min="1" readonly>
+                            <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="serviceType"><i class="fas fa-concierge-bell"></i> የአገልግሎት ዓይነት</label>
+                        <select id="serviceType" onchange="toggleServiceFields(); updateOrderLinks();" required>
+                            <option value="Dine-in">በሬስቶራንት ውስጥ (Dine-in)</option>
+                            <option value="Delivery">ማድረስ (Delivery)</option>
+                            <option value="Appointment">ቀጠሮ/ቅድመ ትዕዛዝ (Appointment)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="tableNumberField">
+                        <label for="tableNumber"><i class="fas fa-chair"></i> የጠረጴዛ ቁጥር</label>
+                        <input type="text" id="tableNumber" oninput="updateOrderLinks()" placeholder="ለምሳሌ፦ Table 05">
+                    </div>
+
+                    <div class="form-group" id="deliveryAddressField" style="display:none;">
+                        <label for="deliveryAddress"><i class="fas fa-map-marker-alt"></i> የማድረሻ አድራሻ</label>
+                        <input type="text" id="deliveryAddress" oninput="updateOrderLinks()" placeholder="ቦታ/ቤት ቁጥር...">
+                    </div>
+
+                    <div class="form-group" id="appointmentTimeField" style="display:none;">
+                        <label for="appointmentTime"><i class="far fa-clock"></i> የቀጠሮ ሰዓት</label>
+                        <input type="time" id="appointmentTime" onchange="updateOrderLinks()">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerName"><i class="fas fa-user"></i> የእርስዎ ስም</label>
+                        <input type="text" id="customerName" oninput="updateOrderLinks()" placeholder="ሙሉ ስም ያስገቡ" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPhone"><i class="fas fa-phone"></i> ስልክ ቁጥር</label>
+                        <input type="tel" id="customerPhone" oninput="updateOrderLinks()" placeholder="09..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentMethod"><i class="fas fa-wallet"></i> የክፍያ መንገድ</label>
+                        <select id="paymentMethod" onchange="updateOrderLinks()" required>
+                            <option value="Telebirr (0968093003)">Telebirr (0968093003)</option>
+                            <option value="CBE Bank (1000648950911)">CBE (ንግድ ባንክ)</option>
+                            <option value="Cash on Delivery / In-person">በእጅ / በጥሬ ገንዘብ</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specialNote"><i class="fas fa-magic"></i> ልዩ ፍላጎት ወይም ማስታወሻ</label>
+                        <textarea id="specialNote" oninput="updateOrderLinks()" placeholder="ለምሳሌ፦ ቅመም ቀንሱበት፣ በደንብ ይብሰል..."></textarea>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="specialNote"><i class="fas fa-magic"></i> ልዩ ፍላጎት ወይም ማስታወሻ</label>
-                    <textarea id="specialNote" oninput="updateOrderLinks()" placeholder="ለምሳሌ፦ ቅመም ቀንሱበት፣ በደንብ ይብሰል..."></textarea>
-                </div>
-            </div>
 
-            <div class="modal-payment-info">
-                <div class="modal-payment-header"><i class="fas fa-credit-card"></i> የክፍያ መረጃ (Payment Details)</div>
-                <div class="modal-total-box">
-                    <span>ጠቅላላ ዋጋ (Total Price):</span>
-                    <strong id="modalTotalPrice">0 ETB</strong>
+                <div class="modal-payment-info">
+                    <div class="modal-payment-header"><i class="fas fa-credit-card"></i> የክፍያ መረጃ (Payment Details)</div>
+                    <div class="modal-total-box">
+                        <span>ጠቅላላ ዋጋ (Total Price):</span>
+                        <strong id="modalTotalPrice">0 ETB</strong>
+                    </div>
+                    <div class="modal-accounts">
+                        <div>📱 Telebirr: <strong>0968093003</strong> <span class="acc-name">(Henok Tafese)</span></div>
+                        <div>🏦 ንግድ ባንክ (CBE): <strong>1000648950911</strong> <span class="acc-name">(Henok Tafese)</span></div>
+                    </div>
+                    <p class="payment-hint">እባክዎ መጀመሪያ ክፍያውን ፈጽመው ሲልኩ ደረሰኙን (Screenshot) ያያይዙ።</p>
                 </div>
-                <div class="modal-accounts">
-                    <div>📱 Telebirr: <strong>0968093003</strong> <span class="acc-name">(Henok Tafese)</span></div>
-                    <div>🏦 ንግድ ባንክ (CBE): <strong>1000648950911</strong> <span class="acc-name">(Henok Tafese)</span></div>
-                </div>
-                <p class="payment-hint">እባክዎ መጀመሪያ ክፍያውን ፈጽመው ሲልኩ ደረሰኙን (Screenshot) ያያይዙ።</p>
-            </div>
 
-            <div class="order-channels">
-                <label class="channel-label">በትዕዛዝ ማስተላለፊያ አማራጭ ይላኩ</label>
-                <div class="channels-grid">
-                    <a id="modalWaLink" href="#" target="_blank" class="btn-opt bg-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                    <a id="modalTgLink" href="#" target="_blank" class="btn-opt bg-tg"><i class="fab fa-telegram-plane"></i> Telegram</a>
-                    <a id="modalSmsLink" href="#" class="btn-opt bg-sms"><i class="fas fa-comment-alt"></i> SMS</a>
-                    <a id="modalFormLink" href="#" target="_blank" class="btn-opt bg-form"><i class="fas fa-wpforms"></i> Form</a>
+                <!-- 1. Direct Telegram Bot Submit Button -->
+                <button type="submit" id="submitOrderBtn" class="btn-submit-order">
+                    <i class="fas fa-paper-plane"></i> በቴሌግራም ቦት በቀጥታ ይላኩ
+                </button>
+
+                <!-- 2. Direct External Social Links -->
+                <div class="order-channels">
+                    <label class="channel-label">ወይም በሌሎች አማራጮች ያጋሩ / ይላኩ</label>
+                    <div class="channels-grid">
+                        <a id="modalWaLink" href="#" target="_blank" class="btn-opt bg-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a id="modalTgLink" href="#" target="_blank" class="btn-opt bg-tg"><i class="fab fa-telegram-plane"></i> Telegram</a>
+                        <a id="modalSmsLink" href="#" class="btn-opt bg-sms"><i class="fas fa-comment-alt"></i> SMS</a>
+                        <a id="modalFormLink" href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-opt bg-form"><i class="fas fa-wpforms"></i> Form</a>
+                    </div>
                 </div>
-            </div>
+
+            </form>
         </div>
     </div>
 
