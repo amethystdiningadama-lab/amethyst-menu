@@ -9,16 +9,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <!-- ALL-IN-ONE COMPLETE STYLES -->
+    <!-- ENTERPRISE OPTIMIZED STYLES -->
     <style>
+        :root {
+            --bg-primary: #0b0512;
+            --bg-card: #160c24;
+            --bg-gradient: radial-gradient(circle, #1a0f2b 0%, #0b0512 100%);
+            --border-color: #332244;
+            --border-hover: #d4af37;
+            --accent-gold: #d4af37;
+            --accent-gold-dark: #aa8314;
+            --text-main: #ffffff;
+            --text-muted: #a8a8a8;
+            --whatsapp-green: #25D366;
+            --telegram-blue: #0088cc;
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            background-color: #0b0512; 
-            color: #ffffff; 
-            font-family: 'Poppins', sans-serif;
+
+        html, body { 
             width: 100%;
+            max-width: 100vw;
             overflow-x: hidden;
+            background-color: var(--bg-primary); 
+            color: var(--text-main); 
+            font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
             padding-bottom: 70px;
         }
 
@@ -26,7 +42,7 @@
         .brand-header {
             text-align: center;
             padding: 25px 15px 15px 15px;
-            background: linear-gradient(180deg, #160c24 0%, #0b0512 100%);
+            background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-primary) 100%);
         }
 
         .logo-img { 
@@ -35,10 +51,11 @@
             height: auto; 
             display: block;
             margin: 0 auto 10px auto;
+            object-fit: contain;
         }
 
         .brand-title {
-            color: #d4af37;
+            color: var(--accent-gold);
             font-size: 26px;
             letter-spacing: 3px;
             font-weight: 700;
@@ -54,19 +71,22 @@
         .hero-section {
             text-align: center;
             padding: 10px 15px 20px 15px;
+            background: var(--bg-gradient);
         }
 
         .hero-heading {
             font-size: 18px;
-            color: #fff;
+            color: var(--text-main);
             margin-bottom: 5px;
+            font-weight: 600;
         }
 
         .tagline {
-            color: #d4af37;
+            color: var(--accent-gold);
             font-size: 11px;
             letter-spacing: 2px;
             margin-bottom: 15px;
+            font-weight: 600;
         }
 
         .hero-buttons {
@@ -83,15 +103,18 @@
             font-size: 12px;
             font-weight: 600;
             transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        .btn-hero-primary { background: #d4af37; color: #0b0512; }
-        .btn-hero-secondary { border: 1px solid #d4af37; color: #d4af37; }
-        .btn-hero-call { background: #25D366; color: #fff; }
+        .btn-hero-primary { background: var(--accent-gold); color: var(--bg-primary); }
+        .btn-hero-secondary { border: 1px solid var(--accent-gold); color: var(--accent-gold); background: transparent; }
+        .btn-hero-call { background: var(--whatsapp-green); color: #fff; }
 
         /* Search Section */
         .search-container {
-            padding: 0 15px 15px 15px;
+            padding: 10px 15px 15px 15px;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -105,19 +128,22 @@
         .search-icon {
             position: absolute;
             left: 15px;
-            color: #d4af37;
+            color: var(--accent-gold);
         }
 
         #searchInput {
             width: 100%;
             padding: 12px 12px 12px 42px;
-            background: #160c24;
-            border: 1px solid #332244;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 25px;
-            color: #fff;
+            color: var(--text-main);
             outline: none;
             font-size: 13px;
+            transition: border-color 0.3s;
         }
+
+        #searchInput:focus { border-color: var(--accent-gold); }
 
         /* Category Tabs */
         .category-tabs {
@@ -130,21 +156,22 @@
         .category-tabs::-webkit-scrollbar { display: none; }
 
         .tab-btn {
-            background: #160c24;
-            color: #aaa;
-            border: 1px solid #332244;
+            background: var(--bg-card);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
             padding: 8px 16px;
             border-radius: 20px;
             white-space: nowrap;
             font-size: 12px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
         .tab-btn.active {
-            background: #d4af37;
-            color: #0b0512;
+            background: var(--accent-gold);
+            color: var(--bg-primary);
             font-weight: bold;
-            border-color: #d4af37;
+            border-color: var(--accent-gold);
         }
 
         /* Menu Grid */
@@ -158,14 +185,17 @@
         }
 
         .menu-item {
-            background: #160c24;
-            border: 1px solid #2a183d;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 15px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: border-color 0.3s;
         }
+
+        .menu-item:hover { border-color: #4a2f66; }
 
         .item-meta {
             display: flex;
@@ -176,26 +206,26 @@
 
         .item-title {
             font-size: 15px;
-            color: #fff;
+            color: var(--text-main);
             font-weight: 600;
         }
 
         .item-price {
-            color: #d4af37;
+            color: var(--accent-gold);
             font-weight: bold;
             font-size: 14px;
             white-space: nowrap;
         }
 
         .item-desc {
-            color: #a8a8a8;
+            color: var(--text-muted);
             font-size: 12px;
             margin-bottom: 12px;
             line-height: 1.4;
         }
 
         .v-badge {
-            background: #25D366;
+            background: var(--whatsapp-green);
             color: #fff;
             font-size: 10px;
             padding: 2px 6px;
@@ -204,8 +234,8 @@
         }
 
         .btn-order-inline {
-            background: linear-gradient(135deg, #d4af37, #aa8314);
-            color: #0b0512;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+            color: var(--bg-primary);
             border: none;
             width: 100%;
             padding: 10px;
@@ -213,23 +243,24 @@
             font-weight: bold;
             font-size: 13px;
             cursor: pointer;
+            transition: opacity 0.2s;
         }
+
+        .btn-order-inline:active { opacity: 0.9; }
 
         /* Info Sections & Payment */
         .payment-box-section, .info-section {
-            background: #160c24;
-            margin: 15px;
+            background: var(--bg-card);
+            margin: 15px auto;
             padding: 20px;
             border-radius: 12px;
-            border: 1px solid #332244;
+            border: 1px solid var(--border-color);
             text-align: center;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .payment-box-section h2, .info-section h2 {
-            color: #d4af37;
+            color: var(--accent-gold);
             font-size: 16px;
             margin-bottom: 10px;
         }
@@ -242,7 +273,7 @@
 
         .payment-accounts {
             margin-top: 12px;
-            background: #0b0512;
+            background: var(--bg-primary);
             padding: 10px;
             border-radius: 8px;
             font-size: 12px;
@@ -254,8 +285,8 @@
         .map-btn {
             display: inline-block;
             margin-top: 10px;
-            background: #d4af37;
-            color: #0b0512;
+            background: var(--accent-gold);
+            color: var(--bg-primary);
             padding: 8px 16px;
             border-radius: 6px;
             text-decoration: none;
@@ -270,13 +301,14 @@
 
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 25px 15px;
             color: #8a6da8;
             font-size: 12px;
             background: #07030a;
+            border-top: 1px solid var(--border-color);
         }
 
-        footer h3 { color: #d4af37; margin-bottom: 5px; }
+        footer h3 { color: var(--accent-gold); margin-bottom: 5px; }
 
         /* Floating Action Buttons */
         .action-buttons-bar {
@@ -303,7 +335,7 @@
         }
 
         /* ==========================================
-           FIXED POPUP / MODAL OVERLAY STYLES
+           PROFESSIONAL MODAL OVERLAY WITH ANIMATION
            ========================================== */
         .order-modal {
             display: none;
@@ -312,17 +344,19 @@
             left: 0 !important;
             width: 100vw !important;
             height: 100vh !important;
-            background-color: rgba(0, 0, 0, 0.88) !important;
+            background-color: rgba(0, 0, 0, 0.85) !important;
             z-index: 99999 !important;
             justify-content: center;
             align-items: center;
             padding: 15px;
             backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .order-modal-content {
-            background: #160c24 !important;
-            border: 1px solid #d4af37 !important;
+            background: var(--bg-card) !important;
+            border: 1px solid var(--accent-gold) !important;
             border-radius: 16px !important;
             width: 100% !important;
             max-width: 450px !important;
@@ -330,8 +364,19 @@
             position: relative !important;
             max-height: 85vh !important;
             overflow-y: auto !important;
-            color: #ffffff !important;
+            color: var(--text-main) !important;
             box-shadow: 0 10px 30px rgba(0,0,0,0.9) !important;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .order-modal.show {
+            display: flex !important;
+            opacity: 1;
+        }
+
+        .order-modal.show .order-modal-content {
+            transform: scale(1);
         }
 
         .btn-close-modal {
@@ -340,13 +385,13 @@
             right: 15px !important;
             background: transparent !important;
             border: none !important;
-            color: #d4af37 !important;
+            color: var(--accent-gold) !important;
             font-size: 22px !important;
             cursor: pointer !important;
         }
 
         #modalFoodTitle {
-            color: #d4af37 !important;
+            color: var(--accent-gold) !important;
             font-size: 1.2rem !important;
             margin-bottom: 15px !important;
             text-align: center !important;
@@ -361,7 +406,7 @@
         .form-group label {
             display: block !important;
             font-size: 12px !important;
-            color: #d4af37 !important;
+            color: var(--accent-gold) !important;
             margin-bottom: 5px !important;
         }
 
@@ -370,8 +415,8 @@
         .form-group textarea {
             width: 100% !important;
             padding: 10px !important;
-            background: #0b0512 !important;
-            border: 1px solid #332244 !important;
+            background: var(--bg-primary) !important;
+            border: 1px solid var(--border-color) !important;
             border-radius: 8px !important;
             color: #fff !important;
             font-size: 13px !important;
@@ -385,8 +430,8 @@
         }
 
         .qty-btn {
-            background: #d4af37 !important;
-            color: #0b0512 !important;
+            background: var(--accent-gold) !important;
+            color: var(--bg-primary) !important;
             border: none !important;
             width: 35px !important;
             height: 35px !important;
@@ -403,11 +448,11 @@
         }
 
         .modal-payment-info {
-            background: #0b0512 !important;
+            background: var(--bg-primary) !important;
             padding: 12px !important;
             border-radius: 8px !important;
             margin-top: 15px !important;
-            border: 1px dashed #d4af37 !important;
+            border: 1px dashed var(--accent-gold) !important;
         }
 
         .modal-total-box {
@@ -415,15 +460,15 @@
             justify-content: space-between !important;
             font-size: 14px !important;
             font-weight: bold !important;
-            color: #d4af37 !important;
+            color: var(--accent-gold) !important;
             margin-bottom: 8px !important;
         }
 
         .selected-account-box {
-            background: #160c24;
+            background: var(--bg-card);
             padding: 10px;
             border-radius: 6px;
-            border: 1px solid #d4af37;
+            border: 1px solid var(--accent-gold);
             font-size: 12px;
             color: #fff;
             margin-top: 6px;
@@ -436,7 +481,7 @@
         }
 
         .btn-submit-order {
-            background: linear-gradient(135deg, #25D366, #128C7E) !important;
+            background: linear-gradient(135deg, var(--whatsapp-green), #128C7E) !important;
             color: #fff !important;
             border: none !important;
             width: 100% !important;
@@ -477,11 +522,10 @@
             display: block !important;
         }
 
-        .bg-wa { background: #25D366 !important; }
-        .bg-tg { background: #0088cc !important; }
+        .bg-wa { background: var(--whatsapp-green) !important; }
+        .bg-tg { background: var(--telegram-blue) !important; }
         .bg-sms { background: #ff9800 !important; }
         .bg-form { background: #673ab7 !important; }
-        .bg-call { background: #2196F3 !important; }
     </style>
 </head>
 <body>
@@ -500,8 +544,8 @@
         <h2 class="hero-heading">Luxury Dining Experience in Adama</h2>
         <div class="tagline">TASTE THE EXCELLENCE</div>
         <div class="hero-buttons">
-            <a href="https://amethyst-dining-demo.pages.dev/" target="_blank" class="btn-hero-primary">Reserve a Table</a>
-            <a href="#menuGrid" class="btn-hero-secondary">View Menu</a>
+            <a href="https://amethyst-dining-demo.pages.dev/" target="_blank" class="btn-hero-primary"><i class="fas fa-calendar-alt"></i> Reserve a Table</a>
+            <a href="#menuGrid" class="btn-hero-secondary"><i class="fas fa-utensils"></i> View Menu</a>
             <a href="tel:+251969995662" class="btn-hero-call"><i class="fas fa-phone"></i> Call Now</a>
         </div>
     </section>
@@ -526,7 +570,6 @@
 
     <!-- Main Menu Grid -->
     <main class="menu-grid" id="menuGrid">
-        
         <!-- SOUPS -->
         <div class="menu-item" data-category="soups">
             <div class="item-info">
@@ -553,7 +596,7 @@
                 </button>
             </div>
         </div>
-        
+
         <div class="menu-item" data-category="soups">
             <div class="item-info">
                 <div class="item-meta">
@@ -593,71 +636,6 @@
                 </button>
             </div>
         </div>
-        
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Shrimp Tempura Maki</h3>
-                    <span class="item-price">1,500 ETB</span>
-                </div>
-                <p class="item-desc">Crispy shrimp tempura and cucumber.</p>
-                <button onclick="openOrderModal('Shrimp Tempura Maki', 1500)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Panko Sushi Roll</h3>
-                    <span class="item-price">1,500 ETB</span>
-                </div>
-                <p class="item-desc">Crispy fried roll with fish, mango, and nori topped with tempura flakes.</p>
-                <button onclick="openOrderModal('Panko Sushi Roll', 1500)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Avocado & Cucumber Roll <span class="v-badge">V</span></h3>
-                    <span class="item-price">1,500 ETB</span>
-                </div>
-                <p class="item-desc">A refreshing classic with creamy avocado and cucumber.</p>
-                <button onclick="openOrderModal('Avocado & Cucumber Roll', 1500)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Amethyst Salmon Grand</h3>
-                    <span class="item-price">2,000 ETB</span>
-                </div>
-                <p class="item-desc">Premium salmon paired elegantly with fresh avocado.</p>
-                <button onclick="openOrderModal('Amethyst Salmon Grand', 2000)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="sushi">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Salmon Nigiri</h3>
-                    <span class="item-price">2,000 ETB</span>
-                </div>
-                <p class="item-desc">Traditional slice of fresh salmon served over seasoned sushi rice.</p>
-                <button onclick="openOrderModal('Salmon Nigiri', 2000)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
 
         <!-- SHAREABLES -->
         <div class="menu-item" data-category="shareables">
@@ -672,268 +650,8 @@
                 </button>
             </div>
         </div>
-        
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Crispy Vegetable Taquitos <span class="v-badge">V</span></h3>
-                    <span class="item-price">800 ETB</span>
-                </div>
-                <p class="item-desc">Golden-fried tortillas filled with vegetables, beans, soy, and ginger.</p>
-                <button onclick="openOrderModal('Crispy Vegetable Taquitos', 800)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Vegetable Spring Rolls <span class="v-badge">V</span></h3>
-                    <span class="item-price">800 ETB</span>
-                </div>
-                <p class="item-desc">Crispy spring rolls served with sweet chili sauce.</p>
-                <button onclick="openOrderModal('Vegetable Spring Rolls', 800)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Gyoza</h3>
-                    <span class="item-price">1,100 ETB</span>
-                </div>
-                <p class="item-desc">Pan-fried Japanese dumplings served with soy dipping sauce.</p>
-                <button onclick="openOrderModal('Gyoza', 1100)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Signature Crispy Taquitos</h3>
-                    <span class="item-price">900 ETB</span>
-                </div>
-                <p class="item-desc">Your choice of savory beef or fresh fish packed in a crispy shell.</p>
-                <button onclick="openOrderModal('Signature Crispy Taquitos', 900)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Vegetable Tempura <span class="v-badge">V</span></h3>
-                    <span class="item-price">700 ETB</span>
-                </div>
-                <p class="item-desc">Lightly battered seasonal vegetables served with premium tempura sauce.</p>
-                <button onclick="openOrderModal('Vegetable Tempura', 700)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Salmon Sashimi</h3>
-                    <span class="item-price">1,500 ETB</span>
-                </div>
-                <p class="item-desc">Fresh salmon with soy sauce, lime, and toasted sesame oil.</p>
-                <button onclick="openOrderModal('Salmon Sashimi', 1500)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Avocado Crispy Tofu Chili <span class="v-badge">V</span></h3>
-                    <span class="item-price">1,000 ETB</span>
-                </div>
-                <p class="item-desc">Crispy tofu with avocado, chili, and signature house seasoning.</p>
-                <button onclick="openOrderModal('Avocado Crispy Tofu Chili', 1000)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Garlic Shrimp</h3>
-                    <span class="item-price">1,800 ETB</span>
-                </div>
-                <p class="item-desc">Garlic butter shrimp perfectly served with sweet corn.</p>
-                <button onclick="openOrderModal('Garlic Shrimp', 1800)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="shareables">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Amethyst Signature Salad <span class="v-badge">V</span></h3>
-                    <span class="item-price">500 ETB</span>
-                </div>
-                <p class="item-desc">Fresh mixed lettuce with seasonal vegetables and premium house dressing.</p>
-                <button onclick="openOrderModal('Amethyst Signature Salad', 500)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
 
         <!-- LARGE PLATES -->
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Spicy Wasabi Beef</h3>
-                    <span class="item-price">2,000 ETB</span>
-                </div>
-                <p class="item-desc">Tender beef served with spring onions & aromatic Coconut Rice.</p>
-                <button onclick="openOrderModal('Spicy Wasabi Beef', 2000)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Beef Fillet (Steak)</h3>
-                    <span class="item-price">1,800 ETB</span>
-                </div>
-                <p class="item-desc">Perfectly grilled beef fillet enhanced with classic Chimichurri sauce.</p>
-                <button onclick="openOrderModal('Beef Fillet (Steak)', 1800)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Sticky Sesame Beef</h3>
-                    <span class="item-price">1,800 ETB</span>
-                </div>
-                <p class="item-desc">Tender beef glazed in a sweet and savory sesame sauce, served with fresh vegetables.</p>
-                <button onclick="openOrderModal('Sticky Sesame Beef', 1800)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Roasted Nile Perch</h3>
-                    <span class="item-price">1,800 ETB</span>
-                </div>
-                <p class="item-desc">Fresh Nile Perch served with fluffy steamed rice and a cheat green salad.</p>
-                <button onclick="openOrderModal('Roasted Nile Perch', 1800)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Chicken Panko</h3>
-                    <span class="item-price">1,700 ETB</span>
-                </div>
-                <p class="item-desc">Crispy breaded chicken served with creamy mayo and tangy pickled daikon.</p>
-                <button onclick="openOrderModal('Chicken Panko', 1700)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Chicken Teriyaki</h3>
-                    <span class="item-price">1,700 ETB</span>
-                </div>
-                <p class="item-desc">Grilled chicken glazed in savory teriyaki sauce, topped with spring onions and served with steamed rice.</p>
-                <button onclick="openOrderModal('Chicken Teriyaki', 1700)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Salmon Teriyaki</h3>
-                    <span class="item-price">5,300 ETB</span>
-                </div>
-                <p class="item-desc">Salmon fillet marinated with garlic and fine herbs, grilled to a delicate finish.</p>
-                <button onclick="openOrderModal('Salmon Teriyaki', 5300)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Wok Stir-Fried Noodles</h3>
-                    <span class="item-price">1,500 ETB</span>
-                </div>
-                <p class="item-desc">Classic wok-tossed noodles with signature savory sauces.</p>
-                <button onclick="openOrderModal('Wok Stir-Fried Noodles', 1500)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Vegetable Curry Noodles <span class="v-badge">V</span></h3>
-                    <span class="item-price">1,300 ETB</span>
-                </div>
-                <p class="item-desc">Rich and aromatic curry infused noodles with crisp seasonal vegetables.</p>
-                <button onclick="openOrderModal('Vegetable Curry Noodles', 1300)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Signature Glass Noodles</h3>
-                    <span class="item-price">1,500 ETB</span>
-                </div>
-                <p class="item-desc">Delicate and flavorful clear glass noodles prepared to perfection.</p>
-                <button onclick="openOrderModal('Signature Glass Noodles', 1500)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Vegetable Fried Rice <span class="v-badge">V</span></h3>
-                    <span class="item-price">1,400 ETB</span>
-                </div>
-                <p class="item-desc">Fragrant fried rice mixed with finely chopped fresh garden vegetables.</p>
-                <button onclick="openOrderModal('Vegetable Fried Rice', 1400)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
         <div class="menu-item" data-category="large-plates">
             <div class="item-info">
                 <div class="item-meta">
@@ -946,73 +664,8 @@
                 </button>
             </div>
         </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Grilled Lamb Chop</h3>
-                    <span class="item-price">5,400 ETB</span>
-                </div>
-                <p class="item-desc">Perfectly seared, juicy lamb chops served alongside rich Coconut Rice.</p>
-                <button onclick="openOrderModal('Grilled Lamb Chop', 5400)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="large-plates">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Sliders (Mini Burgers)</h3>
-                    <span class="item-price">800 ETB</span>
-                </div>
-                <p class="item-desc">Three signature mini burgers with your choice of filling: Beef | Fish | Chicken.</p>
-                <button onclick="openOrderModal('Sliders (Mini Burgers)', 800)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
 
         <!-- SIDES -->
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Seasonal Vegetables <span class="v-badge">V</span></h3>
-                    <span class="item-price">250 ETB</span>
-                </div>
-                <p class="item-desc">Freshly sautéed or steamed assortment of the finest seasonal vegetables.</p>
-                <button onclick="openOrderModal('Seasonal Vegetables', 250)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Steamed Rice <span class="v-badge">V</span></h3>
-                    <span class="item-price">250 ETB</span>
-                </div>
-                <p class="item-desc">Fluffy, light, and perfectly steamed premium grain white rice.</p>
-                <button onclick="openOrderModal('Steamed Rice', 250)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Chinese Cabbage <span class="v-badge">V</span></h3>
-                    <span class="item-price">250 ETB</span>
-                </div>
-                <p class="item-desc">Tender and lightly seasoned sautéed Chinese cabbage.</p>
-                <button onclick="openOrderModal('Chinese Cabbage', 250)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
         <div class="menu-item" data-category="sides">
             <div class="item-info">
                 <div class="item-meta">
@@ -1025,33 +678,6 @@
                 </button>
             </div>
         </div>
-        
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Green Salad <span class="v-badge">V</span></h3>
-                    <span class="item-price">250 ETB</span>
-                </div>
-                <p class="item-desc">A crisp, refreshing mix of garden greens served with a light dressing.</p>
-                <button onclick="openOrderModal('Green Salad', 250)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-        
-        <div class="menu-item" data-category="sides">
-            <div class="item-info">
-                <div class="item-meta">
-                    <h3 class="item-title">Seasonal Fruit Platter <span class="v-badge">V</span></h3>
-                    <span class="item-price">300 ETB</span>
-                </div>
-                <p class="item-desc">A vibrant selection of nature's finest fresh fruits, hand-picked by our Chef.</p>
-                <button onclick="openOrderModal('Seasonal Fruit Platter', 300)" class="btn-order-inline">
-                    <i class="fas fa-shopping-cart"></i> Order Now / ማዘዣ
-                </button>
-            </div>
-        </div>
-
     </main>
 
     <!-- Payment Instructions -->
@@ -1064,24 +690,17 @@
         </div>
     </section>
 
-    <!-- Hours -->
+    <!-- Hours & Location -->
     <section class="info-section">
         <h2>Opening Hours</h2>
         <p>Monday – Sunday</p>
-        <p style="color:#d4af37; font-weight:bold; margin-top:4px;">10:00 AM – 11:00 PM</p>
+        <p style="color:var(--accent-gold); font-weight:bold; margin-top:4px;">10:00 AM – 11:00 PM</p>
     </section>
 
-    <!-- Location -->
     <section class="info-section">
         <h2>📍 Location</h2>
         <p>Adama, Ethiopia</p>
         <a href="https://share.google/YWP23HCNPEKCWyFA8" target="_blank" class="map-btn">Open in Google Maps</a>
-    </section>
-
-    <!-- QR Code -->
-    <section class="info-section">
-        <h2>Scan to View Our Digital Menu</h2>
-        <img src="qr.png" alt="QR Code" class="qr-image" onerror="this.style.display='none'">
     </section>
 
     <!-- Footer -->
@@ -1096,7 +715,7 @@
     <div class="action-buttons-bar">
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-floating bg-form" title="Google Form"><i class="fas fa-wpforms"></i></a>
         <a href="https://wa.me/251969995662" target="_blank" class="btn-floating bg-wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="tel:+251969995662" class="btn-floating bg-call" title="Call Now"><i class="fas fa-phone"></i></a>
+        <a href="tel:+251969995662" target="_blank" class="btn-floating bg-call" title="Call Now"><i class="fas fa-phone"></i></a>
     </div>
 
     <!-- Dynamic Order Modal Popup Window -->
@@ -1107,7 +726,6 @@
             <h3 id="modalFoodTitle">Food Name</h3>
 
             <form id="orderForm" onsubmit="processOrder(event)">
-                
                 <div class="order-customization">
                     <div class="form-group">
                         <label><i class="fas fa-sort-amount-up-alt"></i> የምግብ ብዛት (Quantity)</label>
@@ -1132,7 +750,6 @@
                         <input type="text" id="tableNumber" oninput="updateOrderLinks()" placeholder="ለምሳሌ፦ Table 05">
                     </div>
 
-                    <!-- Delivery Location Selection with Auto-GPS -->
                     <div class="form-group" id="deliveryAddressField" style="display:none;">
                         <label for="deliveryAreaSelect"><i class="fas fa-map-marker-alt"></i> የማድረሻ ሰፈር (Location)</label>
                         <select id="deliveryAreaSelect" onchange="toggleCustomArea(); updateOrderLinks();">
@@ -1146,13 +763,10 @@
                         </select>
                         <input type="text" id="deliveryAddressCustom" oninput="updateOrderLinks()" placeholder="የሰፈር ስም ወይም የቤት ቁጥር..." style="display:none; margin-top:8px;">
                         
-                        <!-- Auto GPS Location Button -->
-                        <button type="button" onclick="getGPSLocation()" id="gpsBtn" style="width: 100%; margin-top: 8px; padding: 8px; background-color: #0b0512; color: #d4af37; border: 1px solid #d4af37; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">
+                        <button type="button" onclick="getGPSLocation()" id="gpsBtn" style="width: 100%; margin-top: 8px; padding: 8px; background-color: var(--bg-primary); color: var(--accent-gold); border: 1px solid var(--accent-gold); border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">
                             🎯 አሁናዊ ቦታዬን በ GPS አግኝ
                         </button>
-                        <p id="locationStatus" style="font-size: 11px; color: #25D366; margin-top: 5px;"></p>
-
-                        <small style="color:#d4af37; font-size:11px; display:block; margin-top:5px;">💡 ትዕዛዙን በ Telegram/WhatsApp ሲልኩ Live Location አብረው ቢልኩልን በፍጥነት እናደርሳለን።</small>
+                        <p id="locationStatus" style="font-size: 11px; color: var(--whatsapp-green); margin-top: 5px;"></p>
                     </div>
 
                     <div class="form-group" id="appointmentTimeField" style="display:none;">
@@ -1191,62 +805,54 @@
                         <strong id="modalTotalPrice">0 ETB</strong>
                     </div>
                     
-                    <!-- DYNAMIC ACCOUNT DISPLAY BOX -->
-                    <div id="selectedAccountDisplay" class="selected-account-box">
-                        <!-- JavaScript fills this based on selection -->
-                    </div>
-
+                    <div id="selectedAccountDisplay" class="selected-account-box"></div>
                     <p class="payment-hint">እባክዎ መጀመሪያ ክፍያውን ፈጽመው ሲልኩ ደረሰኙን (Screenshot) ያያይዙ።</p>
                 </div>
 
-                <!-- Submit Button -->
                 <button type="submit" id="submitOrderBtn" class="btn-submit-order">
                     <i class="fab fa-whatsapp"></i> በ WhatsApp በቀጥታ ይላኩ
                 </button>
 
-                <!-- Channels -->
                 <div class="order-channels">
                     <label class="channel-label">ወይም በሌሎች አማራጮች ያጋሩ / ይላኩ</label>
                     <div class="channels-grid">
                         <a id="modalWaLink" href="#" target="_blank" class="btn-opt bg-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <!-- ቴሌግራም አውቶ-ፊል ሊንክ -->
                         <a id="modalTgLink" href="#" target="_blank" class="btn-opt bg-tg"><i class="fab fa-telegram-plane"></i> Telegram</a>
                         <a id="modalSmsLink" href="#" class="btn-opt bg-sms"><i class="fas fa-comment-alt"></i> SMS</a>
                         <a id="modalFormLink" href="https://docs.google.com/forms/d/e/1FAIpQLScn5gOT0ZfgeIgKvBxCWlnFHlSzto6YoehbYGtWpeYXRQrV8Q/viewform" target="_blank" class="btn-opt bg-form"><i class="fas fa-wpforms"></i> Form</a>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
 
-    <!-- ALL-IN-ONE COMPLETE JAVASCRIPT LOGIC -->
+    <!-- PRODUCTION JAVASCRIPT LOGIC -->
     <script>
         let selectedItemName = '';
         let selectedItemPrice = 0;
         let currentQuantity = 1;
-        let userGpsLink = ''; // የደንበኛውን GPS ሊንክ ማስቀመጫ
+        let userGpsLink = '';
 
         function openOrderModal(itemName, itemPrice) {
             selectedItemName = itemName;
             selectedItemPrice = itemPrice;
             currentQuantity = 1;
-            userGpsLink = ''; // reset location
+            userGpsLink = '';
 
             document.getElementById('modalFoodTitle').innerText = itemName;
             document.getElementById('orderQty').value = 1;
-
             document.getElementById('customerName').value = '';
             document.getElementById('customerPhone').value = '';
             document.getElementById('specialNote').value = '';
             document.getElementById('serviceType').value = 'Dine-in';
             document.getElementById('paymentMethod').value = 'Telebirr (0968093003)';
 
-            // Reset GPS Status UI
             const gpsBtn = document.getElementById('gpsBtn');
             const locationStatus = document.getElementById('locationStatus');
             if(gpsBtn) {
-                gpsBtn.style.backgroundColor = '#0b0512';
-                gpsBtn.style.color = '#d4af37';
+                gpsBtn.style.backgroundColor = 'var(--bg-primary)';
+                gpsBtn.style.color = 'var(--accent-gold)';
                 gpsBtn.innerText = '🎯 አሁናዊ ቦታዬን በ GPS አግኝ';
             }
             if(locationStatus) locationStatus.innerText = '';
@@ -1255,11 +861,15 @@
             calculateTotal();
             updateOrderLinks();
 
-            document.getElementById('dynamicOrderModal').style.display = 'flex';
+            const modal = document.getElementById('dynamicOrderModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
         }
 
         function closeOrderModal() {
-            document.getElementById('dynamicOrderModal').style.display = 'none';
+            const modal = document.getElementById('dynamicOrderModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
         }
 
         window.onclick = function(event) {
@@ -1288,35 +898,16 @@
 
         function toggleServiceFields() {
             const serviceType = document.getElementById('serviceType').value;
-            const tableField = document.getElementById('tableNumberField');
-            const deliveryField = document.getElementById('deliveryAddressField');
-            const appointmentField = document.getElementById('appointmentTimeField');
-
-            tableField.style.display = 'none';
-            deliveryField.style.display = 'none';
-            appointmentField.style.display = 'none';
-
-            if (serviceType === 'Dine-in') {
-                tableField.style.display = 'block';
-            } else if (serviceType === 'Delivery') {
-                deliveryField.style.display = 'block';
-            } else if (serviceType === 'Appointment') {
-                appointmentField.style.display = 'block';
-            }
+            document.getElementById('tableNumberField').style.display = (serviceType === 'Dine-in') ? 'block' : 'none';
+            document.getElementById('deliveryAddressField').style.display = (serviceType === 'Delivery') ? 'block' : 'none';
+            document.getElementById('appointmentTimeField').style.display = (serviceType === 'Appointment') ? 'block' : 'none';
         }
 
         function toggleCustomArea() {
             const areaSelect = document.getElementById('deliveryAreaSelect').value;
-            const customInput = document.getElementById('deliveryAddressCustom');
-
-            if (areaSelect === 'custom') {
-                customInput.style.display = 'block';
-            } else {
-                customInput.style.display = 'none';
-            }
+            document.getElementById('deliveryAddressCustom').style.display = (areaSelect === 'custom') ? 'block' : 'none';
         }
 
-        // AUTO GPS LOCATION FUNCTION
         function getGPSLocation() {
             const status = document.getElementById("locationStatus");
             const btn = document.getElementById("gpsBtn");
@@ -1330,13 +921,13 @@
                         userGpsLink = `https://www.google.com/maps?q=${lat},${lng}`;
                         
                         status.innerText = "✅ ሎኬሽንዎ በስኬት ተይዟል!";
-                        btn.style.backgroundColor = "#25D366";
+                        btn.style.backgroundColor = "var(--whatsapp-green)";
                         btn.style.color = "#ffffff";
                         btn.innerText = "✅ GPS ሎኬሽን ተይዟል";
                         updateOrderLinks();
                     },
                     (error) => {
-                        status.innerText = "❌ ሎኬሽን ማግኘት አልተቻለም። እባክዎን የስልክዎን GPS ያብሩ።";
+                        status.innerText = "❌ ሎኬሽን ማግኘት አልተቻለም። የስልክዎን GPS ያብሩ።";
                     }
                 );
             } else {
@@ -1352,12 +943,11 @@
             const specialNote = document.getElementById('specialNote').value || 'የለም';
             const totalPrice = selectedItemPrice * currentQuantity;
 
-            // DYNAMIC ACCOUNT DISPLAY UPDATE
             const accDisplay = document.getElementById('selectedAccountDisplay');
             if (paymentMethod.includes('Telebirr')) {
-                accDisplay.innerHTML = `📱 <strong>የቴሌብር ሂሳብ፦</strong> <span style="color:#d4af37; font-size:15px; font-weight:bold;">0968093003</span><br><small style="color:#aaa;">(Henok Tafese)</small>`;
+                accDisplay.innerHTML = `📱 <strong>የቴሌብር ሂሳብ፦</strong> <span style="color:var(--accent-gold); font-size:15px; font-weight:bold;">0968093003</span><br><small style="color:#aaa;">(Henok Tafese)</small>`;
             } else if (paymentMethod.includes('CBE')) {
-                accDisplay.innerHTML = `🏦 <strong>የንግድ ባንክ (CBE) ሂሳብ፦</strong> <span style="color:#d4af37; font-size:15px; font-weight:bold;">1000648950911</span><br><small style="color:#aaa;">(Henok Tafese)</small>`;
+                accDisplay.innerHTML = `🏦 <strong>የንግድ ባንክ (CBE) ሂሳብ፦</strong> <span style="color:var(--accent-gold); font-size:15px; font-weight:bold;">1000648950911</span><br><small style="color:#aaa;">(Henok Tafese)</small>`;
             } else {
                 accDisplay.innerHTML = `💵 <strong>የክፍያ መንገድ፦</strong> በጥሬ ገንዘብ / በእጅ የሚከፈል`;
             }
@@ -1368,10 +958,7 @@
                 locationOrDetails = `🪑 የጠረጴዛ ቁጥር: ${table}`;
             } else if (serviceType === 'Delivery') {
                 const areaSel = document.getElementById('deliveryAreaSelect').value;
-                let finalArea = areaSel;
-                if (areaSel === 'custom') {
-                    finalArea = document.getElementById('deliveryAddressCustom').value || 'ያልተጠቀሰ';
-                }
+                let finalArea = (areaSel === 'custom') ? (document.getElementById('deliveryAddressCustom').value || 'ያልተጠቀሰ') : areaSel;
                 locationOrDetails = `📍 የማድረሻ ሰፈር: ${finalArea}`;
                 if (userGpsLink) {
                     locationOrDetails += `\n🎯 Google Maps GPS: ${userGpsLink}`;
@@ -1394,9 +981,11 @@
 
             let encodedMessage = encodeURIComponent(message);
 
+            // WhatsApp Direct URL
             document.getElementById('modalWaLink').href = `https://wa.me/251969995662?text=${encodedMessage}`;
-            // FIXED TELEGRAM SHARE URL (Opens Telegram with complete pre-filled message)
-            document.getElementById('modalTgLink').href = `https://t.me/share/url?url=&text=${encodedMessage}`;
+            // Telegram Direct Auto-Fill URL (ስልክ ቁጥርን በመጠቀም)
+            document.getElementById('modalTgLink').href = `https://t.me/+251969995662?text=${encodedMessage}`;
+            // SMS Direct URL
             document.getElementById('modalSmsLink').href = `sms:+251969995662?body=${encodedMessage}`;
         }
 
@@ -1414,27 +1003,16 @@
             items.forEach(item => {
                 let title = item.querySelector('.item-title').innerText.toLowerCase();
                 let desc = item.querySelector('.item-desc').innerText.toLowerCase();
-
-                if (title.includes(input) || desc.includes(input)) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
+                item.style.display = (title.includes(input) || desc.includes(input)) ? 'flex' : 'none';
             });
         }
 
         function filterCategory(category, event) {
-            let buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             if (event) event.target.classList.add('active');
 
-            let items = document.querySelectorAll('.menu-item');
-            items.forEach(item => {
-                if (category === 'all' || item.getAttribute('data-category') === category) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.style.display = (category === 'all' || item.getAttribute('data-category') === category) ? 'flex' : 'none';
             });
         }
     </script>
