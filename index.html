@@ -419,15 +419,14 @@
             margin-bottom: 8px !important;
         }
 
-        .modal-accounts {
-            font-size: 12px !important;
-            color: #ddd !important;
-            line-height: 1.6 !important;
-        }
-
-        .acc-name {
-            color: #a8a8a8 !important;
-            font-size: 11px !important;
+        .selected-account-box {
+            background: #160c24;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #d4af37;
+            font-size: 12px;
+            color: #fff;
+            margin-top: 6px;
         }
 
         .payment-hint {
@@ -1133,9 +1132,20 @@
                         <input type="text" id="tableNumber" oninput="updateOrderLinks()" placeholder="ለምሳሌ፦ Table 05">
                     </div>
 
+                    <!-- Enhanced Delivery Location Selection -->
                     <div class="form-group" id="deliveryAddressField" style="display:none;">
-                        <label for="deliveryAddress"><i class="fas fa-map-marker-alt"></i> የማድረሻ አድራሻ</label>
-                        <input type="text" id="deliveryAddress" oninput="updateOrderLinks()" placeholder="ቦታ/ቤት ቁጥር...">
+                        <label for="deliveryAreaSelect"><i class="fas fa-map-marker-alt"></i> የማድረሻ ሰፈር (Location)</label>
+                        <select id="deliveryAreaSelect" onchange="toggleCustomArea(); updateOrderLinks();">
+                            <option value="ቦሌ (Bole)">ቦሌ (Bole)</option>
+                            <option value="ፖስታ ቤት (Posta Bet)">ፖስታ ቤት (Posta Bet)</option>
+                            <option value="ፍራንኮ (Franco)">ፍራንኮ (Franco)</option>
+                            <option value="ቀበሌ 04 (Kebele 04)">ቀበሌ 04 (Kebele 04)</option>
+                            <option value="አራዳ (Arada)">አራዳ (Arada)</option>
+                            <option value="ዲማ (Dima)">ዲማ (Dima)</option>
+                            <option value="custom">ሌላ ሰፈር (ፅፈው ያስገቡ)...</option>
+                        </select>
+                        <input type="text" id="deliveryAddressCustom" oninput="updateOrderLinks()" placeholder="የሰፈር ስም ወይም የቤት ቁጥር..." style="display:none; margin-top:8px;">
+                        <small style="color:#d4af37; font-size:11px; display:block; margin-top:5px;">💡 ትዕዛዙን በ Telegram/WhatsApp ሲልኩ Live Location አብረው ቢልኩልን በፍጥነት እናደርሳለን።</small>
                     </div>
 
                     <div class="form-group" id="appointmentTimeField" style="display:none;">
@@ -1157,7 +1167,7 @@
                         <label for="paymentMethod"><i class="fas fa-wallet"></i> የክፍያ መንገድ</label>
                         <select id="paymentMethod" onchange="updateOrderLinks()" required>
                             <option value="Telebirr (0968093003)">Telebirr (0968093003)</option>
-                            <option value="CBE Bank (1000648950911)">CBE (ንግድ ባንክ)</option>
+                            <option value="CBE Bank (1000648950911)">CBE (የኢትዮጵያ ንግድ ባንክ)</option>
                             <option value="Cash on Delivery / In-person">በእጅ / በጥሬ ገንዘብ</option>
                         </select>
                     </div>
@@ -1173,10 +1183,12 @@
                         <span>ጠቅላላ ዋጋ (Total Price):</span>
                         <strong id="modalTotalPrice">0 ETB</strong>
                     </div>
-                    <div class="modal-accounts">
-                        <div>📱 Telebirr: <strong>0968093003</strong> <span class="acc-name">(Henok Tafese)</span></div>
-                        <div>🏦 ንግድ ባንክ (CBE): <strong>1000648950911</strong> <span class="acc-name">(Henok Tafese)</span></div>
+                    
+                    <!-- DYNAMIC ACCOUNT DISPLAY BOX -->
+                    <div id="selectedAccountDisplay" class="selected-account-box">
+                        <!-- JavaScript fills this based on selection -->
                     </div>
+
                     <p class="payment-hint">እባክዎ መጀመሪያ ክፍያውን ፈጽመው ሲልኩ ደረሰኙን (Screenshot) ያያይዙ።</p>
                 </div>
 
@@ -1218,6 +1230,7 @@
             document.getElementById('customerPhone').value = '';
             document.getElementById('specialNote').value = '';
             document.getElementById('serviceType').value = 'Dine-in';
+            document.getElementById('paymentMethod').value = 'Telebirr (0968093003)';
 
             toggleServiceFields();
             calculateTotal();
@@ -1273,6 +1286,17 @@
             }
         }
 
+        function toggleCustomArea() {
+            const areaSelect = document.getElementById('deliveryAreaSelect').value;
+            const customInput = document.getElementById('deliveryAddressCustom');
+
+            if (areaSelect === 'custom') {
+                customInput.style.display = 'block';
+            } else {
+                customInput.style.display = 'none';
+            }
+        }
+
         function updateOrderLinks() {
             const serviceType = document.getElementById('serviceType').value;
             const customerName = document.getElementById('customerName').value || 'ያልተጠቀሰ';
@@ -1281,13 +1305,27 @@
             const specialNote = document.getElementById('specialNote').value || 'የለም';
             const totalPrice = selectedItemPrice * currentQuantity;
 
+            // DYNAMIC ACCOUNT DISPLAY UPDATE
+            const accDisplay = document.getElementById('selectedAccountDisplay');
+            if (paymentMethod.includes('Telebirr')) {
+                accDisplay.innerHTML = `📱 <strong>የቴሌብር ሂሳብ፦</strong> <span style="color:#d4af37; font-size:15px; font-weight:bold;">0968093003</span><br><small style="color:#aaa;">(Henok Tafese)</small>`;
+            } else if (paymentMethod.includes('CBE')) {
+                accDisplay.innerHTML = `🏦 <strong>የንግድ ባንክ (CBE) ሂሳብ፦</strong> <span style="color:#d4af37; font-size:15px; font-weight:bold;">1000648950911</span><br><small style="color:#aaa;">(Henok Tafese)</small>`;
+            } else {
+                accDisplay.innerHTML = `💵 <strong>የክፍያ መንገድ፦</strong> በጥሬ ገንዘብ / በእጅ የሚከፈል`;
+            }
+
             let locationOrDetails = '';
             if (serviceType === 'Dine-in') {
                 const table = document.getElementById('tableNumber').value || 'ያልተጠቀሰ';
                 locationOrDetails = `🪑 የጠረጴዛ ቁጥር: ${table}`;
             } else if (serviceType === 'Delivery') {
-                const addr = document.getElementById('deliveryAddress').value || 'ያልተጠቀሰ';
-                locationOrDetails = `📍 የማድረሻ አድራሻ: ${addr}`;
+                const areaSel = document.getElementById('deliveryAreaSelect').value;
+                let finalArea = areaSel;
+                if (areaSel === 'custom') {
+                    finalArea = document.getElementById('deliveryAddressCustom').value || 'ያልተጠቀሰ';
+                }
+                locationOrDetails = `📍 የማድረሻ ሰፈር: ${finalArea}`;
             } else if (serviceType === 'Appointment') {
                 const time = document.getElementById('appointmentTime').value || 'ያልተጠቀሰ';
                 locationOrDetails = `⏰ የቀጠሮ ሰዓት: ${time}`;
@@ -1307,7 +1345,8 @@
             let encodedMessage = encodeURIComponent(message);
 
             document.getElementById('modalWaLink').href = `https://wa.me/251969995662?text=${encodedMessage}`;
-            document.getElementById('modalTgLink').href = `https://t.me/Amethyst_Dining?text=${encodedMessage}`;
+            // FIXED TELEGRAM BOT LINK
+            document.getElementById('modalTgLink').href = `https://t.me/Amethyst_Dining_bot?start=${encodedMessage}`;
             document.getElementById('modalSmsLink').href = `sms:+251969995662?body=${encodedMessage}`;
         }
 
