@@ -1132,7 +1132,7 @@
                         <input type="text" id="tableNumber" oninput="updateOrderLinks()" placeholder="ለምሳሌ፦ Table 05">
                     </div>
 
-                    <!-- Enhanced Delivery Location Selection -->
+                    <!-- Delivery Location Selection with Auto-GPS -->
                     <div class="form-group" id="deliveryAddressField" style="display:none;">
                         <label for="deliveryAreaSelect"><i class="fas fa-map-marker-alt"></i> የማድረሻ ሰፈር (Location)</label>
                         <select id="deliveryAreaSelect" onchange="toggleCustomArea(); updateOrderLinks();">
@@ -1145,6 +1145,13 @@
                             <option value="custom">ሌላ ሰፈር (ፅፈው ያስገቡ)...</option>
                         </select>
                         <input type="text" id="deliveryAddressCustom" oninput="updateOrderLinks()" placeholder="የሰፈር ስም ወይም የቤት ቁጥር..." style="display:none; margin-top:8px;">
+                        
+                        <!-- Auto GPS Location Button -->
+                        <button type="button" onclick="getGPSLocation()" id="gpsBtn" style="width: 100%; margin-top: 8px; padding: 8px; background-color: #0b0512; color: #d4af37; border: 1px solid #d4af37; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">
+                            🎯 አሁናዊ ቦታዬን በ GPS አግኝ
+                        </button>
+                        <p id="locationStatus" style="font-size: 11px; color: #25D366; margin-top: 5px;"></p>
+
                         <small style="color:#d4af37; font-size:11px; display:block; margin-top:5px;">💡 ትዕዛዙን በ Telegram/WhatsApp ሲልኩ Live Location አብረው ቢልኩልን በፍጥነት እናደርሳለን።</small>
                     </div>
 
@@ -1217,11 +1224,13 @@
         let selectedItemName = '';
         let selectedItemPrice = 0;
         let currentQuantity = 1;
+        let userGpsLink = ''; // የደንበኛውን GPS ሊንክ ማስቀመጫ
 
         function openOrderModal(itemName, itemPrice) {
             selectedItemName = itemName;
             selectedItemPrice = itemPrice;
             currentQuantity = 1;
+            userGpsLink = ''; // reset location
 
             document.getElementById('modalFoodTitle').innerText = itemName;
             document.getElementById('orderQty').value = 1;
@@ -1231,6 +1240,16 @@
             document.getElementById('specialNote').value = '';
             document.getElementById('serviceType').value = 'Dine-in';
             document.getElementById('paymentMethod').value = 'Telebirr (0968093003)';
+
+            // Reset GPS Status UI
+            const gpsBtn = document.getElementById('gpsBtn');
+            const locationStatus = document.getElementById('locationStatus');
+            if(gpsBtn) {
+                gpsBtn.style.backgroundColor = '#0b0512';
+                gpsBtn.style.color = '#d4af37';
+                gpsBtn.innerText = '🎯 አሁናዊ ቦታዬን በ GPS አግኝ';
+            }
+            if(locationStatus) locationStatus.innerText = '';
 
             toggleServiceFields();
             calculateTotal();
@@ -1297,6 +1316,34 @@
             }
         }
 
+        // AUTO GPS LOCATION FUNCTION
+        function getGPSLocation() {
+            const status = document.getElementById("locationStatus");
+            const btn = document.getElementById("gpsBtn");
+
+            if (navigator.geolocation) {
+                status.innerText = "⏳ ሎኬሽንዎን በመፈለግ ላይ...";
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        userGpsLink = `https://www.google.com/maps?q=${lat},${lng}`;
+                        
+                        status.innerText = "✅ ሎኬሽንዎ በስኬት ተይዟል!";
+                        btn.style.backgroundColor = "#25D366";
+                        btn.style.color = "#ffffff";
+                        btn.innerText = "✅ GPS ሎኬሽን ተይዟል";
+                        updateOrderLinks();
+                    },
+                    (error) => {
+                        status.innerText = "❌ ሎኬሽን ማግኘት አልተቻለም። እባክዎን የስልክዎን GPS ያብሩ።";
+                    }
+                );
+            } else {
+                status.innerText = "❌ ስልክዎ Geolocation አይደግፍም።";
+            }
+        }
+
         function updateOrderLinks() {
             const serviceType = document.getElementById('serviceType').value;
             const customerName = document.getElementById('customerName').value || 'ያልተጠቀሰ';
@@ -1326,6 +1373,9 @@
                     finalArea = document.getElementById('deliveryAddressCustom').value || 'ያልተጠቀሰ';
                 }
                 locationOrDetails = `📍 የማድረሻ ሰፈር: ${finalArea}`;
+                if (userGpsLink) {
+                    locationOrDetails += `\n🎯 Google Maps GPS: ${userGpsLink}`;
+                }
             } else if (serviceType === 'Appointment') {
                 const time = document.getElementById('appointmentTime').value || 'ያልተጠቀሰ';
                 locationOrDetails = `⏰ የቀጠሮ ሰዓት: ${time}`;
@@ -1345,8 +1395,8 @@
             let encodedMessage = encodeURIComponent(message);
 
             document.getElementById('modalWaLink').href = `https://wa.me/251969995662?text=${encodedMessage}`;
-            // FIXED TELEGRAM BOT LINK
-            document.getElementById('modalTgLink').href = `https://t.me/Amethyst_Dining_bot?start=${encodedMessage}`;
+            // FIXED TELEGRAM SHARE URL (Opens Telegram with complete pre-filled message)
+            document.getElementById('modalTgLink').href = `https://t.me/share/url?url=&text=${encodedMessage}`;
             document.getElementById('modalSmsLink').href = `sms:+251969995662?body=${encodedMessage}`;
         }
 
